@@ -90,7 +90,6 @@ def signup_post():
     email = request.form.get('email')
     name = request.form.get('name')
     password = request.form.get('password')
-    auth = request.form.get('auth')
 
     user = User.query.filter_by(email=email).first() # pokud vrátí user, email je již v databázi
 
@@ -105,7 +104,7 @@ def signup_post():
         return redirect(url_for('auth.signup'))
 
     # create new user with the form data. Hash the password so plaintext version isn't saved.
-    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'), auth=auth)
+    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'), auth=2)
 
     # add the new user to the database
     db.session.add(new_user)

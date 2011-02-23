@@ -26,38 +26,34 @@
         <br>
         <table>
             <tr>
-                <td>
-                    jméno *
-                </td>
-                <td>
-                    <input type="name" placeholder="Mirek Dušín" id="name" name="name" required>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    email (nepovinné)
-                </td>
-                <td>
-                    <input type="email" id="email" name="email" >
+                
+                <td class="group">
+                
+                    
+                    <input type="name" placeholder="Mirek Dušín" id="name" name="name" required/>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Jméno</label>
                 </td>
             </tr>
             <tr>
-                <td>
-                    heslo *
+                
+                <td class="group">
+                    <input type="email" id="email" name="email"/>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>E-mail (nepovinné)</label>
                 </td>
+            </tr>
+            <tr>
                 <td>
                     <input type="password" id="password" name="password" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Jméno</label>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    pravomoce *
-                </td>
-                <td>
-                    <input type="radio" Name = "auth" id="1" value="1" required> <label for="1">admin </label>
-                    <input type="radio" Name = "auth" id="2" value="2" required selected> <label for="2"> zaměstnanec </label>
-                </td>
-            </tr>
+            
         </table>
         <br>
         <p style="text-align: center;">      <input type="submit" value="vytvořit"> </p>
