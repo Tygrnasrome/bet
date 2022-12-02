@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block head %} 
+<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+{% endblock %}
+
+{% block body %} 
+<form>
+    <div>
+     <h1>
+       <b>deník</b> 
+    </h1>
+    <h2>
+        <b> Základní informace</b> 
+    </h2>
+    <br>
+<table>
+        <tr>
+        <td>
+        Programátor
+    </td>
+    <td>
+    <input type="text" placeholder="jméno">
+    </tr>
+    <tr>
+</td>
+    <td>
+                Co se dělalo
+            </td>
+                <td>
+            <input type="text" placeholder="co se dělalo">
+        </td>
+        </tr>
+        <tr>
+            <td>
+                čas strávení v minutách
+            </td>
+                <td>
+            <input type="text" placeholder="čas">
+        </td>
+        </tr>
+        </tr>
+            <td>
+                Programovací jazyk
+            </td>
+         <td>
+            <select name="vyber">
+                <option value="vyber"></option>
+                <option value="vyber">Javascript</option>
+                <option value="vyber">Python</option>
+                <option value="vyber">Java</option>
+                <option value="vyber">C#</option>
+                <option value="vyber">C/C++</option>
+            </select>
+        </td>
+        </tr>
+        <tr>
+        <td>
+                datum
+        </td>
+        <td>
+            <input type="date" placeholder="datum">
+             </td>
+            </tr>
+            <tr>
+            <td>
+                Škála hodnocení naši práce
+            </td>
+            <td>
+            <input type="radio" Name = "Hodnocení" value="1">1
+            <input type="radio" Name = "Hodnocení" value="2">2
+            <input type="radio" Name = "Hodnocení" value="3">3
+            <input type="radio" Name = "Hodnocení" value="4">4
+            <input type="radio" Name = "Hodnocení" value="5">5
+            </td>
+        </tr>
+    </table>
+            <h3>
+            <button>
+                <b>Zaznamenat</b>
+            </button>
+        </h3>
+        <br>
+        </div>
+</form>
+{% endblock %}
