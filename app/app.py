@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, render_template, url_for
 from . import db
 
 app = Flask(__name__)
@@ -19,9 +19,9 @@ db.init_app(app)
 
 
 @app.route('/')
-def hello_world():  # put application's code here
-    return "Hello Tour de App!"
+def main():  # put application's code here
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=true)
