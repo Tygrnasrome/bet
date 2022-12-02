@@ -1,6 +1,6 @@
 import os
 
-import sqlite
+import sqlite3
 from flask import Flask, render_template
 
 from . import db
@@ -23,7 +23,7 @@ db.init_app(app)
 def index():  
     return render_template('index.html')
 
-@app.route('/add/zaznam/')
+@app.route('/add/')
 def addZaznam():  
     return render_template('addZaznam.html')
 
