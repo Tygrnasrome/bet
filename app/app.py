@@ -1,5 +1,6 @@
 import os
 
+import sqlite
 from flask import Flask
 from . import db
 
@@ -19,8 +20,8 @@ db.init_app(app)
 
 
 @app.route('/')
-def hello_world():  # put application's code here
-    return "Hello Tour de App!"
+def print_db():
+  return(cur.fetchall())
 
 
 if __name__ == '__main__':
