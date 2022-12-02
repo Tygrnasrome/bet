@@ -4,10 +4,53 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for ('static', filename='css/main.css')}}">
-    {% block head %} {% endblock  %}
+    <link rel="stylesheet" href="styly.css">
 </head>
 <body>
-    {% block body %} {% endblock  %}
+    <form>
+        <div>
+         <h1>
+           <b>deník</b> 
+        </h1>
+        <h2>
+            <b> Základní informace</b> 
+        </h2>
+        <br>
+        <label>
+            Programátor
+        </label>
+        <input type="text" placeholder="jméno">
+        <br>
+                <label>
+                    Co se dělalo
+                </label>
+                <input type="text" placeholder="co se dělalo">
+                <br>
+                <label>
+                    čas strávení v minutách
+                </label>
+                <input type="text" placeholder="čas">
+                <br>
+                <label>
+                    Programovací jazyk
+                </label>
+                <input type="Text" placeholder="např: c#">
+                <br>
+                <label>
+                    datum
+                </label>
+                <input type="date" placeholder="datum">
+                <br>
+                <label>
+                    Škála hodnocení naši práce
+                </label>
+                <input type="radio" Name = "Hodnocení" value="1">1
+                <input type="radio" Name = "Hodnocení" value="2">2
+                <input type="radio" Name = "Hodnocení" value="3">3
+                <input type="radio" Name = "Hodnocení" value="4">4
+                <input type="radio" Name = "Hodnocení" value="5">5
+                <br>
+            </div>
+    </form>
 </body>
 </html>
