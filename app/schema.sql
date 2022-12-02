@@ -5,3 +5,6 @@ CREATE TABLE IF NOT EXISTS record (
   jazyk TEXT NOT NULL,
   hodnoceni INT NOT NULL
 );
+insert into record (name, descr, jazyk, hodnoceni) values ('Dan', 'Ano', 'C++', 5);
+insert into record (name, descr, jazyk, hodnoceni) values ('Dan', 'Ano', 'C++', 5);
+insert into record (name, descr, jazyk, hodnoceni) values ('Dan', 'Ano', 'C++', 5);
