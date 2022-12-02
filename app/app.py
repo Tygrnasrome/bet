@@ -1,6 +1,8 @@
 import os
 
+import sqlite
 from flask import Flask, render_template
+
 from . import db
 
 app = Flask(__name__)
@@ -24,6 +26,10 @@ def index():
 @app.route('/add/zaznam/')
 def addZaznam():  
     return render_template('addZaznam.html')
+
+def print_db():
+  return(cur.fetchall())
+
 
 @app.route('/zaznamy/')
 def zaznamy():  
