@@ -6,8 +6,17 @@ body
 div
 {
     background-color: grey;
-    width: auto;
-    height: auto;
-    border: 0px solid;
-}
+    text-align: center;
+    font-size: 16;
+    width: 25%;
+    margin: 0 auto;
 
+}
+table
+{
+    margin: auto; align-self: center;
+}
+button
+{
+    width: 100px; height: 25px; color: black;
+}

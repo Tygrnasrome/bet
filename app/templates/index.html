@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %} 
-
+<link rel="stylesheet" href="styly.css">
 {% endblock %}
 
 {% block body %} 
@@ -14,40 +14,73 @@
         <b> Základní informace</b> 
     </h2>
     <br>
-    <label>
+<table>
+        <tr>
+        <td>
         Programátor
-    </label>
+    </td>
+    <td>
     <input type="text" placeholder="jméno">
-    <br>
-            <label>
+    </tr>
+    <tr>
+</td>
+    <td>
                 Co se dělalo
-            </label>
+            </td>
+                <td>
             <input type="text" placeholder="co se dělalo">
-            <br>
-            <label>
+        </td>
+        </tr>
+        <tr>
+            <td>
                 čas strávení v minutách
-            </label>
+            </td>
+                <td>
             <input type="text" placeholder="čas">
-            <br>
-            <label>
+        </td>
+        </tr>
+        </tr>
+            <td>
                 Programovací jazyk
-            </label>
-            <input type="Text" placeholder="např: c#">
-            <br>
-            <label>
+            </td>
+         <td>
+            <select name="vyber">
+                <option value="vyber"></option>
+                <option value="vyber">Javascript</option>
+                <option value="vyber">Python</option>
+                <option value="vyber">Java</option>
+                <option value="vyber">C#</option>
+                <option value="vyber">C/C++</option>
+            </select>
+        </td>
+        </tr>
+        <tr>
+        <td>
                 datum
-            </label>
+        </td>
+        <td>
             <input type="date" placeholder="datum">
-            <br>
-            <label>
+             </td>
+            </tr>
+            <tr>
+            <td>
                 Škála hodnocení naši práce
-            </label>
+            </td>
+            <td>
             <input type="radio" Name = "Hodnocení" value="1">1
             <input type="radio" Name = "Hodnocení" value="2">2
             <input type="radio" Name = "Hodnocení" value="3">3
             <input type="radio" Name = "Hodnocení" value="4">4
             <input type="radio" Name = "Hodnocení" value="5">5
-            <br>
+            </td>
+        </tr>
+    </table>
+            <h3>
+            <button>
+                <b>Zaznamenat</b>
+            </button>
+        </h3>
+        <br>
         </div>
 </form>
 {% endblock %}
