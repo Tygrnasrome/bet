@@ -5,7 +5,6 @@ from flask.cli import with_appcontext
 import sqlite3
 
 con = sqlite3.connect("db.db")
-
 cur = con.cursor()
 
 def get_db():
@@ -30,11 +29,15 @@ def init_db():
     """
     Inicializuje databázi dle schema.sql
     """
-    db = get_db()
-
     with current_app.open_resource('schema.sql') as f:
-        db.executescript(f.read().decode('utf8'))
+        con.executescript(f.read().decode('utf8'))
+        con.commit()
 
+def print_db():
+    cur.execute("SELECT * FROM person")
+    records = cur.fetchall()
+    for record in records:
+        print(record)
 
 @click.command('init-db')
 @with_appcontext
@@ -43,6 +46,7 @@ def init_db_command():
     Definujeme příkaz příkazové řádky
     """
     init_db()
+    print_db()
     click.echo('Initialized the database.')
 
 
