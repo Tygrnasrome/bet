@@ -43,7 +43,8 @@ def addZaznam():
     record_popis = request.form['popis']
     record_jazyk = request.form['jazyk']
     record_hodnoceni = request.form['hodnoceni']
-    new_record = Denik(name=record_name,jazyk=record_jazyk ,popis=record_popis,hodnoceni=record_hodnoceni,time_spent=record_time)
+    record_date = request.form['date']
+    new_record = Denik(name=record_name,jazyk=record_jazyk ,popis=record_popis,hodnoceni=record_hodnoceni,time_spent=record_time, date=record_date)
     db.session.add(new_record)
     db.session.commit()
     return redirect('/zaznamy/')
@@ -57,7 +58,7 @@ def print_db():
 
 @app.route('/zaznamy/')
 def zaznamy():
-    records = Denik.query.order_by(Denik.name).all()
+    records = Denik.query.order_by(Denik.date).all()
 
     return render_template('zaznamy.html', records=records)
 
