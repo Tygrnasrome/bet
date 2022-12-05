@@ -4,7 +4,7 @@ from flask.cli import with_appcontext
 
 import sqlite3
 
-con = sqlite3.connect("records.db")
+con = sqlite3.connect("db.db")
 
 cur = con.cursor()
 people = [
@@ -49,10 +49,20 @@ def close_db(e=None):
     if db is not None:
         db.close()
 
+def init_db():
+    """
+    Inicializuje databázi dle schema.sql
+    """
+    with current_app.open_resource('schema.sql') as f:
+        con.executescript(f.read().decode('utf8'))
+        con.commit()
 
 
-
-
+def print_db():
+    cur.execute("SELECT * FROM person")
+    records = cur.fetchall()
+    for record in records:
+        print(record)
 
 @click.command('init-db')
 @with_appcontext

@@ -5,3 +5,4 @@ CREATE TABLE IF NOT EXISTS recordD (
   jazyk TEXT NOT NULL,
   hodnoceni INTEGER NOT NULL
 );
+

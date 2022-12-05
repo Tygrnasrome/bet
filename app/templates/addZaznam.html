@@ -5,8 +5,9 @@
 {% endblock %}
 
 {% block body %} 
-<form>
-    <div>
+<form action="/add/" method="post">
+    <div class="First">
+
      <h1>
        <b>deník</b> 
     </h1>
@@ -20,7 +21,7 @@
         Programátor
     </td>
     <td>
-    <input type="text" placeholder="jméno">
+    <input type="text" placeholder="jméno" id="name" name="name">
     </tr>
     <tr>
 </td>
@@ -28,7 +29,7 @@
                 Co se dělalo
             </td>
                 <td>
-            <input type="text" placeholder="co se dělalo">
+            <input type="text" placeholder="co se dělalo" name="popis">
         </td>
         </tr>
         <tr>
@@ -36,7 +37,7 @@
                 čas strávení v minutách
             </td>
                 <td>
-            <input type="text" placeholder="čas">
+            <input type="text" placeholder="čas" name="time_spent">
         </td>
         </tr>
         </tr>
@@ -44,13 +45,13 @@
                 Programovací jazyk
             </td>
          <td>
-            <select name="vyber">
-                <option value="vyber"></option>
-                <option value="vyber">Javascript</option>
-                <option value="vyber">Python</option>
-                <option value="vyber">Java</option>
-                <option value="vyber">C#</option>
-                <option value="vyber">C/C++</option>
+            <select name="jazyk">
+                <option value="Javascript">Javascript</option>
+                <option value="Python">Python</option>
+                <option value="Java">Java</option>
+                <option value="C#">C#</option>
+                <option value="C/C++">C/C++</option>
+                <option value="HolyC">HolyC</option>
             </select>
         </td>
         </tr>
@@ -59,7 +60,7 @@
                 datum
         </td>
         <td>
-            <input type="date" placeholder="datum">
+            <input type="date" placeholder="datum" name="date">
              </td>
             </tr>
             <tr>
@@ -67,20 +68,22 @@
                 Škála hodnocení naši práce
             </td>
             <td>
-            <input type="radio" Name = "Hodnocení" value="1">1
-            <input type="radio" Name = "Hodnocení" value="2">2
-            <input type="radio" Name = "Hodnocení" value="3">3
-            <input type="radio" Name = "Hodnocení" value="4">4
-            <input type="radio" Name = "Hodnocení" value="5">5
+            <input type="radio" Name = "hodnoceni" value="1">1
+            <input type="radio" Name = "hodnoceni" value="2">2
+            <input type="radio" Name = "hodnoceni" value="3">3
+            <input type="radio" Name = "hodnoceni" value="4">4
+            <input type="radio" Name = "hodnoceni" value="5">5
             </td>
         </tr>
     </table>
             <h3>
-            <button>
-                <b>Zaznamenat</b>
-            </button>
+                
+                    <input type="submit" value="add">
+                
+           
         </h3>
         <br>
-        </div>
-</form>
+    </form>
+</div>
+
 {% endblock %}
