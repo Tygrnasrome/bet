@@ -1,15 +1,22 @@
 body
-{
+{    
+    margin: 0;
     background-color: black;
     color: white;
+    border: 0;
+    padding: 0;
 }
-div
+.First
 {
     background-color: grey;
     text-align: center;
     font-size: 16;
     width: 25%;
     margin: 0 auto;
+    position: absolute;
+    top: 33%;
+    right: 0;
+    left: 0;
 
 }
 table
@@ -18,5 +25,37 @@ table
 }
 button
 {
-    width: 100px; height: 25px; color: black;
+    width: 20%; height: 20%; color: black;
 }
+.Second
+{
+    color: black; 
+    background-color: red;
+    margin: 0 ;
+}
+ul
+{
+    display: flex;
+}
+li
+{
+   display: inline-block;
+   padding: 15px 30px;
+}
+a
+{
+    text-transform: uppercase;
+    text-decoration: none;
+    color: black;
+    font-size: 35px;
+}
+header
+{
+    width: 100%;
+    background-color: red;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+

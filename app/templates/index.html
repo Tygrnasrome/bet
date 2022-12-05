@@ -4,16 +4,26 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}" >
 {% endblock %}
 
-{% block body %} 
+{% block body %}
+<header> 
+<nav>
+<ul>
+    <li><a href="http://localhost:8080/">Domů</a></li>
+    <li><a href="http://localhost:8080/zaznamy/">Záznamy</a></li>
+    <li><a href="http://localhost:8080/add/zaznam/">Přidat</a></li>
+    <li><a href="">About</a></li>
+    <li><a href="">Nastavení</a></li>
+</ul>
+</nav>
+</header>
+<div class="First">
+    Homepage
+</div>
 
-    <div>
-     <h1>
-       <b>deník</b> 
-    </h1>
-    <h2>
-        <b> Uvítací stránka </b> 
-    </h2>
 
-    </div>
+
+
+
+
 
 {% endblock %}
