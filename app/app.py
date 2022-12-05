@@ -44,6 +44,8 @@ def addZaznam():
     record_jazyk = request.form['jazyk']
     record_hodnoceni = request.form['hodnoceni']
     record_date = request.form['date']
+    record_date = datetime.strptime(record_date, '%Y-%m-%d')
+    
     new_record = Denik(name=record_name,jazyk=record_jazyk ,popis=record_popis,hodnoceni=record_hodnoceni,time_spent=record_time, date=record_date)
     db.session.add(new_record)
     db.session.commit()

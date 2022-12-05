@@ -22,6 +22,7 @@
         <th>popis</th>
         <th>datum</th>
         <th>hodnoceni</th>
+        <th>možnosti</th>
     </tr>
     {% for record in records %}
     <tr>
@@ -32,6 +33,7 @@
         <td>{{record.popis}}</td>
         <td>{{record.date}}</td>
         <td>{{record.hodnoceni}}</td>
+        <td></td>
     </tr>
     {% endfor %}
 </table>
