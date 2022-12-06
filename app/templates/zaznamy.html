@@ -7,11 +7,9 @@
 {% block body %} 
 <div class="First">
     <h1>
-      <b>záznamy deníku </b> 
+      <b> Záznamy deníku </b> 
    </h1>
-   <h2>
-       <b> Seznam záznamů </b> 
-   </h2>
+
    <table>
     <tr>
         <th>id</th>
@@ -27,12 +25,20 @@
     <tr>
         <td>{{record.id}}</td>
         <td>{{record.name}}</td>
-        <td>{{record.jazyk}}</td>
+        <td>
+            {% for language in languages %}
+                {% if language.id == record.jazyk_id %}
+                    {{language.name}}
+                {% endif %}
+            {% endfor %}
+            </td>
+        
         <td>{{record.time_spent}}</td>
         <td>{{record.popis}}</td>
         <td>{{record.date}}</td>
         <td>{{record.hodnoceni}}</td>
-        <td></td>
+        <td> <a href="/update-form/{{record.id}}"> upravit</a>  <br>
+            <a href="/delete/{{record.id}}"> smazat</a>  </td>
     </tr>
     {% endfor %}
 </table>
