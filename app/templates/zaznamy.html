@@ -4,13 +4,31 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}" >
 {% endblock %}
 
-{% block body %} 
+{% block body %}    
 <div class="First">
     <h1>
       <b> Záznamy deníku </b> 
-   </h1>
-
-   <table>
+    </h1>
+    <form action="/zaznamy/filtered/" method="post">
+        <h2>filtry:</h2>
+        <h4>jazyky</h4>
+        {% for language in languages %}
+            <input type="checkbox" id="{{language.name}}" name="{{language.name}}" checked>
+            <label for="{{language.name}}">{{language.name}}</label>
+        {% endfor %}
+        <h4>Čas programování</h4>
+        <input type="text" placeholder="od" name="time_from">
+        <input type="text" placeholder="do" name="time_to">
+        <h4>Datum</h4>
+        <input type="date" name="date_from">
+        <label for="date_from">od</label>
+        <input type="date" name="date_to">
+        <label for="date_from">do</label>
+        <h4>Hodnocení</h4>
+        <input type="text" placeholder="od" name="hodnoceni_from">
+        <input type="text" placeholder="do" name="hodnoceni_to">   
+    </form>
+    <table>
     <tr>
         <th>id</th>
         <th>jméno</th>
@@ -41,7 +59,7 @@
             <a href="/delete/{{record.id}}"> smazat</a>  </td>
     </tr>
     {% endfor %}
-</table>
-   </div>
+    </table>
+</div>
 
 {% endblock %}

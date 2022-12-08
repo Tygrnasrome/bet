@@ -49,7 +49,7 @@ def addZaznam():
     record_time = request.form['time_spent']
     record_popis = request.form['popis']
     record_jazyk = request.form['jazyk_id']
-    intrecord_hodnoceni = request.form['hodnoceni']
+    record_hodnoceni = request.form['hodnoceni']
     record_date = request.form['date']
     
     new_record = Denik(name=record_name,jazyk_id=record_jazyk ,popis=record_popis,hodnoceni=record_hodnoceni,time_spent=record_time, date=record_date)
