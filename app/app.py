@@ -19,6 +19,9 @@ try:
     os.makedirs(app.instance_path)
 except OSError:
     pass
+error_dict = {'name':0, 'jazyk_id':0,'popis':0,'hodnoceni':0,'date':0,'time_spent':0}
+    
+
 class Denik(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
@@ -42,11 +45,11 @@ def index():
 @app.route('/add/', methods=['POST', 'GET'])
 def addZaznam():  
     #pokud nekdo prida neco do databaze, tak se spusti tato cast, jinak se zobrazi stranka
-    record_name = request.form['name']
+    record_name = request.form['name']  
     record_time = request.form['time_spent']
     record_popis = request.form['popis']
     record_jazyk = request.form['jazyk_id']
-    record_hodnoceni = request.form['hodnoceni']
+    intrecord_hodnoceni = request.form['hodnoceni']
     record_date = request.form['date']
     
     new_record = Denik(name=record_name,jazyk_id=record_jazyk ,popis=record_popis,hodnoceni=record_hodnoceni,time_spent=record_time, date=record_date)
