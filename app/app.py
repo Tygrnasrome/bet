@@ -36,6 +36,19 @@ class Jazyk(db.Model):
     name = db.Column(db.String(100), nullable=False) 
     def __repr__(self):
         return '<Jazyk %r>' % self.id
+
+class Programator(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False) 
+    def __repr__(self):
+        return '<Programator %r>' % self.id
+
+class Kategorie(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False) 
+    type = db.Column(db.String(100), nullable=False) 
+    def __repr__(self):
+        return '<Kategorie %r>' % self.id
         
 @app.route('/')
 def index():
@@ -44,7 +57,7 @@ def index():
 
 @app.route('/add/', methods=['POST', 'GET'])
 def addZaznam():  
-    #pokud nekdo prida neco do databaze, tak se spusti tato cast, jinak se zobrazi stranka
+    #pokud nekdo prida neco do databaze, tak se spusti tato cast, a pak se přeseměruje na view /zaznamy/
     record_name = request.form['name']  
     record_time = request.form['time_spent']
     record_popis = request.form['popis']
@@ -61,6 +74,70 @@ def showForm():
     languages = Jazyk.query.order_by(Jazyk.id).all()
     return render_template('addZaznam.html',languages=languages)
 
+@app.route('/language/form/', methods=['POST', 'GET'])
+def showLanguageForm():
+    if request.method == 'GET':
+        languages = Jazyk.query.order_by(Jazyk.id).all()
+        return render_template('addJazyk.html',languages=languages)
+    else:
+        language_name = request.form['name']
+        new_language = Jazyk(name=language_name)
+        db.session.add(new_language)
+        db.session.commit()
+        languages = Jazyk.query.order_by(Jazyk.id).all()
+        request.method = "GET"
+        return render_template('addJazyk.html',languages=languages)
+
+@app.route('/language/delete/<int:id>')
+def delLanguage(id):
+    language_to_del = Jazyk.query.get_or_404(id)
+    db.session.delete(language_to_del)
+    db.session.commit()
+    return redirect('/language/form/') 
+    
+@app.route('/programmer/form/', methods=['POST', 'GET'])
+def showProgrammerForm():
+    if request.method == 'GET':
+        programmers = Programator.query.order_by(Programator.id).all()
+        return render_template('addProgramator.html',programmers=programmers)
+    else:
+        programmer_name = request.form['name']
+        new_programmer = Programator(name=programmer_name)
+        db.session.add(new_programmer)
+        db.session.commit()
+        programmers = Programator.query.order_by(Programator.id).all()
+        request.method = "GET"
+        return render_template('addProgramator.html',programmers=programmers)
+
+@app.route('/programmer/delete/<int:id>')
+def delProgrammer(id):
+    programmer_to_del = Programator.query.get_or_404(id)
+    db.session.delete(programmer_to_del)
+    db.session.commit()
+    return redirect('/programmer/form/') 
+
+@app.route('/cat/form/', methods=['POST', 'GET'])
+def showCatForm():
+    if request.method == 'GET':
+        cats = Kategorie.query.order_by(Kategorie.id).all()
+        return render_template('addKategorie.html',cats=cats)
+    else:
+        cat_name = request.form['name']
+        cat_type = request.form['type']
+        new_cat = Kategorie(name=cat_name, type=cat_type)
+        db.session.add(new_cat)
+        db.session.commit()
+        cats = Kategorie.query.order_by(Kategorie.id).all()
+        request.method = "GET"
+        return render_template('addKategorie.html',cats=cats)
+
+@app.route('/cat/delete/<int:id>')
+def delCat(id):
+    cat_to_del = Kategorie.query.get_or_404(id)
+    db.session.delete(cat_to_del)
+    db.session.commit()
+    return redirect('/cat/form/') 
+
 def print_db():
   return(cur.fetchall())
 
@@ -69,7 +146,8 @@ def print_db():
 def zaznamy():
     records = Denik.query.order_by(Denik.date).all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
-    return render_template('zaznamy.html', records=records,languages=languages)
+    cats = Kategorie.query.order_by(Kategorie.id).all()
+    return render_template('zaznamy.html', records=records,languages=languages, cats=cats)
 
 @app.route('/update-form/<int:id>')
 def updateRecord(id):
