@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block head %} 
+<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+{% endblock %}
+
+{% block body %} 
+<form action="/programmer/form/" method="post">
+    <div class="First">
+     <h1>
+       <b>Přidat programátora do výběru</b> 
+    </h1>
+    <h3>
+        <b> všechna pole jsou povinná </b> 
+    </h3>
+    <br>
+<table>
+        <tr>
+        <td>
+        Jméno programátora
+    </td>
+    <td>
+    <input type="text" placeholder="jméno" id="name" name="name">
+    </tr>
+    </form>
+    <h3>   
+        <br>
+        <input type="submit" value="přidat">
+    </h3>
+    <table>
+        <tr>
+            <th> id </th>
+            <th> Jméno programátora </th>
+        </tr>
+            {% for programmer in programmers %}
+            <tr>
+                <td>
+                    {{programmer.id}}
+                </td>
+                <td>
+                    {{programmer.name}}
+                </td>
+                <td>
+                    <a href="/programmer/delete/{{programmer.id}}"> smazat</a>
+                </td>
+            </tr>
+            {% endfor %}
+
+    </table>
+</div>
+
+{% endblock %}
