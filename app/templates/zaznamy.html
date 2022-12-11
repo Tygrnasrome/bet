@@ -21,16 +21,21 @@
             <label for="{{language.name}}">{{language.name}}</label>
         {% endfor %}
         <h4>Čas programování</h4>
+        <label for="time_from">od</label>
         <input type="number" placeholder="od" name="time_from" value="{{min_time}}">
+        <label for="time_to">do</label>
         <input type="number" placeholder="do" name="time_to" value="{{max_time}}">
         <h4>Datum</h4>
-        <input type="date" name="date_from" value="{{min_date}}">
         <label for="date_from">od</label>
-        <input type="date" name="date_to" value="{{max_date}}">
+        <input type="date" name="date_from" value="{{min_date}}">
         <label for="date_from">do</label>
+        <input type="date" name="date_to" value="{{max_date}}">
+        
         <h4>Hodnocení</h4>
-        <input type="number" placeholder="od" name="hodnoceni_from" value="1">
-        <input type="number" placeholder="do" name="hodnoceni_to" value="5">  
+        <label for="hodnoceni_from">od</label>
+        <input type="number" placeholder="od" name="hodnoceni_from" value="{{min_hod}}">
+        <label for="hodnoceni_to">do</label>
+        <input type="number" placeholder="do" name="hodnoceni_to" value="{{max_hod}}">  
         <input type="submit" value="filtrovat"> 
     </form>
     <form action="/zaznamy/reset-filter" method="get">

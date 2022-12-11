@@ -59,6 +59,8 @@ class Filter():
     date_from = ""
     time_to = 0
     time_from = 0
+    hodnoceni_from = 1
+    hodnoceni_to = 1
     language_dict = {1:True}
 
 @app.route('/')
@@ -168,6 +170,8 @@ def zaznamy():
         Filter.date_to = r.date
         Filter.time_from = r.time_spent
         Filter.time_to = r.time_spent
+        Filter.hodnoceni_to = r.hodnoceni
+        Filter.hodnoceni_from = r.hodnoceni
     try:
         #try jenom pro jistotu, protoze obcas input vyhodnoti int jako str a pak je to neplecha
         for r in records:
@@ -179,6 +183,10 @@ def zaznamy():
                 Filter.time_to = r.date
             if(Filter.time_from > r.time_spent):
                 Filter.time_from = r.time_spent
+            if(Filter.hodnoceni_from > r.hodnoceni):
+                Filter.hodnoceni_from = r.hodnoceni         
+            if(Filter.hodnoceni_to < r.hodnoceni):
+                Filter.hodnoceni_to = r.hodnoceni         
     except:
         pass
 
@@ -201,14 +209,21 @@ def zaznamy():
             Filter.date_to = request.form['date_to']
         except:
             pass
+        try:
+            #try jenom pro jistotu, protoze obcas input vyhodnoti int jako str a pak je to neplecha
+            Filter.hodnoceni_from = request.form['hodnoceni_from']
+            Filter.hodnoceni_to = request.form['hodnoceni_to']
+        except:
+            pass
 
     #zde se provádí filtrace
     records = db.session.query(Denik).filter(Denik.date <= Filter.date_to).filter(Denik.date >= Filter.date_from).filter(Denik.date >= Filter.date_from).filter(Denik.time_spent >= Filter.time_from).filter(Denik.time_spent <= Filter.time_to)
+    records = records.filter(Denik.hodnoceni <= Filter.hodnoceni_to).filter(Denik.hodnoceni >= Filter.hodnoceni_from)
     for language in languages:
         if(not Filter.language_dict[language.id]):
             records = records.filter(Denik.jazyk_id !=  language.id)
     
-    return render_template('zaznamy.html', records=records,languages=languages, cats=cats, filtered_languages=Filter.language_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter.time_to)
+    return render_template('zaznamy.html', records=records,languages=languages, cats=cats, filtered_languages=Filter.language_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter.time_to, max_hod=Filter.hodnoceni_to, min_hod=Filter.hodnoceni_from)
 
 #jeste jsem netestoval tuto view funkci !!!
 @app.route('/zaznamy/reset-filter', methods=['POST', 'GET'])
