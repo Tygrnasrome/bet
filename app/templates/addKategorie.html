@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block head %} 
+<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+{% endblock %}
+
+{% block body %} 
+<form action="/cat/form/" method="post">
+    <div class="First">
+     <h1>
+       <b>Přidat kategorii do výběru</b> 
+    </h1>
+    <h3>
+        <b> všechna pole jsou povinná </b> 
+    </h3>
+    <br>
+<table>
+    <tr>
+        <td>Název kategorie</td>
+        <td>
+            <input type="text" placeholder="název kategorie" id="name" name="name" required>
+        </td>
+    </tr>
+    <tr>
+        <td>Typ kategorie</td>
+        <td>
+            <label for="int">Číselná</label>
+            <input type="radio" id="int" Name = "type" value="int" required>
+            <label for="string">Textová</label>
+            <input type="radio" id="string" Name = "type" value="text" required>
+            <label for="date">Datumová</label>
+            <input type="radio" id="date" Name = "type" value="date" required>
+            <label for="bool">ano/ne</label>
+            <input type="radio" id="bool" Name = "type" value="bool" required>
+            <label for="nullable">povinná</label>
+            <input type="checkbox" id="nullable" name="nullable">
+            
+        </td>
+    </tr>
+    <h3>   
+        <br>
+        <input type="submit" value="přidat">
+    
+    </h3>
+</form>
+    <table>
+        <tr>
+            <th> id </th>
+            <th> Název kategorie </th>
+            <th> Typ kategorie</th>
+        </tr>
+            {% for cat in cats %}
+            <tr>
+                <td>
+                    {{cat.id}}
+                </td>
+                <td>
+                    {{cat.name}}
+                </td>
+                <td>
+                    {{cat.type}}
+                </td>
+                <td>
+                    <a href="/cat/delete/{{cat.id}}"> smazat</a>
+                </td>
+            </tr>
+            {% endfor %}
+
+    </table>
+</div>
+
+{% endblock %}

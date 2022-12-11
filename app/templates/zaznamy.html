@@ -4,15 +4,44 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}" >
 {% endblock %}
 
-{% block body %} 
+{% block body %}    
 <div class="First">
     <h1>
-      <b>záznamy deníku </b> 
-   </h1>
-   <h2>
-       <b> Seznam záznamů </b> 
-   </h2>
-   <table>
+      <b> Záznamy deníku </b> 
+    </h1>
+    <form action="/zaznamy/" method="post">
+        <h2>filtry:</h2>
+        <h4>jazyky</h4>
+        {% for language in languages %}
+            <input type="checkbox" id="{{language.id}}" name="{{language.id}}"
+            {% if filtered_languages[language.id] == "on" %}
+                checked
+            {% endif %}
+            >
+            <label for="{{language.name}}">{{language.name}}</label>
+        {% endfor %}
+        <h4>Čas programování</h4>
+        <label for="time_from">od</label>
+        <input type="number" placeholder="od" name="time_from" value="{{min_time}}">
+        <label for="time_to">do</label>
+        <input type="number" placeholder="do" name="time_to" value="{{max_time}}">
+        <h4>Datum</h4>
+        <label for="date_from">od</label>
+        <input type="date" name="date_from" value="{{min_date}}">
+        <label for="date_from">do</label>
+        <input type="date" name="date_to" value="{{max_date}}">
+        
+        <h4>Hodnocení</h4>
+        <label for="hodnoceni_from">od</label>
+        <input type="number" placeholder="od" name="hodnoceni_from" value="{{min_hod}}">
+        <label for="hodnoceni_to">do</label>
+        <input type="number" placeholder="do" name="hodnoceni_to" value="{{max_hod}}">  
+        <input type="submit" value="filtrovat"> 
+    </form>
+    <form action="/zaznamy/reset-filter" method="get">
+        <input type="submit" value="reset filtru"> 
+    </form>
+    <table>
     <tr>
         <th>id</th>
         <th>jméno</th>
@@ -27,15 +56,23 @@
     <tr>
         <td>{{record.id}}</td>
         <td>{{record.name}}</td>
-        <td>{{record.jazyk}}</td>
+        <td>
+            {% for language in languages %}
+                {% if language.id == record.jazyk_id %}
+                    {{language.name}}
+                {% endif %}
+            {% endfor %}
+            </td>
+        
         <td>{{record.time_spent}}</td>
         <td>{{record.popis}}</td>
         <td>{{record.date}}</td>
         <td>{{record.hodnoceni}}</td>
-        <td></td>
+        <td> <a href="/update-form/{{record.id}}"> upravit</a>  <br>
+            <a href="/delete/{{record.id}}"> smazat</a>  </td>
     </tr>
     {% endfor %}
-</table>
-   </div>
+    </table>
+</div>
 
 {% endblock %}
