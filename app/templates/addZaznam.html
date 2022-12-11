@@ -21,7 +21,11 @@
         Programátor
     </td>
     <td>
-    <input type="text" placeholder="jméno" id="name" name="name" required>
+        <select name="name" >
+            {% for programmer in programmers %}
+            <option value="{{programmer.id}}">{{programmer.name}}</option>
+            {% endfor %}
+        </select>
     </tr>
     <tr>
 </td>

@@ -21,10 +21,13 @@ except OSError:
     pass
 error_dict = {'name':0, 'jazyk_id':0,'popis':0,'hodnoceni':0,'date':0,'time_spent':0}
     
+class Programator(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False) 
 
 class Denik(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
+    name = db.Column(db.Integer, db.ForeignKey(Programator.id))
     jazyk_id = db.Column(db.Integer, nullable=False)
     popis = db.Column(db.String(200), nullable=False)
     hodnoceni = db.Column(db.Integer, nullable=False)
@@ -34,21 +37,14 @@ class Denik(db.Model):
 class Jazyk(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False) 
-    def __repr__(self):
-        return '<Jazyk %r>' % self.id
 
-class Programator(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False) 
-    def __repr__(self):
-        return '<Programator %r>' % self.id
+
 
 class Kategorie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False) 
-    type = db.Column(db.String(100), nullable=False) 
-    def __repr__(self):
-        return '<Kategorie %r>' % self.id
+    barva = db.Column(db.String(100), nullable=False)
+    popis = db.Column(db.String(100), nullable=False)  
 
 class Filter():
     min_date = ""
@@ -57,11 +53,12 @@ class Filter():
     max_time = 0
     date_to = ""
     date_from = ""
-    time_to = int(0)
+    time_to = 0
     time_from = 0
     hodnoceni_from = 1
     hodnoceni_to = 1
     language_dict = {1:True}
+    name = 0
 
 @app.route('/')
 def index():
@@ -87,8 +84,9 @@ def addZaznam():
     return redirect('/zaznamy/1')
 @app.route('/form/')
 def showForm():
+    programmers = Programator.query.order_by(Programator.id).all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
-    return render_template('addZaznam.html',languages=languages)
+    return render_template('addZaznam.html',languages=languages, programmers=programmers)
 
 @app.route('/language/form/', methods=['POST', 'GET'])
 def showLanguageForm():
@@ -154,15 +152,12 @@ def delCat(id):
     db.session.commit()
     return redirect('/cat/form/') 
 
-def print_db():
-  return(cur.fetchall())
-
-
 @app.route('/zaznamy/<int:serazeni>', methods=['POST', 'GET'])
 def zaznamy(serazeni):
     cats = Kategorie.query.order_by(Kategorie.id).all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
     records = db.session.query(Denik).order_by(Denik.date).all()
+    programmers = Programator.query.order_by(Programator.id).all()
     if(serazeni == 1):
         #datum od nejdříve
         records = db.session.query(Denik).order_by(Denik.date)
@@ -228,16 +223,19 @@ def zaznamy(serazeni):
         Filter.hodnoceni_to = request.form['hodnoceni_to']
         Filter.hodnoceni_from = request.form['hodnoceni_from']
         Filter.hodnoceni_to = request.form['hodnoceni_to']
-
-
+        Filter.name = request.form['name']
+        
     #zde se provádí filtrace
-    records = records.filter(Denik.date <= Filter.date_to).filter(Denik.date >= Filter.date_from).filter(Denik.date >= Filter.date_from).filter(Denik.time_spent >= Filter.time_from).filter(Denik.time_spent <= Filter.time_to)
+    if (int(Filter.name) != int(0)):
+        records = records.filter(Denik.name == Filter.name)
+    records = records.filter(Denik.date <= Filter.date_to).filter(Denik.date >= Filter.date_from)
+    records = records.filter(Denik.time_spent >= Filter.time_from).filter(Denik.time_spent <= Filter.time_to)
     records = records.filter(Denik.hodnoceni <= Filter.hodnoceni_to).filter(Denik.hodnoceni >= Filter.hodnoceni_from)
     for language in languages:
         if(not Filter.language_dict[language.id]):
             records = records.filter(Denik.jazyk_id !=  language.id)
     
-    return render_template('zaznamy.html', records=records,languages=languages, cats=cats, filtered_languages=Filter.language_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter.time_to, max_hod=Filter.hodnoceni_to, min_hod=Filter.hodnoceni_from, serazeni=serazeni)
+    return render_template('zaznamy.html', records=records, languages=languages, cats=cats, programmers=programmers, filtered_languages=Filter.language_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter.time_to, max_hod=Filter.hodnoceni_to, min_hod=Filter.hodnoceni_from, sel_name=int(Filter.name), serazeni=serazeni)
 
 @app.route('/zaznamy/set-serazeni/', methods=['POST', 'GET'])
 def setSerazeniZaznamy():
