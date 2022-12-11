@@ -49,10 +49,24 @@ class Kategorie(db.Model):
     type = db.Column(db.String(100), nullable=False) 
     def __repr__(self):
         return '<Kategorie %r>' % self.id
-        
+
+class Filter():
+    min_date = ""
+    max_date = ""
+    min_time = 0
+    max_time = 0
+    date_to = ""
+    date_from = ""
+    time_to = 0
+    time_from = 0
+    language_dict = {1:True}
+
 @app.route('/')
 def index():
     db.create_all()
+    languages = Jazyk.query.order_by(Jazyk.id).all()
+    for language in languages:
+        Filter.language_dict[language.id] = "on"
     return render_template('index.html')
 
 @app.route('/add/', methods=['POST', 'GET'])
@@ -142,12 +156,82 @@ def print_db():
   return(cur.fetchall())
 
 
-@app.route('/zaznamy/')
+@app.route('/zaznamy/', methods=['POST', 'GET'])
 def zaznamy():
+    cats = Kategorie.query.order_by(Kategorie.id).all()
     records = Denik.query.order_by(Denik.date).all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
-    cats = Kategorie.query.order_by(Kategorie.id).all()
-    return render_template('zaznamy.html', records=records,languages=languages, cats=cats)
+
+    for r in records:
+        #před porovnáváním hodnoty stringů se musí dostat do proměnných nějaká hodnota 
+        Filter.date_from = r.date
+        Filter.date_to = r.date
+        Filter.time_from = r.time_spent
+        Filter.time_to = r.time_spent
+    try:
+        #try jenom pro jistotu, protoze obcas input vyhodnoti int jako str a pak je to neplecha
+        for r in records:
+            if(Filter.date_to < r.date):
+                Filter.date_to = r.date
+            if(Filter.date_from > r.date):
+                Filter.date_from = r.date
+            if(Filter.time_to < r.time_spent):
+                Filter.time_to = r.date
+            if(Filter.time_from > r.time_spent):
+                Filter.time_from = r.time_spent
+    except:
+        pass
+
+    if request.method == 'POST':
+        for language in languages:
+            try:        
+                #try protoze pokud neni oznacen, tak by to melo hodit exception
+                Filter.language_dict[language.id] = request.form[str(language.id)]
+            except:
+                Filter.language_dict[language.id] = 0
+        try:
+            #try jenom pro jistotu, protoze obcas input vyhodnoti int jako str a pak je to neplecha
+            Filter.time_from = request.form['time_from']
+            Filter.time_to = request.form['time_to']
+        except:
+            pass
+        try:
+            #try jenom pro jistotu, protoze obcas input vyhodnoti int jako str a pak je to neplecha
+            Filter.date_from = request.form['date_from']
+            Filter.date_to = request.form['date_to']
+        except:
+            pass
+
+    #zde se provádí filtrace
+    records = db.session.query(Denik).filter(Denik.date <= Filter.date_to).filter(Denik.date >= Filter.date_from).filter(Denik.date >= Filter.date_from).filter(Denik.time_spent >= Filter.time_from).filter(Denik.time_spent <= Filter.time_to)
+    for language in languages:
+        if(not Filter.language_dict[language.id]):
+            records = records.filter(Denik.jazyk_id !=  language.id)
+    
+    return render_template('zaznamy.html', records=records,languages=languages, cats=cats, filtered_languages=Filter.language_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter.time_to)
+
+#jeste jsem netestoval tuto view funkci !!!
+@app.route('/zaznamy/reset-filter', methods=['POST', 'GET'])
+def OGzaznamy():
+    records = Denik.query.order_by(Denik.date).all()
+    for r in records:
+        Filter.date_from = r.date
+        Filter.date_to = r.date
+        Filter.time_from = r.time_spent
+        Filter.time_to = r.time_spent
+    try:
+        for r in records:
+            if(Filter.date_to < r.date):
+                Filter.date_to = r.date
+            if(Filter.date_from > r.date):
+                Filter.date_from = r.date
+            if(Filter.time_to < r.time_spent):
+                Filter.time_to = r.date
+            if(Filter.time_from > r.time_spent):
+                Filter.time_from = r.time_spent
+    except:
+        pass
+    return redirect('/zaznamy/') 
 
 @app.route('/update-form/<int:id>')
 def updateRecord(id):

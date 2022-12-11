@@ -9,24 +9,32 @@
     <h1>
       <b> Záznamy deníku </b> 
     </h1>
-    <form action="/zaznamy/filtered/" method="post">
+    <form action="/zaznamy/" method="post">
         <h2>filtry:</h2>
         <h4>jazyky</h4>
         {% for language in languages %}
-            <input type="checkbox" id="{{language.name}}" name="{{language.name}}" checked>
+            <input type="checkbox" id="{{language.id}}" name="{{language.id}}"
+            {% if filtered_languages[language.id] == "on" %}
+                checked
+            {% endif %}
+            >
             <label for="{{language.name}}">{{language.name}}</label>
         {% endfor %}
         <h4>Čas programování</h4>
-        <input type="text" placeholder="od" name="time_from">
-        <input type="text" placeholder="do" name="time_to">
+        <input type="number" placeholder="od" name="time_from" value="{{min_time}}">
+        <input type="number" placeholder="do" name="time_to" value="{{max_time}}">
         <h4>Datum</h4>
-        <input type="date" name="date_from">
+        <input type="date" name="date_from" value="{{min_date}}">
         <label for="date_from">od</label>
-        <input type="date" name="date_to">
+        <input type="date" name="date_to" value="{{max_date}}">
         <label for="date_from">do</label>
         <h4>Hodnocení</h4>
-        <input type="text" placeholder="od" name="hodnoceni_from">
-        <input type="text" placeholder="do" name="hodnoceni_to">   
+        <input type="number" placeholder="od" name="hodnoceni_from" value="1">
+        <input type="number" placeholder="do" name="hodnoceni_to" value="5">  
+        <input type="submit" value="filtrovat"> 
+    </form>
+    <form action="/zaznamy/reset-filter" method="get">
+        <input type="submit" value="reset filtru"> 
     </form>
     <table>
     <tr>
