@@ -9,7 +9,7 @@
     <h1>
       <b> Záznamy deníku </b> 
     </h1>
-    <form action="/zaznamy/" method="post">
+    <form action="/zaznamy/{{serazeni}}" method="post">
         <h2>filtry:</h2>
         <h4>jazyky</h4>
         {% for language in languages %}
@@ -40,6 +40,19 @@
     </form>
     <form action="/zaznamy/reset-filter" method="get">
         <input type="submit" value="reset filtru"> 
+    </form>
+    <form action="/zaznamy/set-serazeni/" method="post">
+        <h2>Seřazení:</h2>
+        <select name="serazeni" >
+            <option value="1" {% if serazeni == 1 %} selected {% endif %}>datum od nejdříve</option>
+            <option value="2" {% if serazeni == 2 %} selected {% endif %}>datum od nejpozději</option>
+            <option value="3" {% if serazeni == 3 %} selected {% endif %}>čas od nejvíce</option>
+            <option value="4" {% if serazeni == 4 %} selected {% endif %}>čas od nejméně</option>
+            <option value="5" {% if serazeni == 5 %} selected {% endif %}>hodnocení od nejvíce</option>
+            <option value="6" {% if serazeni == 6 %} selected {% endif %}>hodnocení od nejméně</option>
+            <option value="7" {% if serazeni == 7 %} selected {% endif %}>programovací jazyk</option>
+        </select>
+        <input type="submit" value="seřadit"> 
     </form>
     <table>
     <tr>
