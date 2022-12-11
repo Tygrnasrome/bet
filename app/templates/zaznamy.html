@@ -13,29 +13,38 @@
         <h2>filtry:</h2>
         <h4>jazyky</h4>
         {% for language in languages %}
+            <label for="{{language.name}}">{{language.name}}</label>
             <input type="checkbox" id="{{language.id}}" name="{{language.id}}"
             {% if filtered_languages[language.id] == "on" %}
                 checked
             {% endif %}
             >
-            <label for="{{language.name}}">{{language.name}}</label>
+            
         {% endfor %}
         <h4>Čas programování</h4>
         <label for="time_from">od</label>
-        <input type="number" placeholder="od" name="time_from" value="{{min_time}}">
+        <input type="number" placeholder="od" name="time_from" value="{{min_time}}" required>
         <label for="time_to">do</label>
-        <input type="number" placeholder="do" name="time_to" value="{{max_time}}">
+        <input type="number" placeholder="do" name="time_to" value="{{max_time}}" required>
         <h4>Datum</h4>
         <label for="date_from">od</label>
-        <input type="date" name="date_from" value="{{min_date}}">
+        <input type="date" name="date_from" value="{{min_date}}" required>
         <label for="date_from">do</label>
-        <input type="date" name="date_to" value="{{max_date}}">
+        <input type="date" name="date_to" value="{{max_date}}" required>
         
         <h4>Hodnocení</h4>
         <label for="hodnoceni_from">od</label>
-        <input type="number" placeholder="od" name="hodnoceni_from" value="{{min_hod}}">
+        <input type="number" placeholder="od" name="hodnoceni_from" value="{{min_hod}}" required>
         <label for="hodnoceni_to">do</label>
-        <input type="number" placeholder="do" name="hodnoceni_to" value="{{max_hod}}">  
+        <input type="number" placeholder="do" name="hodnoceni_to" value="{{max_hod}}" required>
+        <label for="name">Programátor: </label>
+        <select name="name">
+            <option value="0"> všichni </option>
+            {% for programmer in programmers %}
+            <option value="{{programmer.id}}"
+            {% if programmer.id == sel_name %} selected {% endif %}>{{programmer.name}}</option>
+            {% endfor %}
+        </select>  
         <input type="submit" value="filtrovat"> 
     </form>
     <form action="/zaznamy/reset-filter" method="get">
@@ -68,7 +77,11 @@
     {% for record in records %}
     <tr>
         <td>{{record.id}}</td>
-        <td>{{record.name}}</td>
+        <td>{% for programmer in programmers %}
+            {% if programmer.id == record.name %}
+                {{programmer.name}}
+            {% endif %}
+        {% endfor %}</td>
         <td>
             {% for language in languages %}
                 {% if language.id == record.jazyk_id %}
