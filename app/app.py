@@ -21,10 +21,13 @@ except OSError:
     pass
 error_dict = {'name':0, 'jazyk_id':0,'popis':0,'hodnoceni':0,'date':0,'time_spent':0}
     
+class Programator(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False) 
 
 class Denik(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
+    name = db.Column(db.Integer, db.ForeignKey(Programator.id))
     jazyk_id = db.Column(db.Integer, nullable=False)
     popis = db.Column(db.String(200), nullable=False)
     hodnoceni = db.Column(db.Integer, nullable=False)
@@ -34,21 +37,14 @@ class Denik(db.Model):
 class Jazyk(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False) 
-    def __repr__(self):
-        return '<Jazyk %r>' % self.id
 
-class Programator(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False) 
-    def __repr__(self):
-        return '<Programator %r>' % self.id
+
 
 class Kategorie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False) 
-    type = db.Column(db.String(100), nullable=False) 
-    def __repr__(self):
-        return '<Kategorie %r>' % self.id
+    barva = db.Column(db.String(100), nullable=False)
+    popis = db.Column(db.String(100), nullable=False)  
 
 class Filter():
     min_date = ""
@@ -62,6 +58,7 @@ class Filter():
     hodnoceni_from = 1
     hodnoceni_to = 1
     language_dict = {1:True}
+    name = 0
 
 @app.route('/')
 def index():
@@ -74,21 +71,22 @@ def index():
 @app.route('/add/', methods=['POST', 'GET'])
 def addZaznam():  
     #pokud nekdo prida neco do databaze, tak se spusti tato cast, a pak se přeseměruje na view /zaznamy/
-    record_name = request.form['name']  
-    record_time = request.form['time_spent']
-    record_popis = request.form['popis']
-    record_jazyk = request.form['jazyk_id']
-    record_hodnoceni = request.form['hodnoceni']
-    record_date = request.form['date']
+    record_name = str(request.form['name'])  
+    record_time = int(request.form['time_spent'])
+    record_popis = str((request.form['popis']))
+    record_jazyk = int(request.form['jazyk_id'])
+    record_hodnoceni = int(request.form['hodnoceni'])
+    record_date = str(request.form['date'])
     
     new_record = Denik(name=record_name,jazyk_id=record_jazyk ,popis=record_popis,hodnoceni=record_hodnoceni,time_spent=record_time, date=record_date)
     db.session.add(new_record)
     db.session.commit()
-    return redirect('/zaznamy/')
+    return redirect('/zaznamy/1')
 @app.route('/form/')
 def showForm():
+    programmers = Programator.query.order_by(Programator.id).all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
-    return render_template('addZaznam.html',languages=languages)
+    return render_template('addZaznam.html',languages=languages, programmers=programmers)
 
 @app.route('/language/form/', methods=['POST', 'GET'])
 def showLanguageForm():
@@ -154,16 +152,37 @@ def delCat(id):
     db.session.commit()
     return redirect('/cat/form/') 
 
-def print_db():
-  return(cur.fetchall())
-
-
-@app.route('/zaznamy/', methods=['POST', 'GET'])
-def zaznamy():
+@app.route('/zaznamy/<int:serazeni>', methods=['POST', 'GET'])
+def zaznamy(serazeni):
     cats = Kategorie.query.order_by(Kategorie.id).all()
-    records = Denik.query.order_by(Denik.date).all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
-
+    records = db.session.query(Denik).order_by(Denik.date).all()
+    programmers = Programator.query.order_by(Programator.id).all()
+    if(serazeni == 1):
+        #datum od nejdříve
+        records = db.session.query(Denik).order_by(Denik.date)
+    if(serazeni == 2):
+        #datum od nejpozději
+        records = db.session.query(Denik).order_by(Denik.date.desc())
+    if(serazeni == 3):
+        #čas od nejvíce
+        records = db.session.query(Denik).order_by(Denik.time_spent.desc())
+    if(serazeni == 4):
+        #čas od nejméně
+        records = db.session.query(Denik).order_by(Denik.time_spent)
+    if(serazeni == 5):
+        #hodnocení od nejvíce
+        records = db.session.query(Denik).order_by(Denik.hodnoceni.desc())
+    if(serazeni == 6):
+        #hodnocení od nejvíce
+        records = db.session.query(Denik).order_by(Denik.hodnoceni)
+    if(serazeni == 7):
+        #programovací jazyk
+        records = db.session.query(Denik).order_by(Denik.jazyk_id)
+    if(serazeni == 8):
+        #programovací jazyk naopak (nemáme v provozu)
+        records = Denik.query.order_by(Denik.jazyk_id).all()
+    
     for r in records:
         #před porovnáváním hodnoty stringů se musí dostat do proměnných nějaká hodnota 
         Filter.date_from = r.date
@@ -172,23 +191,22 @@ def zaznamy():
         Filter.time_to = r.time_spent
         Filter.hodnoceni_to = r.hodnoceni
         Filter.hodnoceni_from = r.hodnoceni
-    try:
-        #try jenom pro jistotu, protoze obcas input vyhodnoti int jako str a pak je to neplecha
-        for r in records:
-            if(Filter.date_to < r.date):
-                Filter.date_to = r.date
-            if(Filter.date_from > r.date):
-                Filter.date_from = r.date
-            if(Filter.time_to < r.time_spent):
-                Filter.time_to = r.date
-            if(Filter.time_from > r.time_spent):
-                Filter.time_from = r.time_spent
-            if(Filter.hodnoceni_from > r.hodnoceni):
-                Filter.hodnoceni_from = r.hodnoceni         
-            if(Filter.hodnoceni_to < r.hodnoceni):
-                Filter.hodnoceni_to = r.hodnoceni         
-    except:
-        pass
+   
+    
+    for r in records:
+        if(str(Filter.date_to) < str(r.date)):
+            Filter.date_to = r.date
+        if(str(Filter.date_from) > str(r.date)):
+            Filter.date_from = r.date
+        if(int(Filter.time_to) < int(r.time_spent)):
+            Filter.time_to = r.time_spent
+        if(int(Filter.time_from) > int(r.time_spent)):
+            Filter.time_from = r.time_spent
+        if(int(Filter.hodnoceni_from) > int(r.hodnoceni)):
+            Filter.hodnoceni_from = r.hodnoceni         
+        if(int(Filter.hodnoceni_to) < int(r.hodnoceni)):
+            Filter.hodnoceni_to = r.hodnoceni         
+
 
     if request.method == 'POST':
         for language in languages:
@@ -196,36 +214,33 @@ def zaznamy():
                 #try protoze pokud neni oznacen, tak by to melo hodit exception
                 Filter.language_dict[language.id] = request.form[str(language.id)]
             except:
-                Filter.language_dict[language.id] = 0
-        try:
-            #try jenom pro jistotu, protoze obcas input vyhodnoti int jako str a pak je to neplecha
-            Filter.time_from = request.form['time_from']
-            Filter.time_to = request.form['time_to']
-        except:
-            pass
-        try:
-            #try jenom pro jistotu, protoze obcas input vyhodnoti int jako str a pak je to neplecha
-            Filter.date_from = request.form['date_from']
-            Filter.date_to = request.form['date_to']
-        except:
-            pass
-        try:
-            #try jenom pro jistotu, protoze obcas input vyhodnoti int jako str a pak je to neplecha
-            Filter.hodnoceni_from = request.form['hodnoceni_from']
-            Filter.hodnoceni_to = request.form['hodnoceni_to']
-        except:
-            pass
-
+                Filter.language_dict[language.id] = 0   
+        Filter.time_from = request.form['time_from']
+        Filter.time_to = request.form['time_to']
+        Filter.date_from = request.form['date_from']
+        Filter.date_to = request.form['date_to']
+        Filter.hodnoceni_from = request.form['hodnoceni_from']
+        Filter.hodnoceni_to = request.form['hodnoceni_to']
+        Filter.hodnoceni_from = request.form['hodnoceni_from']
+        Filter.hodnoceni_to = request.form['hodnoceni_to']
+        Filter.name = request.form['name']
+        
     #zde se provádí filtrace
-    records = db.session.query(Denik).filter(Denik.date <= Filter.date_to).filter(Denik.date >= Filter.date_from).filter(Denik.date >= Filter.date_from).filter(Denik.time_spent >= Filter.time_from).filter(Denik.time_spent <= Filter.time_to)
+    if (int(Filter.name) != int(0)):
+        records = records.filter(Denik.name == Filter.name)
+    records = records.filter(Denik.date <= Filter.date_to).filter(Denik.date >= Filter.date_from)
+    records = records.filter(Denik.time_spent >= Filter.time_from).filter(Denik.time_spent <= Filter.time_to)
     records = records.filter(Denik.hodnoceni <= Filter.hodnoceni_to).filter(Denik.hodnoceni >= Filter.hodnoceni_from)
     for language in languages:
         if(not Filter.language_dict[language.id]):
             records = records.filter(Denik.jazyk_id !=  language.id)
     
-    return render_template('zaznamy.html', records=records,languages=languages, cats=cats, filtered_languages=Filter.language_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter.time_to, max_hod=Filter.hodnoceni_to, min_hod=Filter.hodnoceni_from)
+    return render_template('zaznamy.html', records=records, languages=languages, cats=cats, programmers=programmers, filtered_languages=Filter.language_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter.time_to, max_hod=Filter.hodnoceni_to, min_hod=Filter.hodnoceni_from, sel_name=int(Filter.name), serazeni=serazeni)
 
-#jeste jsem netestoval tuto view funkci !!!
+@app.route('/zaznamy/set-serazeni/', methods=['POST', 'GET'])
+def setSerazeniZaznamy():
+    serazeni = request.form['serazeni']
+    return redirect('/zaznamy/' + serazeni) 
 @app.route('/zaznamy/reset-filter', methods=['POST', 'GET'])
 def OGzaznamy():
     records = Denik.query.order_by(Denik.date).all()
@@ -234,6 +249,8 @@ def OGzaznamy():
         Filter.date_to = r.date
         Filter.time_from = r.time_spent
         Filter.time_to = r.time_spent
+        Filter.hodnoceni_to = r.hodnoceni
+        Filter.hodnoceni_from = r.hodnoceni
     try:
         for r in records:
             if(Filter.date_to < r.date):
@@ -244,9 +261,13 @@ def OGzaznamy():
                 Filter.time_to = r.date
             if(Filter.time_from > r.time_spent):
                 Filter.time_from = r.time_spent
+            if(int(Filter.hodnoceni_from) > int(r.hodnoceni)):
+                Filter.hodnoceni_from = r.hodnoceni         
+            if(int(Filter.hodnoceni_to) < int(r.hodnoceni)):
+                Filter.hodnoceni_to = r.hodnoceni  
     except:
         pass
-    return redirect('/zaznamy/') 
+    return redirect('/zaznamy/1') 
 
 @app.route('/update-form/<int:id>')
 def updateRecord(id):
@@ -259,7 +280,7 @@ def deleteRecord(id):
     record_to_del = Denik.query.get_or_404(id)
     db.session.delete(record_to_del)
     db.session.commit()
-    return redirect('/zaznamy/') 
+    return redirect('/zaznamy/1') 
 
 @app.route('/update-add/<int:id>', methods=['POST', 'GET'])
 def updateAddZaznam(id):  
@@ -272,6 +293,6 @@ def updateAddZaznam(id):
     record_to_update.date = request.form['date']
 
     db.session.commit()
-    return redirect('/zaznamy/')
+    return redirect('/zaznamy/1')
 if __name__ == '__main__':
     app.run(debug=true)
