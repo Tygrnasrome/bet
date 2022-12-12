@@ -88,6 +88,11 @@ def showForm():
     languages = Jazyk.query.order_by(Jazyk.id).all()
     return render_template('addZaznam.html',languages=languages, programmers=programmers)
 
+@app.route('/language/')
+def showLanguageTable(): 
+    languages = Jazyk.query.order_by(Jazyk.id).all()
+    return render_template('jazyky.html',languages=languages)
+
 @app.route('/language/form/', methods=['POST', 'GET'])
 def showLanguageForm():
     if request.method == 'GET':
@@ -109,7 +114,12 @@ def delLanguage(id):
     db.session.commit()
     return redirect('/language/form/') 
     
-@app.route('/programmer/form/', methods=['POST', 'GET'])
+@app.route('/programmer/', methods=['POST', 'GET'])
+def showTableProgrammer():
+    programmers = Programator.query.order_by(Programator.id).all()
+    return render_template('programatori.html',programmers=programmers)
+
+@app.route('/programmer/form/')
 def showProgrammerForm():
     if request.method == 'GET':
         programmers = Programator.query.order_by(Programator.id).all()
@@ -123,12 +133,38 @@ def showProgrammerForm():
         request.method = "GET"
         return render_template('addProgramator.html',programmers=programmers)
 
+@app.route('/programmer/update/<int:id>', methods=['POST', 'GET'])
+def showProgrammerUpdateForm(id):
+    programmers = Programator.query.order_by(Programator.id).all()
+    if request.method == 'GET':
+        for programmer in programmers:
+            if(id == programmer.id):
+                return render_template('updateProgramator.html',programmers=programmers, programmer_to_update=programmer)
+    else:
+        for programmer in programmers:
+            if(id == programmer.id):
+                programmer.name = request.form['name']
+        db.session.commit()
+        programmers = Programator.query.order_by(Programator.id).all()
+        request.method = "GET"
+        return render_template('addProgramator.html',programmers=programmers)
+
 @app.route('/programmer/delete/<int:id>')
 def delProgrammer(id):
     programmer_to_del = Programator.query.get_or_404(id)
+    records = Denik.query.order_by(Denik.id).all()
+    for record in records:
+        if(record.name == programmer_to_del.id):
+            db.session.delete(record)
+            db.session.commit()
     db.session.delete(programmer_to_del)
     db.session.commit()
     return redirect('/programmer/form/') 
+
+@app.route('/cat/')
+def showCatTable():
+    cats = Kategorie.query.order_by(Kategorie.id).all()
+    return render_template('kategorie.html',cats=cats)
 
 @app.route('/cat/form/', methods=['POST', 'GET'])
 def showCatForm():
