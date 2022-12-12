@@ -5,36 +5,37 @@
 {% endblock %}
 
 {% block body %} 
-    <div class="First">
-     <h1>
-       <b>Seznam kategorií</b> 
-    </h1>
-    <br>
-    <table>
-        <tr>
-            <th> id </th>
-            <th> Název kategorie </th>
-            <th> Typ kategorie</th>
-        </tr>
-            {% for cat in cats %}
+<div class="First">
+    </form>
+        <table>
             <tr>
-                <td>
-                    {{cat.id}}
-                </td>
-                <td>
-                    {{cat.name}}
-                </td>
-                <td>
-                    {{cat.type}}
-                </td>
-                <td>
-                    <a href="/cat/delete/{{cat.id}}"> smazat</a>
-                    <a href="/cat/update/{{cat.id}}"> update</a>
-                </td>
+                <th> id </th>
+                <th> Název kategorie </th>
+                <th> Barva kategorie</th>
+                <th> Popis kategorie</th>
             </tr>
-            {% endfor %}
-
-    </table>
-</div>
+                {% for tag in tags %}
+                <tr>
+                    <td>
+                        {{tag.id}}
+                    </td>
+                    <td>
+                        {{tag.type}}
+                    </td>
+                    <td>
+                        {{tag.owned_by}}
+                    </td>
+                    <td>
+                        {{tag.popis}}
+                    </td>
+                    <td>
+                        <a href="/cat/delete/{{tag.id}}"> smazat</a>
+                        <a href="/cat/update/{{tag.id}}"> update</a>
+                    </td>
+                </tr>
+                {% endfor %}
+    
+        </table>
+    </div>
 
 {% endblock %}

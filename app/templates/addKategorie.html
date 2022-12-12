@@ -22,19 +22,15 @@
         </td>
     </tr>
     <tr>
-        <td>Typ kategorie</td>
+        <td>Barva kategorie</td>
         <td>
-            <label for="int">Číselná</label>
-            <input type="radio" id="int" Name = "type" value="int" required>
-            <label for="string">Textová</label>
-            <input type="radio" id="string" Name = "type" value="text" required>
-            <label for="date">Datumová</label>
-            <input type="radio" id="date" Name = "type" value="date" required>
-            <label for="bool">ano/ne</label>
-            <input type="radio" id="bool" Name = "type" value="bool" required>
-            <label for="nullable">povinná</label>
-            <input type="checkbox" id="nullable" name="nullable">
-            
+            <input type="color" id="barva" Name = "barva" required>          
+        </td>
+    </tr>
+    <tr>
+        <td>Popis kategorie</td>
+        <td>
+            <input type="text" placeholder="popis kategorie" id="popis" name="popis" required>
         </td>
     </tr>
     <h3>   
@@ -47,22 +43,26 @@
         <tr>
             <th> id </th>
             <th> Název kategorie </th>
-            <th> Typ kategorie</th>
+            <th> Barva kategorie</th>
+            <th> Popis kategorie</th>
         </tr>
-            {% for cat in cats %}
+            {% for tag in tags %}
             <tr>
                 <td>
-                    {{cat.id}}
+                    {{tag.id}}
                 </td>
                 <td>
-                    {{cat.name}}
+                    {{tag.name}}
                 </td>
                 <td>
-                    {{cat.type}}
+                    {{tag.barva}}
                 </td>
                 <td>
-                    <a href="/cat/delete/{{cat.id}}"> smazat</a>
-                    <a href="/cat/update/{{cat.id}}"> update</a>
+                    {{tag.popis}}
+                </td>
+                <td>
+                    <a href="/cat/delete/{{tag.id}}"> smazat</a>
+                    <a href="/cat/update/{{tag.id}}"> update</a>
                 </td>
             </tr>
             {% endfor %}

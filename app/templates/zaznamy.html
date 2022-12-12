@@ -72,6 +72,7 @@
         <th>popis</th>
         <th>datum</th>
         <th>hodnoceni</th>
+        <th>Štítky</th>
         <th>možnosti</th>
     </tr>
     {% for record in records %}
@@ -94,6 +95,17 @@
         <td>{{record.popis}}</td>
         <td>{{record.date}}</td>
         <td>{{record.hodnoceni}}</td>
+        <td>
+            {% for cat in cats %}
+                {% if cat.owned_id == record.id %}
+                    {% for tag in tags %}
+                        {% if cat.type_id == tag.id %}
+                            {{tag.name}}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </td>
         <td> <a href="/update-form/{{record.id}}"> upravit</a>  <br>
             <a href="/delete/{{record.id}}"> smazat</a>  </td>
     </tr>
