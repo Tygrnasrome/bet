@@ -114,12 +114,12 @@ def delLanguage(id):
     db.session.commit()
     return redirect('/language/form/') 
     
-@app.route('/programmer/', methods=['POST', 'GET'])
+@app.route('/programmer/')
 def showTableProgrammer():
     programmers = Programator.query.order_by(Programator.id).all()
     return render_template('programatori.html',programmers=programmers)
 
-@app.route('/programmer/form/')
+@app.route('/programmer/form/', methods=['POST', 'GET'])
 def showProgrammerForm():
     if request.method == 'GET':
         programmers = Programator.query.order_by(Programator.id).all()
