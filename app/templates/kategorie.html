@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block head %} 
+<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+{% endblock %}
+
+{% block body %} 
+    <div class="First">
+     <h1>
+       <b>Seznam kategorií</b> 
+    </h1>
+    <br>
+    <table>
+        <tr>
+            <th> id </th>
+            <th> Název kategorie </th>
+            <th> Typ kategorie</th>
+        </tr>
+            {% for cat in cats %}
+            <tr>
+                <td>
+                    {{cat.id}}
+                </td>
+                <td>
+                    {{cat.name}}
+                </td>
+                <td>
+                    {{cat.type}}
+                </td>
+                <td>
+                    <a href="/cat/delete/{{cat.id}}"> smazat</a>
+                    <a href="/cat/update/{{cat.id}}"> update</a>
+                </td>
+            </tr>
+            {% endfor %}
+
+    </table>
+</div>
+
+{% endblock %}

@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block body %} 
-<form action="/programmer/form/" method="post">
+<form action="/programmer/update/{{programmer_to_update.id}}" method="post">
     <div class="First">
      <h1>
-       <b>Přidat programátora do výběru</b> 
+       <b>Upravit programátora ve výběru</b> 
     </h1>
     <h3>
         <b> všechna pole jsou povinná </b> 
@@ -20,12 +20,12 @@
         Jméno programátora
     </td>
     <td>
-    <input type="text" placeholder="jméno" id="name" name="name">
+    <input type="text" placeholder="jméno" id="name" name="name" value="{{programmer_to_update.name}}">
     </tr>
     </form>
     <h3>   
         <br>
-        <input type="submit" value="přidat">
+        <input type="submit" value="upravit">
     </h3>
     <table>
         <tr>
@@ -42,7 +42,7 @@
                 </td>
                 <td>
                     <a href="/programmer/delete/{{programmer.id}}"> smazat</a>
-                    <a href="/programmer/update/{{programmer.id}}"> update</a>
+                    <a href="/programmer/update/{{programmer.id}}"> smazat</a>
                 </td>
             </tr>
             {% endfor %}
