@@ -45,6 +45,16 @@
             {% if programmer.id == sel_name %} selected {% endif %}>{{programmer.name}}</option>
             {% endfor %}
         </select>  
+        <h4>štítky</h4>
+        {% for tag in tags %}
+            <label for="{{tag.name}}">{{tag.name}}</label>
+            <input type="checkbox" id="{{tag.id}}" name="{{tag.id}}"
+            {% if filtered_tags[tag.id] == "on" %}
+                checked
+            {% endif %}
+            >
+            
+        {% endfor %}
         <input type="submit" value="filtrovat"> 
     </form>
     <form action="/zaznamy/reset-filter" method="get">

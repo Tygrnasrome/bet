@@ -61,6 +61,7 @@ class Filter():
     hodnoceni_from = 1
     hodnoceni_to = 1
     language_dict = {1:True}
+    tag_dict = {1:True}
     name = 0
 
 @app.route('/')
@@ -69,6 +70,9 @@ def index():
     languages = Jazyk.query.order_by(Jazyk.id).all()
     for language in languages:
         Filter.language_dict[language.id] = "on"
+    tags = Tags.query.order_by(Tags.id).all()
+    for tag in tags:
+        Filter.tag_dict[tag.id] = "on"
     return render_template('index.html')
 
 @app.route('/add/', methods=['POST', 'GET'])
@@ -119,6 +123,8 @@ def showLanguageForm():
         db.session.commit()
         languages = Jazyk.query.order_by(Jazyk.id).all()
         request.method = "GET"
+        for language in languages:
+            Filter.language_dict[language.id] = "on"
         return render_template('addJazyk.html',languages=languages)
 
 @app.route('/language/delete/<int:id>')
@@ -195,6 +201,9 @@ def showCatForm():
         db.session.commit()
         tags = Tags.query.order_by(Tags.id).all()
         request.method = "GET"
+        tags = Tags.query.order_by(Tags.id).all()
+        for tag in tags:
+            Filter.tag_dict[tag.id] = "on"
         return render_template('addKategorie.html', tags=tags)
 
 @app.route('/cat/delete/<int:id>')
@@ -291,6 +300,13 @@ def zaznamy(serazeni):
                 Filter.language_dict[language.id] = request.form[str(language.id)]
             except:
                 Filter.language_dict[language.id] = 0   
+        for tag in tags:
+            try:        
+                #try protoze pokud neni oznacen, tak by to melo hodit exception
+                Filter.tag_dict[tag.id] = request.form[str(tag.id)]
+            except:
+                Filter.tag_dict[tag.id] = 0  
+
         Filter.time_from = request.form['time_from']
         Filter.time_to = request.form['time_to']
         Filter.date_from = request.form['date_from']
@@ -310,9 +326,18 @@ def zaznamy(serazeni):
     for language in languages:
         if(not Filter.language_dict[int(language.id)]):
             records = records.filter(Denik.jazyk_id !=  language.id)
+    for tag in tags:
+        if(not Filter.tag_dict[int(tag.id)]):
+            for record in records:
+                has = False
+                for cat in cats:
+                    if (int(cat.owned_id) == int(record.id) and int(cat.type_id) == int(tag.id)):
+                        has = True
+                if (has == True):
+                    records = records.filter(Denik.id !=  record.id)
     
     return render_template('zaznamy.html', records=records, languages=languages, programmers=programmers, tags=tags, cats=cats, \
-    filtered_languages=Filter.language_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter. \
+    filtered_languages=Filter.language_dict, filtered_tags=Filter.tag_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter. \
     time_to, max_hod=Filter.hodnoceni_to, min_hod=Filter.hodnoceni_from, sel_name=int(Filter.name), serazeni=serazeni)
 
 @app.route('/zaznamy/set-serazeni/', methods=['POST', 'GET'])
