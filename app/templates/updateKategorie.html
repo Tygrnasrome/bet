@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block head %} 
+<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+{% endblock %}
+
+{% block body %} 
+<form action="/cat/update/{{tag_to_update.id}}" method="post">
+    <div class="First">
+     <h1>
+       <b>Upravit kategorii ve výběru</b> 
+    </h1>
+    <h3>
+        <b> všechna pole jsou povinná </b> 
+    </h3>
+    <br>
+<table>
+    <tr>
+        <td>Název kategorie</td>
+        <td>
+            <input type="text" placeholder="název kategorie" id="name" name="name" required value="{{tag_to_update.name}}">
+        </td>
+    </tr>
+    <tr>
+        <td>Barva kategorie</td>
+        <td>
+            <input type="color" id="barva" Name = "barva" value="{{tag_to_update.barva}}" required>          
+        </td>
+    </tr>
+    <tr>
+        <td>Popis kategorie</td>
+        <td>
+            <input type="text" placeholder="popis kategorie" id="popis" name="popis" value="{{tag_to_update.popis}}" required>
+        </td>
+    </tr>
+    <h3>   
+        <br>
+        <input type="submit" value="upravit">
+    
+    </h3>
+</form>
+    <table>
+        <tr>
+            <th> id </th>
+            <th> Název kategorie </th>
+            <th> Barva kategorie</th>
+            <th> Popis kategorie</th>
+        </tr>
+            {% for tag in tags %}
+            <tr>
+                <td>
+                    {{tag.id}}
+                </td>
+                <td>
+                    {{tag.name}}
+                </td>
+                <td>
+                    {{tag.barva}}
+                </td>
+                <td>
+                    {{tag.popis}}
+                </td>
+                <td>
+                    <a href="/cat/delete/{{tag.id}}"> smazat</a>
+                    <a href="/cat/update/{{tag.id}}"> update</a>
+                </td>
+            </tr>
+            {% endfor %}
+
+    </table>
+</div>
+
+{% endblock %}

@@ -211,6 +211,22 @@ def delCat(id):
     db.session.commit()
     return redirect('/cat/form/') 
 
+@app.route('/cat/update/<int:id>', methods=['POST', 'GET'])
+def updateCatForm(id):
+    tags = Tags.query.order_by(Tags.id).all()
+    if request.method == 'GET':
+        for tag in tags:
+            if(id == tag.id):
+                return render_template('updateKategorie.html', tags=tags, tag_to_update=tag)
+    else:
+        tag_to_update = Tags.query.get_or_404(id)
+        tag_to_update.name = request.form['name']
+        tag_to_update.barva = request.form['barva']
+        tag_to_update.popis = request.form['popis']
+
+        db.session.commit()
+        return redirect('/cat/form/') 
+
 @app.route('/zaznamy/<int:serazeni>', methods=['POST', 'GET'])
 def zaznamy(serazeni):
     cats = Kategorie.query.order_by(Kategorie.id).all()
