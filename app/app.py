@@ -346,7 +346,14 @@ def setSerazeniZaznamy():
     return redirect('/zaznamy/' + serazeni) 
 @app.route('/zaznamy/reset-filter', methods=['POST', 'GET'])
 def OGzaznamy():
+    languages = Jazyk.query.order_by(Jazyk.id).all()
+    for language in languages:
+        Filter.language_dict[language.id] = "on"
+    tags = Tags.query.order_by(Tags.id).all()
+    for tag in tags:
+        Filter.tag_dict[tag.id] = "on"
     records = Denik.query.order_by(Denik.date).all()
+    Filter.name = 0
     for r in records:
         Filter.date_from = r.date
         Filter.date_to = r.date
@@ -371,6 +378,10 @@ def OGzaznamy():
     except:
         pass
     return redirect('/zaznamy/1') 
+
+@app.route('/zaznamy/')
+def justSimpleRedirect():
+    return redirect('/zaznamy/1')
 
 @app.route('/update-form/<int:id>')
 def updateRecord(id):

@@ -47,7 +47,7 @@
         </select>  
         <h4>štítky</h4>
         {% for tag in tags %}
-            <label for="{{tag.name}}">{{tag.name}}</label>
+            <label for="{{tag.id}}">{{tag.name}}</label>
             <input type="checkbox" id="{{tag.id}}" name="{{tag.id}}"
             {% if filtered_tags[tag.id] == "on" %}
                 checked
@@ -110,7 +110,7 @@
                 {% if cat.owned_id == record.id %}
                     {% for tag in tags %}
                         {% if cat.type_id == tag.id %}
-                            {{tag.name}}
+                            {{tag.name}} <br>
                         {% endif %}
                     {% endfor %}
                 {% endif %}
