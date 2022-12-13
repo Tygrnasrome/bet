@@ -8,7 +8,7 @@
 <form action="/cat/form/" method="post">
     <div class="First">
      <h1>
-       <b>Přidat kategorii do výběru</b> 
+       <b>Přidat štítek do výběru</b> 
     </h1>
     <h3>
         <b> všechna pole jsou povinná </b> 
@@ -16,21 +16,21 @@
     <br>
 <table>
     <tr>
-        <td>Název kategorie</td>
+        <td>Název štítku</td>
         <td>
-            <input type="text" placeholder="název kategorie" id="name" name="name" required>
+            <input type="text" placeholder="název štítku" id="name" name="name" required>
         </td>
     </tr>
     <tr>
-        <td>Barva kategorie</td>
+        <td>Barva štítku</td>
         <td>
             <input type="color" id="barva" Name = "barva" required>          
         </td>
     </tr>
     <tr>
-        <td>Popis kategorie</td>
+        <td>Popis štítku</td>
         <td>
-            <input type="text" placeholder="popis kategorie" id="popis" name="popis" required>
+            <input type="text" placeholder="popis štítku" id="popis" name="popis" required>
         </td>
     </tr>
     <h3>   
@@ -42,9 +42,9 @@
     <table>
         <tr>
             <th> id </th>
-            <th> Název kategorie </th>
-            <th> Barva kategorie</th>
-            <th> Popis kategorie</th>
+            <th> Název štítku </th>
+            <th> Barva štítku</th>
+            <th> Popis štítku</th>
         </tr>
             {% for tag in tags %}
             <tr>
