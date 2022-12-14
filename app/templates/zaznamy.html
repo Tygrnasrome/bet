@@ -13,13 +13,13 @@
         <h2>filtry:</h2>
         <h4>jazyky</h4>
         {% for language in languages %}
-            <label for="{{language.name}}">{{language.name}}</label>
-            <input type="checkbox" id="{{language.id}}" name="{{language.id}}"
+            
+            <input type="checkbox" id="{{language.name}}" name="{{language.id}}"
             {% if filtered_languages[language.id] == "on" %}
                 checked
             {% endif %}
             >
-            
+            <label for="{{language.name}}">{{language.name}}</label>
         {% endfor %}
         <h4>Čas programování</h4>
         <label for="time_from">od</label>
@@ -47,13 +47,13 @@
         </select>  
         <h4>štítky</h4>
         {% for tag in tags %}
-            <label for="{{tag.id}}">{{tag.name}}</label>
-            <input type="checkbox" id="{{tag.id}}" name="{{tag.id}}"
+            <input type="checkbox" id="{{tag.name}}" name="{{tag.id}}"
+            
             {% if filtered_tags[tag.id] == "on" %}
                 checked
             {% endif %}
             >
-            
+            <label for="{{tag.name}}">{{tag.name}}</label>
         {% endfor %}
         <input type="submit" value="filtrovat"> 
     </form>
