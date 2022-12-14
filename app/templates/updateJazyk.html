@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block body %} 
-<form action="/language/form/" method="post">
+<form action="/language/update/{{language_to_update.id}}" method="post">
     <div class="First">
 
      <h1>
-       <b>Přidat programátorský jazyk do výběru</b> 
+       <b>Upravit programátorský jazyk ve výběru</b> 
     </h1>
     <h3>
         <b> všechna pole jsou povinná </b> 
@@ -21,12 +21,12 @@
             Název jazyku
         </td>
         <td>
-            <input type="text" placeholder="název jazyku" id="name" name="name" required>
+            <input type="text" placeholder="název jazyku" id="name" name="name" required value="{{language_to_update.name}}">
         </td>
     </tr>
     <tr>
         <td>
-            <input type="submit" value="přidat">
+            <input type="submit" value="upravit">
         </td>    
     </tr>
 </form>

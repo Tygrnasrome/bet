@@ -128,6 +128,20 @@ def showLanguageForm():
             Filter.language_dict[language.id] = "on"
         return render_template('addJazyk.html',languages=languages)
 
+@app.route('/language/update/<int:id>', methods=['POST', 'GET'])
+def showLanguageUpdateForm(id):
+    languages = Jazyk.query.order_by(Jazyk.id).all()
+    if request.method == 'GET':
+        language_to_update = Jazyk.query.get_or_404(id)
+        return render_template('updateJazyk.html',languages=languages, language_to_update=language_to_update)
+    else:
+        language_to_update = Jazyk.query.get_or_404(id)
+        language_to_update.name = request.form['name']
+        db.session.commit()
+        for language in languages:
+            Filter.language_dict[language.id] = "on"
+        return redirect('/language/form/') 
+
 @app.route('/language/delete/<int:id>')
 def delLanguage(id):
     language_to_del = Jazyk.query.get_or_404(id)
