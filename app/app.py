@@ -73,6 +73,7 @@ def index():
     tags = Tags.query.order_by(Tags.id).all()
     for tag in tags:
         Filter.tag_dict[tag.id] = "on"
+    Filter.tag_dict[0] = "on"
     return render_template('index.html')
 
 @app.route('/add/', methods=['POST', 'GET'])
@@ -202,6 +203,7 @@ def showCatForm():
         tags = Tags.query.order_by(Tags.id).all()
         request.method = "GET"
         tags = Tags.query.order_by(Tags.id).all()
+        Filter.tag_dict[0] = "on"
         for tag in tags:
             Filter.tag_dict[tag.id] = "on"
         return render_template('addKategorie.html', tags=tags)
@@ -305,7 +307,11 @@ def zaznamy(serazeni):
                 #try protoze pokud neni oznacen, tak by to melo hodit exception
                 Filter.tag_dict[tag.id] = request.form[str(tag.id)]
             except:
-                Filter.tag_dict[tag.id] = 0  
+                Filter.tag_dict[tag.id] = 0
+        try:
+            Filter.tag_dict[0] = request.form[str(0)]
+        except:
+            Filter.tag_dict[0] = int(0)
 
         Filter.time_from = request.form['time_from']
         Filter.time_to = request.form['time_to']
@@ -323,6 +329,14 @@ def zaznamy(serazeni):
     records = records.filter(Denik.date <= Filter.date_to).filter(Denik.date >= Filter.date_from)
     records = records.filter(Denik.time_spent >= Filter.time_from).filter(Denik.time_spent <= Filter.time_to)
     records = records.filter(Denik.hodnoceni <= Filter.hodnoceni_to).filter(Denik.hodnoceni >= Filter.hodnoceni_from)
+    if(not Filter.tag_dict[0]):
+        for record in records:
+            has = False
+            for cat in cats:
+                if (record.id == cat.owned_id):
+                    has = True
+            if (has == False):
+                records = records.filter(Denik.id !=  record.id)
     for language in languages:
         if(not Filter.language_dict[int(language.id)]):
             records = records.filter(Denik.jazyk_id !=  language.id)

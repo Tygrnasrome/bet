@@ -46,6 +46,11 @@
             {% endfor %}
         </select>  
         <h4>štítky</h4>
+            <input type="checkbox" id="bezkatky0" name="0" 
+            {% if filtered_tags[0] == "on" %}
+            checked
+            {% endif %}>
+            <label for="bezkatky0">  bez kategorie</label>
         {% for tag in tags %}
             <input type="checkbox" id="{{tag.name}}" name="{{tag.id}}"
             
@@ -53,7 +58,7 @@
                 checked
             {% endif %}
             >
-            <label for="{{tag.name}}">{{tag.name}}</label>
+            <label for="{{tag.name}}" > {{tag.name}}</label>
         {% endfor %}
         <input type="submit" value="filtrovat"> 
     </form>
