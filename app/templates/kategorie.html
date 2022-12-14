@@ -7,6 +7,7 @@
 {% block body %} 
 <div class="First">
     </form>
+        <h1>Seznam Štítků</h1>
         <table>
             <tr>
                 <th> id </th>
@@ -20,10 +21,10 @@
                         {{tag.id}}
                     </td>
                     <td>
-                        {{tag.type}}
+                        {{tag.name}}
                     </td>
-                    <td>
-                        {{tag.owned_by}}
+                    <td style="color: {{tag.barva}};">
+                        {{tag.barva}}
                     </td>
                     <td>
                         {{tag.popis}}

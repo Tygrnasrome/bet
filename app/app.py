@@ -61,6 +61,7 @@ class Filter():
     hodnoceni_from = 1
     hodnoceni_to = 1
     language_dict = {1:True}
+    tag_dict = {0:"on",1:True}
     name = 0
 
 @app.route('/')
@@ -69,6 +70,10 @@ def index():
     languages = Jazyk.query.order_by(Jazyk.id).all()
     for language in languages:
         Filter.language_dict[language.id] = "on"
+    tags = Tags.query.order_by(Tags.id).all()
+    for tag in tags:
+        Filter.tag_dict[tag.id] = "on"
+    Filter.tag_dict[0] = "on"
     return render_template('index.html')
 
 @app.route('/add/', methods=['POST', 'GET'])
@@ -119,7 +124,23 @@ def showLanguageForm():
         db.session.commit()
         languages = Jazyk.query.order_by(Jazyk.id).all()
         request.method = "GET"
+        for language in languages:
+            Filter.language_dict[language.id] = "on"
         return render_template('addJazyk.html',languages=languages)
+
+@app.route('/language/update/<int:id>', methods=['POST', 'GET'])
+def showLanguageUpdateForm(id):
+    languages = Jazyk.query.order_by(Jazyk.id).all()
+    if request.method == 'GET':
+        language_to_update = Jazyk.query.get_or_404(id)
+        return render_template('updateJazyk.html',languages=languages, language_to_update=language_to_update)
+    else:
+        language_to_update = Jazyk.query.get_or_404(id)
+        language_to_update.name = request.form['name']
+        db.session.commit()
+        for language in languages:
+            Filter.language_dict[language.id] = "on"
+        return redirect('/language/form/') 
 
 @app.route('/language/delete/<int:id>')
 def delLanguage(id):
@@ -177,7 +198,7 @@ def delProgrammer(id):
 
 @app.route('/cat/')
 def showCatTable():
-    tags = Kategorie.query.order_by(Kategorie.id).all()
+    tags = Tags.query.order_by(Tags.id).all()
     return render_template('kategorie.html', tags=tags)
 
 @app.route('/cat/form/', methods=['POST', 'GET'])
@@ -195,6 +216,10 @@ def showCatForm():
         db.session.commit()
         tags = Tags.query.order_by(Tags.id).all()
         request.method = "GET"
+        tags = Tags.query.order_by(Tags.id).all()
+        Filter.tag_dict[0] = "on"
+        for tag in tags:
+            Filter.tag_dict[tag.id] = "on"
         return render_template('addKategorie.html', tags=tags)
 
 @app.route('/cat/delete/<int:id>')
@@ -291,6 +316,17 @@ def zaznamy(serazeni):
                 Filter.language_dict[language.id] = request.form[str(language.id)]
             except:
                 Filter.language_dict[language.id] = 0   
+        for tag in tags:
+            try:        
+                #try protoze pokud neni oznacen, tak by to melo hodit exception
+                Filter.tag_dict[tag.id] = request.form[str(tag.id)]
+            except:
+                Filter.tag_dict[tag.id] = 0
+        try:
+            Filter.tag_dict[0] = request.form[str(0)]
+        except:
+            Filter.tag_dict[0] = int(0)
+
         Filter.time_from = request.form['time_from']
         Filter.time_to = request.form['time_to']
         Filter.date_from = request.form['date_from']
@@ -307,12 +343,29 @@ def zaznamy(serazeni):
     records = records.filter(Denik.date <= Filter.date_to).filter(Denik.date >= Filter.date_from)
     records = records.filter(Denik.time_spent >= Filter.time_from).filter(Denik.time_spent <= Filter.time_to)
     records = records.filter(Denik.hodnoceni <= Filter.hodnoceni_to).filter(Denik.hodnoceni >= Filter.hodnoceni_from)
+    if(not Filter.tag_dict[0]):
+        for record in records:
+            has = False
+            for cat in cats:
+                if (record.id == cat.owned_id):
+                    has = True
+            if (has == False):
+                records = records.filter(Denik.id !=  record.id)
     for language in languages:
         if(not Filter.language_dict[int(language.id)]):
             records = records.filter(Denik.jazyk_id !=  language.id)
+    for tag in tags:
+        if(not Filter.tag_dict[int(tag.id)]):
+            for record in records:
+                has = False
+                for cat in cats:
+                    if (int(cat.owned_id) == int(record.id) and int(cat.type_id) == int(tag.id)):
+                        has = True
+                if (has == True):
+                    records = records.filter(Denik.id !=  record.id)
     
     return render_template('zaznamy.html', records=records, languages=languages, programmers=programmers, tags=tags, cats=cats, \
-    filtered_languages=Filter.language_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter. \
+    filtered_languages=Filter.language_dict, filtered_tags=Filter.tag_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter. \
     time_to, max_hod=Filter.hodnoceni_to, min_hod=Filter.hodnoceni_from, sel_name=int(Filter.name), serazeni=serazeni)
 
 @app.route('/zaznamy/set-serazeni/', methods=['POST', 'GET'])
@@ -321,7 +374,14 @@ def setSerazeniZaznamy():
     return redirect('/zaznamy/' + serazeni) 
 @app.route('/zaznamy/reset-filter', methods=['POST', 'GET'])
 def OGzaznamy():
+    languages = Jazyk.query.order_by(Jazyk.id).all()
+    for language in languages:
+        Filter.language_dict[language.id] = "on"
+    tags = Tags.query.order_by(Tags.id).all()
+    for tag in tags:
+        Filter.tag_dict[tag.id] = "on"
     records = Denik.query.order_by(Denik.date).all()
+    Filter.name = 0
     for r in records:
         Filter.date_from = r.date
         Filter.date_to = r.date
@@ -347,13 +407,18 @@ def OGzaznamy():
         pass
     return redirect('/zaznamy/1') 
 
+@app.route('/zaznamy/')
+def justSimpleRedirect():
+    return redirect('/zaznamy/1')
+
 @app.route('/update-form/<int:id>')
 def updateRecord(id):
     record_to_update = Denik.query.get_or_404(id)
     languages = Jazyk.query.order_by(Jazyk.id).all()
     cats = Kategorie.query.order_by(Kategorie.id).all()
     tags = Tags.query.order_by(Tags.id).all()
-    return render_template('update.html', record=record_to_update,languages=languages, tags=tags, cats=cats)
+    programmers = Programator.query.order_by(Programator.id).all()
+    return render_template('update.html', record=record_to_update,languages=languages, tags=tags, cats=cats, programmers=programmers)
 
 @app.route('/delete/<int:id>')
 def deleteRecord(id):
