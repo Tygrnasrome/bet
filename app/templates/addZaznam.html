@@ -6,14 +6,15 @@
 
 {% block body %} 
 <form action="/add/" method="post">
-    <div class="First">
+    <div class="Normaldiv">
 
      <h1>
-       <b>Přidat záznam do deníku</b> 
+        <p style="text-align: center;">  <b>Přidat záznam do deníku</b> </p>
     </h1>
     <h3>
-        <b> všechna pole jsou povinná </b> 
+        <p style="text-align: center;"><b> všechna pole jsou povinná </b> </p>
     </h3>
+    <br>
     <br>
 <table>
         <tr>
@@ -21,7 +22,7 @@
         Programátor
     </td>
     <td>
-        <select name="name" >
+        <select name="name" style="width: 172px;" >
             {% for programmer in programmers %}
             <option value="{{programmer.id}}">{{programmer.name}}</option>
             {% endfor %}
@@ -78,7 +79,7 @@
         </tr>
         <tr>
             <td> Štítky </td>
-            <td>
+            <td style=" width: 150px;">
                 {% for tag in tags %}
                 <label for="{{tag.id}}">{{tag.name}}</label>
                 <input type="checkbox" id="{{tag.id}}" name="{{tag.id}}">
@@ -88,7 +89,7 @@
     </table>
             <h3>
                 
-                    <input type="submit" value="přidat">
+                  <p style="text-align: center;">  <input type="submit" value="přidat"></p>
                 
            
         </h3>

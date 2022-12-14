@@ -21,35 +21,47 @@
             >
             
         {% endfor %}
+        <br>
+        <br>
         <h4>Čas programování</h4>
         <label for="time_from">od</label>
-        <input type="number" placeholder="od" name="time_from" value="{{min_time}}" required>
+        <input type="number" placeholder="od" name="time_from" value="{{min_time}}" required style="width: 55px;">
         <label for="time_to">do</label>
-        <input type="number" placeholder="do" name="time_to" value="{{max_time}}" required>
+        <input type="number" placeholder="do" name="time_to" value="{{max_time}}" required style="width: 55px;">
+        <br>
+        <br>
         <h4>Datum</h4>
         <label for="date_from">od</label>
         <input type="date" name="date_from" value="{{min_date}}" required>
         <label for="date_from">do</label>
         <input type="date" name="date_to" value="{{max_date}}" required>
-        
+        <br>
+        <br>
         <h4>Hodnocení</h4>
         <label for="hodnoceni_from">od</label>
-        <input type="number" placeholder="od" name="hodnoceni_from" value="{{min_hod}}" required>
+        <input type="number" placeholder="od" name="hodnoceni_from" value="{{min_hod}}" required style="width: 55px;">
         <label for="hodnoceni_to">do</label>
-        <input type="number" placeholder="do" name="hodnoceni_to" value="{{max_hod}}" required>
-        <label for="name">Programátor: </label>
-        <select name="name">
+        <input type="number" placeholder="do" name="hodnoceni_to" value="{{max_hod}}" required style="width: 55px;">
+        <br>
+        <br>
+       <h4> Programátor</h4>
+        <select name="name" style="width: 200px;">
             <option value="0"> všichni </option>
             {% for programmer in programmers %}
             <option value="{{programmer.id}}"
             {% if programmer.id == sel_name %} selected {% endif %}>{{programmer.name}}</option>
             {% endfor %}
-        </select>  
-        <input type="submit" value="filtrovat"> 
+        </select>
+        <br>  
+        <br>
+       <p style="text-align: center;" ><input type="submit" value="filtrovat"> </p>
     </form>
     <form action="/zaznamy/reset-filter" method="get">
-        <input type="submit" value="reset filtru"> 
+        <p style="text-align: center;" >    <input type="submit" value="reset filtru"> </p>
     </form>
+</div>
+
+<div class="Divse">
     <form action="/zaznamy/set-serazeni/" method="post">
         <h2>Seřazení:</h2>
         <select name="serazeni" >
@@ -63,27 +75,30 @@
         </select>
         <input type="submit" value="seřadit"> 
     </form>
+</div>
+
+<div class="Divthi">
     <table>
     <tr>
-        <th>id</th>
-        <th>jméno</th>
-        <th>jazyk</th>
-        <th>čas strávený v min</th>
-        <th>popis</th>
-        <th>datum</th>
-        <th>hodnoceni</th>
-        <th>Štítky</th>
-        <th>možnosti</th>
+        <th style="padding-right:  20px; text-align: left;">id</th>
+        <th style="padding-right:  20px; text-align: left;">jméno</th>
+        <th style="padding-right:  20px; text-align: left;">jazyk</th>
+        <th style="padding-right:  20px; text-align: left;">čas strávený v min</th>
+        <th style="text-align: left;">popis</th>
+        <th style="padding-right:  30px; text-align: left;">datum</th>
+        <th style="padding-right:  30px; text-align: left;">hodnoceni</th>
+        <th style="padding-right:  30px; text-align: left;">Štítky</th>
+        <th style="padding-right:  30px; text-align: left;">možnosti</th>
     </tr>
     {% for record in records %}
     <tr>
         <td>{{record.id}}</td>
-        <td>{% for programmer in programmers %}
+        <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">{% for programmer in programmers %}
             {% if programmer.id == record.name %}
                 {{programmer.name}}
             {% endif %}
         {% endfor %}</td>
-        <td>
+        <td style=" text-align: center;">
             {% for language in languages %}
                 {% if language.id == record.jazyk_id %}
                     {{language.name}}
@@ -91,10 +106,10 @@
             {% endfor %}
             </td>
         
-        <td>{{record.time_spent}}</td>
-        <td>{{record.popis}}</td>
+        <td style="text-align: center;">{{record.time_spent}}</td>
+        <td style=" width: 200px; word-wrap: break-word; word-break: break-all;">{{record.popis}}</td>
         <td>{{record.date}}</td>
-        <td>{{record.hodnoceni}}</td>
+        <td style="text-align: center;">{{record.hodnoceni}}</td>
         <td>
             {% for cat in cats %}
                 {% if cat.owned_id == record.id %}
