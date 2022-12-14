@@ -227,7 +227,7 @@ def updateCatForm(id):
         db.session.commit()
         return redirect('/cat/form/') 
 
-@app.route('/zaznamy/<int:serazeni>', methods=['POST', 'GET'])
+@app.route('/zaznamy/<int:serazeni>/', methods=['POST', 'GET'])
 def zaznamy(serazeni):
     cats = Kategorie.query.order_by(Kategorie.id).all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
@@ -345,7 +345,7 @@ def OGzaznamy():
                 Filter.hodnoceni_to = r.hodnoceni  
     except:
         pass
-    return redirect('/zaznamy/1') 
+    return redirect('/zaznamy/1/') 
 
 @app.route('/update-form/<int:id>')
 def updateRecord(id):
