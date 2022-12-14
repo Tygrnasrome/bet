@@ -183,7 +183,7 @@ def delProgrammer(id):
 
 @app.route('/cat/')
 def showCatTable():
-    tags = Kategorie.query.order_by(Kategorie.id).all()
+    tags = Tags.query.order_by(Tags.id).all()
     return render_template('kategorie.html', tags=tags)
 
 @app.route('/cat/form/', methods=['POST', 'GET'])
@@ -236,7 +236,7 @@ def updateCatForm(id):
         db.session.commit()
         return redirect('/cat/form/') 
 
-@app.route('/zaznamy/<int:serazeni>', methods=['POST', 'GET'])
+@app.route('/zaznamy/<int:serazeni>/', methods=['POST', 'GET'])
 def zaznamy(serazeni):
     cats = Kategorie.query.order_by(Kategorie.id).all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
