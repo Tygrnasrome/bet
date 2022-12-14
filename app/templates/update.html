@@ -18,7 +18,15 @@
         Programátor
     </td>
     <td>
-    <input type="text" placeholder="jméno" id="name" name="name" value="{{record.name}}">
+        <select name="name" >
+            {% for programmer in programmers %}
+            <option value="{{programmer.id}}" 
+            {% if programmer.id == record.name %}
+                selected
+            {% endif %}
+            >{{programmer.name}}</option>
+            {% endfor %}
+        </select>
     </tr>
     <tr>
 </td>

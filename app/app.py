@@ -389,7 +389,8 @@ def updateRecord(id):
     languages = Jazyk.query.order_by(Jazyk.id).all()
     cats = Kategorie.query.order_by(Kategorie.id).all()
     tags = Tags.query.order_by(Tags.id).all()
-    return render_template('update.html', record=record_to_update,languages=languages, tags=tags, cats=cats)
+    programmers = Programator.query.order_by(Programator.id).all()
+    return render_template('update.html', record=record_to_update,languages=languages, tags=tags, cats=cats, programmers=programmers)
 
 @app.route('/delete/<int:id>')
 def deleteRecord(id):
