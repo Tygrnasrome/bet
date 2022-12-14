@@ -61,7 +61,7 @@ class Filter():
     hodnoceni_from = 1
     hodnoceni_to = 1
     language_dict = {1:True}
-    tag_dict = {1:True}
+    tag_dict = {0:"on",1:True}
     name = 0
 
 @app.route('/')
