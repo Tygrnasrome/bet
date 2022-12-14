@@ -81,7 +81,7 @@
             <td> Štítky </td>
             <td style=" width: 150px;">
                 {% for tag in tags %}
-                <label for="{{tag.id}}">{{tag.name}}</label>
+                <label for="{{tag.id}}" style="color: {{tag.barva}};">{{tag.name}}</label>
                 <input type="checkbox" id="{{tag.id}}" name="{{tag.id}}">
                 {% endfor %}
             </td>

@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block body %} 
-<form action="/language/form/" method="post">
-    <div class="Normaldiv">
+<form action="/language/update/{{language_to_update.id}}" method="post">
+    <div class="First">
 
      <h1>
-       <b>Přidat programátorský jazyk do výběru</b> 
+       <b>Upravit programátorský jazyk ve výběru</b> 
     </h1>
     <h3>
-      <p style="text-align: center;"> <b> všechna pole jsou povinná </b> </p>
+        <b> všechna pole jsou povinná </b> 
     </h3>
     <br>
 <table>
@@ -21,20 +21,21 @@
             Název jazyku
         </td>
         <td>
-            <input type="text" placeholder="název jazyku" id="name" name="name" required>
+            <input type="text" placeholder="název jazyku" id="name" name="name" required value="{{language_to_update.name}}">
         </td>
     </tr>
-</table>
-<br>
-            <p style="text-align: center;">      <input type="submit" value="přidat"> </p>
-            <br>
+    <tr>
+        <td>
+            <input type="submit" value="upravit">
+        </td>    
+    </tr>
 </form>
         
     
     <table>
         <tr>
-            <th style="padding-right:  20px;"> id </th>
-            <th style="padding-right:  20px;width: 125px; overflow-wrap: break-word; word-break: break-all;"> název jazyku </th>
+            <th> id </th>
+            <th> název jazyku </th>
         </tr>
             {% for language in languages %}
             <tr>

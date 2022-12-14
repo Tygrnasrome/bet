@@ -13,13 +13,13 @@
         <h2>filtry:</h2>
         <h4>jazyky</h4>
         {% for language in languages %}
-            <label for="{{language.name}}">{{language.name}}</label>
-            <input type="checkbox" id="{{language.id}}" name="{{language.id}}"
+            
+            <input type="checkbox" id="{{language.name}}" name="{{language.id}}"
             {% if filtered_languages[language.id] == "on" %}
                 checked
             {% endif %}
             >
-            
+            <label for="{{language.name}}">{{language.name}}</label>
         {% endfor %}
         <br>
         <br>
@@ -51,10 +51,28 @@
             <option value="{{programmer.id}}"
             {% if programmer.id == sel_name %} selected {% endif %}>{{programmer.name}}</option>
             {% endfor %}
-        </select>
+
+        </select>  
+        <h4>štítky</h4>
+            <input type="checkbox" id="bezkatky0" name="0" 
+            {% if filtered_tags[0] == "on" %}
+            checked
+            {% endif %}>
+            <label for="bezkatky0">  bez kategorie</label>
+        {% for tag in tags %}
+            <input type="checkbox" id="{{tag.name}}" name="{{tag.id}}"
+            
+            {% if filtered_tags[tag.id] == "on" %}
+                checked
+            {% endif %}
+            >
+            <label for="{{tag.name}}" style="color: {{tag.barva}};"> {{tag.name}}</label>
+        {% endfor %}
+
         <br>  
         <br>
        <p style="text-align: center;" ><input type="submit" value="filtrovat"> </p>
+
     </form>
     <form action="/zaznamy/reset-filter" method="get">
         <p style="text-align: center;" >    <input type="submit" value="reset filtru"> </p>
@@ -115,7 +133,8 @@
                 {% if cat.owned_id == record.id %}
                     {% for tag in tags %}
                         {% if cat.type_id == tag.id %}
-                            {{tag.name}}
+                        <p style="color: {{tag.barva}};">{{tag.name}}</p>
+                             <br>
                         {% endif %}
                     {% endfor %}
                 {% endif %}

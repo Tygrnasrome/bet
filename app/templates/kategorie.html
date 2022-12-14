@@ -7,6 +7,7 @@
 {% block body %} 
 <div class="Normaldiv">
     </form>
+        <h1>Seznam Štítků</h1>
         <table>
             <tr>
                 <th style="padding-right:  20px;"> id </th>
@@ -19,10 +20,11 @@
                     <td>
                         {{tag.id}}
                     </td>
+
                     <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">
                         {{tag.name}}
                     </td>
-                    <td>
+                    <td style="color: {{tag.barva}};">
                         {{tag.barva}}
                     </td>
                     <td>
