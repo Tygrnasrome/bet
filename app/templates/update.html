@@ -74,6 +74,20 @@
                 {% endfor %}
             </td>
         </tr>
+        <tr>
+            <td> Štítky </td>
+            <td>
+                {% for tag in tags %}
+                    <label for="{{tag.id}}">{{tag.name}}</label>
+                    <input type="checkbox" id="{{tag.id}}" name="{{tag.id}}"
+                    {% for cat in cats %}
+                        {% if cat.owned_id == record.id and cat.type_id == tag.id %}
+                            checked
+                        {% endif %}
+                    {% endfor %}>
+                {% endfor %}
+            </td>
+        </tr>
     </table>
             <h3>
                 
