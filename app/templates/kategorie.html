@@ -5,36 +5,41 @@
 {% endblock %}
 
 {% block body %} 
-    <div class="First">
-     <h1>
-       <b>Seznam kategorií</b> 
-    </h1>
-    <br>
-    <table>
-        <tr>
-            <th> id </th>
-            <th> Název kategorie </th>
-            <th> Typ kategorie</th>
-        </tr>
-            {% for cat in cats %}
-            <tr>
-                <td>
-                    {{cat.id}}
-                </td>
-                <td>
-                    {{cat.name}}
-                </td>
-                <td>
-                    {{cat.type}}
-                </td>
-                <td>
-                    <a href="/cat/delete/{{cat.id}}"> smazat</a>
-                    <a href="/cat/update/{{cat.id}}"> update</a>
-                </td>
-            </tr>
-            {% endfor %}
 
-    </table>
-</div>
+<div class="Normaldiv">
+    </form>
+        <h1>Seznam Štítků</h1>
+        <table>
+            <tr>
+                <th style="padding-right:  20px;"> id </th>
+                <th style="padding-right:  20px;"> Název štítku </th>
+                <th style="padding-right:  20px;"> Barva štítku</th>
+                <th style="padding-right:  20px;"> Popis štítku</th>
+            </tr>
+                {% for tag in tags %}
+                <tr>
+                    <td>
+                        {{tag.id}}
+                    </td>
+
+                    <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">
+                        {{tag.name}}
+                    </td>
+                    <td style="color: {{tag.barva}};">
+                        {{tag.barva}}
+                    </td>
+                    <td>
+                        {{tag.popis}}
+                    </td>
+                    <td>
+                        <a href="/cat/delete/{{tag.id}}"> smazat</a>
+                        <a href="/cat/update/{{tag.id}}"> update</a>
+                    </td>
+                </tr>
+                {% endfor %}
+    
+        </table>
+    </div>
+
 
 {% endblock %}

@@ -38,13 +38,16 @@ class Jazyk(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False) 
 
-
+class Tags(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    barva = db.Column(db.String(100), nullable=False)
+    popis = db.Column(db.String(100), nullable=False)  
 
 class Kategorie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False) 
-    barva = db.Column(db.String(100), nullable=False)
-    popis = db.Column(db.String(100), nullable=False)  
+    owned_id = db.Column(db.Integer, nullable=False)
+    type_id = db.Column(db.Integer, nullable=False)  
 
 class Filter():
     min_date = ""
@@ -58,6 +61,9 @@ class Filter():
     hodnoceni_from = 1
     hodnoceni_to = 1
     language_dict = {1:True}
+
+    tag_dict = {0:"on",1:True}
+
     name = 0
 
 @app.route('/')
@@ -66,10 +72,19 @@ def index():
     languages = Jazyk.query.order_by(Jazyk.id).all()
     for language in languages:
         Filter.language_dict[language.id] = "on"
+
+    tags = Tags.query.order_by(Tags.id).all()
+    for tag in tags:
+        Filter.tag_dict[tag.id] = "on"
+    Filter.tag_dict[0] = "on"
+
     return render_template('index.html')
 
 @app.route('/add/', methods=['POST', 'GET'])
 def addZaznam():  
+
+    tags = Tags.query.order_by(Tags.id).all()
+
     #pokud nekdo prida neco do databaze, tak se spusti tato cast, a pak se přeseměruje na view /zaznamy/
     record_name = str(request.form['name'])  
     record_time = int(request.form['time_spent'])
@@ -77,16 +92,29 @@ def addZaznam():
     record_jazyk = int(request.form['jazyk_id'])
     record_hodnoceni = int(request.form['hodnoceni'])
     record_date = str(request.form['date'])
-    
+
+
+
     new_record = Denik(name=record_name,jazyk_id=record_jazyk ,popis=record_popis,hodnoceni=record_hodnoceni,time_spent=record_time, date=record_date)
     db.session.add(new_record)
-    db.session.commit()
+    db.session.commit()    
+    for tag in tags:
+        try:
+            request.form[str(tag.id)]
+            new_cat = Kategorie(type_id=tag.id, owned_id=new_record.id)
+            db.session.add(new_cat)
+            db.session.commit()
+        except:
+            pass
+
     return redirect('/zaznamy/1')
 @app.route('/form/')
 def showForm():
     programmers = Programator.query.order_by(Programator.id).all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
-    return render_template('addZaznam.html',languages=languages, programmers=programmers)
+
+    tags = Tags.query.order_by(Tags.id).all()
+    return render_template('addZaznam.html',languages=languages, programmers=programmers, tags=tags)
 
 @app.route('/language/')
 def showLanguageTable(): 
@@ -105,7 +133,23 @@ def showLanguageForm():
         db.session.commit()
         languages = Jazyk.query.order_by(Jazyk.id).all()
         request.method = "GET"
+        for language in languages:
+            Filter.language_dict[language.id] = "on"
         return render_template('addJazyk.html',languages=languages)
+
+@app.route('/language/update/<int:id>', methods=['POST', 'GET'])
+def showLanguageUpdateForm(id):
+    languages = Jazyk.query.order_by(Jazyk.id).all()
+    if request.method == 'GET':
+        language_to_update = Jazyk.query.get_or_404(id)
+        return render_template('updateJazyk.html',languages=languages, language_to_update=language_to_update)
+    else:
+        language_to_update = Jazyk.query.get_or_404(id)
+        language_to_update.name = request.form['name']
+        db.session.commit()
+        for language in languages:
+            Filter.language_dict[language.id] = "on"
+        return redirect('/language/form/') 
 
 @app.route('/language/delete/<int:id>')
 def delLanguage(id):
@@ -114,12 +158,12 @@ def delLanguage(id):
     db.session.commit()
     return redirect('/language/form/') 
     
-@app.route('/programmer/', methods=['POST', 'GET'])
+@app.route('/programmer/')
 def showTableProgrammer():
     programmers = Programator.query.order_by(Programator.id).all()
     return render_template('programatori.html',programmers=programmers)
 
-@app.route('/programmer/form/')
+@app.route('/programmer/form/', methods=['POST', 'GET'])
 def showProgrammerForm():
     if request.method == 'GET':
         programmers = Programator.query.order_by(Programator.id).all()
@@ -163,37 +207,68 @@ def delProgrammer(id):
 
 @app.route('/cat/')
 def showCatTable():
-    cats = Kategorie.query.order_by(Kategorie.id).all()
-    return render_template('kategorie.html',cats=cats)
+    tags = Tags.query.order_by(Tags.id).all()
+    return render_template('kategorie.html', tags=tags)
+
 
 @app.route('/cat/form/', methods=['POST', 'GET'])
 def showCatForm():
     if request.method == 'GET':
-        cats = Kategorie.query.order_by(Kategorie.id).all()
-        return render_template('addKategorie.html',cats=cats)
+        tags = Tags.query.order_by(Tags.id).all()
+        return render_template('addKategorie.html', tags=tags)
     else:
-        cat_name = request.form['name']
-        cat_type = request.form['type']
-        new_cat = Kategorie(name=cat_name, type=cat_type)
-        db.session.add(new_cat)
+        tag_name = request.form['name']
+        tag_barva = request.form['barva']
+        tag_popis = request.form['popis']
+
+        new_tag = Tags(name=tag_name, barva=tag_barva, popis=tag_popis)
+        db.session.add(new_tag)
         db.session.commit()
-        cats = Kategorie.query.order_by(Kategorie.id).all()
+        tags = Tags.query.order_by(Tags.id).all()
         request.method = "GET"
-        return render_template('addKategorie.html',cats=cats)
+        tags = Tags.query.order_by(Tags.id).all()
+        Filter.tag_dict[0] = "on"
+        for tag in tags:
+            Filter.tag_dict[tag.id] = "on"
+        return render_template('addKategorie.html', tags=tags)
 
 @app.route('/cat/delete/<int:id>')
 def delCat(id):
-    cat_to_del = Kategorie.query.get_or_404(id)
-    db.session.delete(cat_to_del)
+    cats = Kategorie.query.order_by(Kategorie.id).all()
+    tag_to_del = Tags.query.get_or_404(id)
+    for cat in cats:
+        if (cat.type_id == tag_to_del.id):
+            cat_to_del = Kategorie.query.get_or_404(cat.id)
+            db.session.delete(cat_to_del)
+            db.session.commit()
+    
+    db.session.delete(tag_to_del)
     db.session.commit()
     return redirect('/cat/form/') 
 
-@app.route('/zaznamy/<int:serazeni>', methods=['POST', 'GET'])
+@app.route('/cat/update/<int:id>', methods=['POST', 'GET'])
+def updateCatForm(id):
+    tags = Tags.query.order_by(Tags.id).all()
+    if request.method == 'GET':
+        for tag in tags:
+            if(id == tag.id):
+                return render_template('updateKategorie.html', tags=tags, tag_to_update=tag)
+    else:
+        tag_to_update = Tags.query.get_or_404(id)
+        tag_to_update.name = request.form['name']
+        tag_to_update.barva = request.form['barva']
+        tag_to_update.popis = request.form['popis']
+
+        db.session.commit()
+        return redirect('/cat/form/') 
+
+@app.route('/zaznamy/<int:serazeni>/', methods=['POST', 'GET'])
 def zaznamy(serazeni):
     cats = Kategorie.query.order_by(Kategorie.id).all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
     records = db.session.query(Denik).order_by(Denik.date).all()
     programmers = Programator.query.order_by(Programator.id).all()
+    tags = Tags.query.order_by(Tags.id).all()
     if(serazeni == 1):
         #datum od nejdříve
         records = db.session.query(Denik).order_by(Denik.date)
@@ -251,6 +326,18 @@ def zaznamy(serazeni):
                 Filter.language_dict[language.id] = request.form[str(language.id)]
             except:
                 Filter.language_dict[language.id] = 0   
+
+        for tag in tags:
+            try:        
+                #try protoze pokud neni oznacen, tak by to melo hodit exception
+                Filter.tag_dict[tag.id] = request.form[str(tag.id)]
+            except:
+                Filter.tag_dict[tag.id] = 0
+        try:
+            Filter.tag_dict[0] = request.form[str(0)]
+        except:
+            Filter.tag_dict[0] = int(0)
+
         Filter.time_from = request.form['time_from']
         Filter.time_to = request.form['time_to']
         Filter.date_from = request.form['date_from']
@@ -267,11 +354,31 @@ def zaznamy(serazeni):
     records = records.filter(Denik.date <= Filter.date_to).filter(Denik.date >= Filter.date_from)
     records = records.filter(Denik.time_spent >= Filter.time_from).filter(Denik.time_spent <= Filter.time_to)
     records = records.filter(Denik.hodnoceni <= Filter.hodnoceni_to).filter(Denik.hodnoceni >= Filter.hodnoceni_from)
+    if(not Filter.tag_dict[0]):
+        for record in records:
+            has = False
+            for cat in cats:
+                if (record.id == cat.owned_id):
+                    has = True
+            if (has == False):
+                records = records.filter(Denik.id !=  record.id)
     for language in languages:
-        if(not Filter.language_dict[language.id]):
+        if(not Filter.language_dict[int(language.id)]):
             records = records.filter(Denik.jazyk_id !=  language.id)
+    for tag in tags:
+        if(not Filter.tag_dict[int(tag.id)]):
+            for record in records:
+                has = False
+                for cat in cats:
+                    if (int(cat.owned_id) == int(record.id) and int(cat.type_id) == int(tag.id)):
+                        has = True
+                if (has == True):
+                    records = records.filter(Denik.id !=  record.id)
     
-    return render_template('zaznamy.html', records=records, languages=languages, cats=cats, programmers=programmers, filtered_languages=Filter.language_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter.time_to, max_hod=Filter.hodnoceni_to, min_hod=Filter.hodnoceni_from, sel_name=int(Filter.name), serazeni=serazeni)
+    return render_template('zaznamy.html', records=records, languages=languages, programmers=programmers, tags=tags, cats=cats, \
+    filtered_languages=Filter.language_dict, filtered_tags=Filter.tag_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter. \
+    time_to, max_hod=Filter.hodnoceni_to, min_hod=Filter.hodnoceni_from, sel_name=int(Filter.name), serazeni=serazeni)
+
 
 @app.route('/zaznamy/set-serazeni/', methods=['POST', 'GET'])
 def setSerazeniZaznamy():
@@ -279,7 +386,14 @@ def setSerazeniZaznamy():
     return redirect('/zaznamy/' + serazeni) 
 @app.route('/zaznamy/reset-filter', methods=['POST', 'GET'])
 def OGzaznamy():
+    languages = Jazyk.query.order_by(Jazyk.id).all()
+    for language in languages:
+        Filter.language_dict[language.id] = "on"
+    tags = Tags.query.order_by(Tags.id).all()
+    for tag in tags:
+        Filter.tag_dict[tag.id] = "on"
     records = Denik.query.order_by(Denik.date).all()
+    Filter.name = 0
     for r in records:
         Filter.date_from = r.date
         Filter.date_to = r.date
@@ -303,17 +417,33 @@ def OGzaznamy():
                 Filter.hodnoceni_to = r.hodnoceni  
     except:
         pass
-    return redirect('/zaznamy/1') 
+
+    return redirect('/zaznamy/1/') 
+
+@app.route('/zaznamy/')
+def justSimpleRedirect():
+    return redirect('/zaznamy/1')
+
 
 @app.route('/update-form/<int:id>')
 def updateRecord(id):
     record_to_update = Denik.query.get_or_404(id)
     languages = Jazyk.query.order_by(Jazyk.id).all()
-    return render_template('update.html', record=record_to_update,languages=languages)
+    cats = Kategorie.query.order_by(Kategorie.id).all()
+    tags = Tags.query.order_by(Tags.id).all()
+    programmers = Programator.query.order_by(Programator.id).all()
+    return render_template('update.html', record=record_to_update,languages=languages, tags=tags, cats=cats, programmers=programmers)
 
 @app.route('/delete/<int:id>')
 def deleteRecord(id):
     record_to_del = Denik.query.get_or_404(id)
+
+    cats = Kategorie.query.order_by(Kategorie.id).all()
+    for cat in cats:
+        if (cat.owned_id == record_to_del.id):
+            cat_to_del = Kategorie.query.get_or_404(cat.id)
+            db.session.delete(cat_to_del)
+            db.session.commit()
     db.session.delete(record_to_del)
     db.session.commit()
     return redirect('/zaznamy/1') 
@@ -327,6 +457,24 @@ def updateAddZaznam(id):
     record_to_update.jazyk_id = request.form['jazyk_id']
     record_to_update.hodnoceni = request.form['hodnoceni']
     record_to_update.date = request.form['date']
+    
+    cats = Kategorie.query.order_by(Kategorie.id).all()
+    for cat in cats:
+        if (cat.owned_id == record_to_update.id):
+            cat_to_del = Kategorie.query.get_or_404(cat.id)
+            db.session.delete(cat_to_del)
+            db.session.commit()
+
+    tags = Tags.query.order_by(Tags.id).all()
+    for tag in tags:
+        try:
+            request.form[str(tag.id)]
+            new_cat = Kategorie(type_id=tag.id, owned_id=record_to_update.id)
+            db.session.add(new_cat)
+            db.session.commit()
+        except:
+            pass
+
 
     db.session.commit()
     return redirect('/zaznamy/1')
