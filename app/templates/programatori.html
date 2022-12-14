@@ -5,21 +5,21 @@
 {% endblock %}
 
 {% block body %} 
-<div class="First">
+<div class="Normaldiv">
     <h1>
         <b>Seznam programátorů</b> 
      </h1>
     <table>
         <tr>
-            <th> id </th>
-            <th> Jméno programátora </th>
+            <th style="padding-right:  20px;"> id </th>
+            <th style="padding-right:  20px;"> Jméno programátora </th>
         </tr>
             {% for programmer in programmers %}
             <tr>
                 <td>
                     {{programmer.id}}
                 </td>
-                <td>
+                <td style="width: 125px; overflow-wrap: break-word; word-break: break-all;">
                     {{programmer.name}}
                 </td>
                 <td>

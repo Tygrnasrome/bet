@@ -6,12 +6,12 @@
 
 {% block body %} 
 <form action="/cat/form/" method="post">
-    <div class="First">
+    <div class="Normaldiv">
      <h1>
-       <b>Přidat štítek do výběru</b> 
+        <p style="text-align: center;"> <b>Přidat štítek do výběru</b> </p>
     </h1>
     <h3>
-        <b> všechna pole jsou povinná </b> 
+        <p style="text-align: center;">   <b> všechna pole jsou povinná </b>  </p>
     </h3>
     <br>
 <table>
@@ -33,25 +33,26 @@
             <input type="text" placeholder="popis štítku" id="popis" name="popis" required>
         </td>
     </tr>
+ </table>
     <h3>   
         <br>
-        <input type="submit" value="přidat">
-    
+        <p style="text-align: center;">  <input type="submit" value="přidat"> </p>
+    <br>
     </h3>
 </form>
     <table>
         <tr>
-            <th> id </th>
-            <th> Název štítku </th>
-            <th> Barva štítku</th>
-            <th> Popis štítku</th>
+            <th style="padding-right:  20px;"> id </th>
+            <th style="padding-right:  20px;"> Název štítku </th>
+            <th style="padding-right:  20px;"> Barva štítku</th>
+            <th style="padding-right:  20px; width: 300px; overflow-wrap: break-word; word-break: break-all;"> Popis štítku</th>
         </tr>
             {% for tag in tags %}
             <tr>
                 <td>
                     {{tag.id}}
                 </td>
-                <td>
+                <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">
                     {{tag.name}}
                 </td>
                 <td style="color: {{tag.barva}};">

@@ -1,27 +1,62 @@
 body
-{    
-    margin: 0;
-    background-color: black;
+{   
+    background-image: linear-gradient(rgb(0, 90, 94) 20%,rgb(1, 54, 21), rgb(57, 63, 2)) ;
     color: white;
-    border: 0;
-    padding: 0;
+    height: 50vw;
+    width: 50vh;
 }
 .First
 {
     background-color: grey;
-    text-align: center;
+    text-align: left;
     font-size: 16;
-    width: 25%;
-    margin: 0 auto;
+    width:fit-content;
     position: absolute;
-    top: 33%;
-    right: 0;
-    left: 0;
-
+    top: 30%;
+    left: 3%;
+    padding: 20px;
+    border-radius: 35px;
+}
+.Normaldiv
+{
+    background-color: grey;
+    text-align: left;
+    font-size: 16;
+    width:fit-content;
+    position: absolute;
+    top: 30%;
+    left: 40%;
+    align-items: center;
+    justify-content:  center;
+    padding: 20px;
+    border-radius: 35px;
+}
+.Divse
+{
+    background-color: grey;
+    font-size: 16;
+    width:fit-content;
+    position: absolute;
+    top: 40%;
+    right: 9%;
+    padding: 20px;
+    border-radius: 35px;
+}
+.Divthi
+{
+    background-color: grey;
+    text-align: left;
+    font-size: 16;
+    width:fit-content;
+    position:absolute;
+    top: 40%;
+    right: 25%; 
+    padding: 20px;
+    border-radius: 35px;   
 }
 table
 {
-    margin: auto; align-self: center;
+    margin: auto; align-self: Left;
 }
 button
 {

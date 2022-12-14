@@ -6,12 +6,12 @@
 
 {% block body %} 
 <form action="/programmer/form/" method="post">
-    <div class="First">
+    <div class="Normaldiv">
      <h1>
-       <b>Přidat programátora do výběru</b> 
+        <p style="text-align: center;"> <b>Přidat programátora do výběru</b> </p>
     </h1>
     <h3>
-        <b> všechna pole jsou povinná </b> 
+        <p style="text-align: center;">  <b> všechna pole jsou povinná </b> </p>
     </h3>
     <br>
 <table>
@@ -23,21 +23,21 @@
     <input type="text" placeholder="jméno" id="name" name="name">
     </tr>
     </form>
-    <h3>   
-        <br>
-        <input type="submit" value="přidat">
-    </h3>
-    <table>
+</table>
+    <br>
+      <p style="text-align: center;"> <input type="submit" value="přidat"></p>  
+    <br>
+    <table >
         <tr>
-            <th> id </th>
-            <th> Jméno programátora </th>
+            <th style="padding-right:  20px;"> id </th>
+            <th style="padding-right:  20px;"> Jméno programátora </th>
         </tr>
             {% for programmer in programmers %}
             <tr>
                 <td>
                     {{programmer.id}}
                 </td>
-                <td>
+                <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">
                     {{programmer.name}}
                 </td>
                 <td>
