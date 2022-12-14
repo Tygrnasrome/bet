@@ -6,7 +6,8 @@
 
 {% block body %} 
 <form action="/update-add/{{record.id}}" method="post">
-    <div class="First">
+    <div class="Normaldiv">
+
 
      <h1>
        <b>Upravit záznam</b> 
@@ -18,7 +19,19 @@
         Programátor
     </td>
     <td>
+
     <input type="text" placeholder="jméno" id="name" name="name" value="{{record.name}}">
+
+        <select name="name" >
+            {% for programmer in programmers %}
+            <option value="{{programmer.id}}" 
+            {% if programmer.id == record.name %}
+                selected
+            {% endif %}
+            >{{programmer.name}}</option>
+            {% endfor %}
+        </select>
+
     </tr>
     <tr>
 </td>
@@ -74,6 +87,22 @@
                 {% endfor %}
             </td>
         </tr>
+
+        <tr>
+            <td> Štítky </td>
+            <td>
+                {% for tag in tags %}
+                    <label for="{{tag.id}}" style="color: {{tag.barva}};">{{tag.name}}</label>
+                    <input type="checkbox" id="{{tag.id}}" name="{{tag.id}}"
+                    {% for cat in cats %}
+                        {% if cat.owned_id == record.id and cat.type_id == tag.id %}
+                            checked
+                        {% endif %}
+                    {% endfor %}>
+                {% endfor %}
+            </td>
+        </tr>
+
     </table>
             <h3>
                 

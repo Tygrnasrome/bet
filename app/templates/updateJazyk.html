@@ -5,16 +5,37 @@
 {% endblock %}
 
 {% block body %} 
-<div class="Normaldiv">
+<form action="/language/update/{{language_to_update.id}}" method="post">
+    <div class="First">
 
+     <h1>
+       <b>Upravit programátorský jazyk ve výběru</b> 
+    </h1>
+    <h3>
+        <b> všechna pole jsou povinná </b> 
+    </h3>
+    <br>
+<table>
+    <tr>
+        <td>
+            Název jazyku
+        </td>
+        <td>
+            <input type="text" placeholder="název jazyku" id="name" name="name" required value="{{language_to_update.name}}">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="submit" value="upravit">
+        </td>    
+    </tr>
+</form>
+        
+    
     <table>
-        <h1>
-            <b>Seznam programovacích jazyků</b> 
-         </h1>
         <tr>
-            <th style="padding-right:  20px;"> id </th>
-            <th style="padding-right:  20px;"> název jazyku </th>
-
+            <th> id </th>
+            <th> název jazyku </th>
         </tr>
             {% for language in languages %}
             <tr>
@@ -27,7 +48,6 @@
                 <td>
                     <a href="/language/delete/{{language.id}}"> smazat</a>
                     <a href="/language/update/{{language.id}}"> upravit</a>
-
                 </td>
             </tr>
             {% endfor %}
