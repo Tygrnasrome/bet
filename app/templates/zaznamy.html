@@ -58,7 +58,7 @@
                 checked
             {% endif %}
             >
-            <label for="{{tag.name}}" > {{tag.name}}</label>
+            <label for="{{tag.name}}" style="color: {{tag.barva}};"> {{tag.name}}</label>
         {% endfor %}
         <input type="submit" value="filtrovat"> 
     </form>
@@ -115,7 +115,8 @@
                 {% if cat.owned_id == record.id %}
                     {% for tag in tags %}
                         {% if cat.type_id == tag.id %}
-                            {{tag.name}} <br>
+                        <p style="color: {{tag.barva}};">{{tag.name}}</p>
+                             <br>
                         {% endif %}
                     {% endfor %}
                 {% endif %}
