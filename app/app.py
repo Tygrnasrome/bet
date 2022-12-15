@@ -71,11 +71,11 @@ def index():
     db.create_all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
     for language in languages:
-        Filter.language_dict[language.id] = "on"
+        Filter.language_dict[int(language.id)] = "on"
 
     tags = Tags.query.order_by(Tags.id).all()
     for tag in tags:
-        Filter.tag_dict[tag.id] = "on"
+        Filter.tag_dict[int(tag.id)] = "on"
     Filter.tag_dict[0] = "on"
 
     return render_template('index.html')
@@ -323,16 +323,16 @@ def zaznamy(serazeni):
         for language in languages:
             try:        
                 #try protoze pokud neni oznacen, tak by to melo hodit exception
-                Filter.language_dict[language.id] = request.form[str(language.id)]
+                Filter.language_dict[int(language.id)] = request.form[str(language.name)]
             except:
-                Filter.language_dict[language.id] = 0   
+                Filter.language_dict[int(language.id)] = 0   
 
         for tag in tags:
             try:        
                 #try protoze pokud neni oznacen, tak by to melo hodit exception
-                Filter.tag_dict[tag.id] = request.form[str(tag.id)]
+                Filter.tag_dict[int(tag.id)] = request.form[str(tag.name)]
             except:
-                Filter.tag_dict[tag.id] = 0
+                Filter.tag_dict[int(tag.id)] = 0
         try:
             Filter.tag_dict[0] = request.form[str(0)]
         except:
@@ -358,10 +358,10 @@ def zaznamy(serazeni):
         for record in records:
             has = False
             for cat in cats:
-                if (record.id == cat.owned_id):
+                if (int(record.id) == int(cat.owned_id)):
                     has = True
             if (has == False):
-                records = records.filter(Denik.id !=  record.id)
+                records = records.filter(int(Denik.id) !=  int(record.id))
     for language in languages:
         if(not Filter.language_dict[int(language.id)]):
             records = records.filter(Denik.jazyk_id !=  language.id)
@@ -373,7 +373,7 @@ def zaznamy(serazeni):
                     if (int(cat.owned_id) == int(record.id) and int(cat.type_id) == int(tag.id)):
                         has = True
                 if (has == True):
-                    records = records.filter(Denik.id !=  record.id)
+                    records = records.filter(Denik.id != record.id)
     
     return render_template('zaznamy.html', records=records, languages=languages, programmers=programmers, tags=tags, cats=cats, \
     filtered_languages=Filter.language_dict, filtered_tags=Filter.tag_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter. \
@@ -419,11 +419,6 @@ def OGzaznamy():
         pass
 
     return redirect('/zaznamy/1/') 
-
-@app.route('/zaznamy/')
-def justSimpleRedirect():
-    return redirect('/zaznamy/1')
-
 
 @app.route('/update-form/<int:id>')
 def updateRecord(id):
