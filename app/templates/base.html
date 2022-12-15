@@ -25,9 +25,10 @@
             <li><a href="http://localhost:8080/cat/" >Štítky</a></li>
             <li><a href="http://localhost:8080/programmer/" >Programátoři</a></li>
             <li><a href="http://localhost:8080/language/" >Programovací jazyky</a></li>
+            <img src="{{url_for('static', filename='images/logo.png')}}" alt="logo" height="58px" style="float: right;">
         </ul>
         </nav>
-        </header>
+    </header>
     {% block body %} 
 
     {% endblock %}
