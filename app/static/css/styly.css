@@ -2,55 +2,44 @@ body
 {   
     background-image: linear-gradient(rgb(0, 90, 94) 20%,rgb(1, 54, 21), rgb(57, 63, 2)) ;
     color: white;
-    height: 50vw;
-    width: 50vh;
+    height: 100%;
+    width: 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin: 0;
 }
-.First
+.Center
 {
     background-color: grey;
-    text-align: left;
-    font-size: 16px;
+    width: fit-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 20px;
+    border-radius: 35px;
+    word-break: break-all;
+    overflow: auto;
+}
+.Vpravo
+{
+    background-color: grey;
     width:fit-content;
     position: absolute;
-    top: 30%;
-    left: 3%;
+    top: 50%;
+    right: 15%;
+    transform: translate(50%,-50%);
     padding: 20px;
     border-radius: 35px;
 }
-.Normaldiv
+.Vlevo
 {
     background-color: grey;
-    text-align: left;
-    font-size: 16px;
-    width:fit-content;
-    position: absolute;
-    top: 30%;
-    left: 40%;
-    align-items: center;
-    justify-content:  center;
-    padding: 20px;
-    border-radius: 35px;
-}
-.Divse
-{
-    background-color: grey;
-    font-size: 16px;
-    width:fit-content;
-    position: absolute;
-    top: 40%;
-    right: 9%;
-    padding: 20px;
-    border-radius: 35px;
-}
-.Divthi
-{
-    background-color: grey;
-    text-align: left;
-    font-size: 16px;
     width:fit-content;
     position:absolute;
-    top: 40%;
-    right: 25%; 
+    top: 50%;
+    left: 15%;
+    transform: translate(-50%,-50%);
     padding: 20px;
     border-radius: 35px;   
 }

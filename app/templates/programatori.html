@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %} 
-<div class="Normaldiv">
+<div class="Center">
 
     <h1>
         <b>Seznam programátorů</b> 
@@ -13,8 +13,8 @@
     <table>
         <tr>
 
-            <th style="padding-right:  20px;"> id </th>
-            <th style="padding-right:  20px;"> Jméno programátora </th>
+            <th style="padding-right:  20px;"> ID </th>
+            <th style="padding-right:  20px; word-break: normal"> Jméno programátora </th>
         </tr>
             {% for programmer in programmers %}
             <tr>

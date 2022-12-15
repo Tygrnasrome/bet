@@ -6,109 +6,106 @@
 
 {% block body %} 
 <form action="/add/" method="post">
-    <div class="Normaldiv">
-
-     <h1>
-        <p style="text-align: center;">  <b>Přidat záznam do deníku</b> </p>
-    </h1>
-    <h3>
-        <p style="text-align: center;"><b> všechna pole jsou povinná </b> </p>
-    </h3>
-    <br>
-    <br>
-<table>
-        <tr>
-        <td>
-        Programátor
-    </td>
-    <td>
-
-        <select name="name" style="width: 172px;" >
-            {% for programmer in programmers %}
-            <option value="{{programmer.id}}">{{programmer.name}}</option>
-            {% endfor %}
-        </select>
-    </tr>
-    <tr>
-</td>
-    <td>
-                Co se dělalo
-            </td>
-                <td>
-            <input type="text" placeholder="co se dělalo" name="popis" required>
-        </td>
-        </tr>
-        <tr>
-            <td>
-                čas strávení v minutách
-            </td>
-                <td>
-            <input type="number" placeholder="čas" name="time_spent" required>
-        </td>
-        </tr>
-        </tr>
-            <td>
-                Programovací jazyk
-            </td>
-         <td>
-            <select name="jazyk_id" >
-                {% for language in languages %}
-                <option value="{{language.id}}">{{language.name}}</option>
-                {% endfor %}
-            </select>
-        </td>
-        </tr>
-        <tr>
-        <td>
-                datum
-        </td>
-        <td>
-            <input type="date" placeholder="datum" name="date" required>
-             </td>
-            </tr>
-            <tr>
-            <td>
-                Škála hodnocení naši práce
-            </td>
-            <td>
-            <input type="radio" Name = "hodnoceni" value="1" required>1
-            <input type="radio" Name = "hodnoceni" value="2" required>2
-            <input type="radio" Name = "hodnoceni" value="3" required>3
-            <input type="radio" Name = "hodnoceni" value="4" required>4
-            <input type="radio" Name = "hodnoceni" value="5" required>5
-
-            </td>
-        </tr>
-        <tr>
-            <td> Štítky </td>
-            <td style=" width: 150px;">
-                {% for tag in tags %}
-                <label for="{{tag.id}}" style="color: {{tag.barva}};">{{tag.name}}</label>
-                <input type="checkbox" id="{{tag.id}}" name="{{tag.id}}">
-                {% endfor %}
-
-            </td>
-        </tr>
-        {% for cat in cats %}
-        <tr>
-            <td> {{cat.name}}</td>
-            <td> 
-                {% if cat.type == String(200) %}
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-            <h3>
-                
-
-                  <p style="text-align: center;">  <input type="submit" value="přidat"></p>
-
-                
-           
+    <div class="Center">
+        <h1>
+            <p style="text-align: center;">  <b>Přidat záznam do deníku</b> </p>
+        </h1>
+        <h3>
+            <p style="text-align: center;"><b> Všechna pole jsou povinná </b></p>
         </h3>
         <br>
-    </form>
-</div>
+        <br>
+        <table>
+            <tr>
+                <td>
+                    Programátor
+                </td>
+                <td>
+                    <select name="name" style="width: 172px;" >
+                        {% for programmer in programmers %}
+                        <option value="{{programmer.id}}">{{programmer.name}}</option>
+                        {% endfor %}
+                    </select>
+            </tr>
+            <tr>
+                <td>
+                    čas strávení v minutách
+                </td>
+                <td>
+                    <input type="number" placeholder="čas" name="time_spent" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Programovací jazyk
+                </td>
+                <td>
+                    <select name="jazyk_id" >
+                        {% for language in languages %}
+                        <option value="{{language.id}}">{{language.name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    datum
+                </td>
+                <td>
+                    <input type="date" placeholder="datum" name="date" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Popis
+                </td>
+                <td>
+                    <TEXTAREA rows="5" cols="12" name="popis" required></TEXTAREA>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Škála hodnocení naši práce
+                </td>
+                <td>
+                    <input type="radio" Name = "hodnoceni" value="1" required>1
+                    <input type="radio" Name = "hodnoceni" value="2" required>2
+                    <input type="radio" Name = "hodnoceni" value="3" required>3
+                    <input type="radio" Name = "hodnoceni" value="4" required>4
+                    <input type="radio" Name = "hodnoceni" value="5" required>5
+
+                </td>
+            </tr>
+            <tr>
+                <td>Štítky</td>
+                <td style=" width: 150px;">
+                    {% for tag in tags %}
+                    <label for="{{tag.id}}" style="color: {{tag.barva}};">{{tag.name}}</label>
+                    <input type="checkbox" id="{{tag.id}}" name="{{tag.id}}">
+                    {% endfor %}
+
+                </td>
+            </tr>
+            {% for cat in cats %}
+            <tr>
+                <td> {{cat.name}}</td>
+                <td>
+                    {% if cat.type == String(200) %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <h3>
+
+
+            <p style="text-align: center;"><input type="submit" value="přidat"></p>
+
+
+
+        </h3>
+        <br>
+    </div>
+</form>
 
 {% endblock %}

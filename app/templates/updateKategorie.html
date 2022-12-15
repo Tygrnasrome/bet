@@ -6,7 +6,7 @@
 
 {% block body %} 
 <form action="/cat/update/{{tag_to_update.id}}" method="post">
-    <div class="Normaldiv">
+    <div class="Center">
      <h1>
        <b>Upravit štítek ve výběru</b> 
     </h1>
@@ -33,6 +33,7 @@
             <input type="text" placeholder="popis štítku" id="popis" name="popis" value="{{tag_to_update.popis}}" required>
         </td>
     </tr>
+</table>
     <h3>   
         <br>
         <input type="submit" value="upravit">

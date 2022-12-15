@@ -5,21 +5,21 @@
 {% endblock %}
 
 {% block body %}    
-<div class="First">
+<div class="Vlevo">
     <h1>
-      <b> Záznamy deníku </b> 
+      <b> Záznamy v deníku </b>
     </h1>
     <form action="/zaznamy/{{serazeni}}" method="post">
-        <h2>filtry:</h2>
-        <h4>jazyky</h4>
+        <h2>Filtry:</h2>
+        <h4>Jazyky</h4>
         {% for language in languages %}
 
             <label for="{{language.name}}">{{language.name}}</label>
-            <input type="checkbox" id="{{language.name}}" name="{{language.id}}"
+            <input type="checkbox" id="{{language.name}}" name="{{language.id}}">
             {% if filtered_languages[language.id] == "on" %}
                 checked
             {% endif %}
-            >
+
 
             <label for="{{language.name}}">{{language.name}}</label>
         {% endfor %}
@@ -47,7 +47,7 @@
         <input type="number" placeholder="do" name="hodnoceni_to" value="{{max_hod}}" required style="width: 55px;">
         <br>
         <br>
-       <h4> Programátor</h4>
+       <h4>Programátor</h4>
         <select name="name" style="width: 200px;">
 
             <option value="0"> všichni </option>
@@ -57,19 +57,14 @@
             {% endfor %}
 
         </select>  
-        <h4>štítky</h4>
+        <h4>Štítky</h4>
             <input type="checkbox" id="bezkatky0" name="0" 
             {% if filtered_tags[0] == "on" %}
             checked
             {% endif %}>
             <label for="bezkatky0">  bez kategorie</label>
         {% for tag in tags %}
-            <input type="checkbox" id="{{tag.name}}" name="{{tag.id}}"
-            
-            {% if filtered_tags[tag.id] == "on" %}
-                checked
-            {% endif %}
-            >
+            <input type="checkbox" id="{{tag.name}}" name="{{tag.id}}"> {% if filtered_tags[tag.id] == "on" %} checked {% endif %}
             <label for="{{tag.name}}" style="color: {{tag.barva}};"> {{tag.name}}</label>
         {% endfor %}
 
@@ -83,7 +78,7 @@
     </form>
 </div>
 
-<div class="Divse">
+<div class="Vpravo">
     <form action="/zaznamy/set-serazeni/" method="post">
         <h2>Seřazení:</h2>
         <select name="serazeni" >
@@ -99,7 +94,7 @@
     </form>
 </div>
 
-<div class="Divthi">
+<div class="Center">
 
     <table>
     <tr>
