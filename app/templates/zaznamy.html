@@ -9,19 +9,17 @@
     <h1>
       <b> Záznamy deníku </b> 
     </h1>
-    <form action="/zaznamy/{{serazeni}}" method="post">
+    <form action="/zaznamy/{{serazeni}}/" method="post">
         <h2>filtry:</h2>
         <h4>jazyky</h4>
         {% for language in languages %}
 
             <label for="{{language.name}}">{{language.name}}</label>
-            <input type="checkbox" id="{{language.name}}" name="{{language.id}}"
+            <input type="checkbox" id="{{language.name}}" name="{{language.name}}"
             {% if filtered_languages[language.id] == "on" %}
                 checked
             {% endif %}
             >
-
-            <label for="{{language.name}}">{{language.name}}</label>
         {% endfor %}
         <br>
         <br>
@@ -64,7 +62,7 @@
             {% endif %}>
             <label for="bezkatky0">  bez kategorie</label>
         {% for tag in tags %}
-            <input type="checkbox" id="{{tag.name}}" name="{{tag.id}}"
+            <input type="checkbox" id="{{tag.name}}" name="{{tag.name}}"
             
             {% if filtered_tags[tag.id] == "on" %}
                 checked
