@@ -53,6 +53,7 @@ h3{
     padding: 20px;
     border-radius: 35px;
     word-break: normal;
+    max-width: 25%;
 }
 .Logo{
     position: absolute;
