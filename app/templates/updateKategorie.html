@@ -5,9 +5,10 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
 {% endblock %}
 
-{% block body %} 
-<form action="/cat/update/{{tag_to_update.id}}" method="post">
-    <div class="Center">
+{% block body %}
+<div class="Center">
+    <form action="/cat/update/{{tag_to_update.id}}" method="post">
+
      <h1>
        <b>Upravit štítek ve výběru</b> 
     </h1>

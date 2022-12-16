@@ -8,6 +8,15 @@ body
     background-repeat: no-repeat;
     margin: 0;
 }
+h1{
+    text-align: center;
+}
+h2{
+    text-align: center;
+}
+h3{
+    text-align: center;
+}
 .Center
 {
     background-color: grey;
@@ -60,12 +69,6 @@ table
 button
 {
     width: 20%; height: 20%; color: black;
-}
-.Second
-{
-    color: black; 
-    background-color: red;
-    margin: 0 ;
 }
 ul
 {

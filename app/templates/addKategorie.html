@@ -5,16 +5,16 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
 {% endblock %}
 
-{% block body %} 
-<form action="/cat/form/" method="post">
+{% block body %}
+<div class="Center">
+    <form action="/cat/form/" method="post">
 
-    <div class="Center">
+
      <h1>
-        <p style="text-align: center;"> <b>Přidat štítek do výběru</b> </p>
+        <b>Přidat štítek do výběru</b>
     </h1>
     <h3>
-        <p style="text-align: center;">   <b> všechna pole jsou povinná </b>  </p>
-
+        <b> všechna pole jsou povinná </b>
     </h3>
     <br>
 <table>
@@ -40,10 +40,9 @@
  </table>
     <h3>   
         <br>
-        <p style="text-align: center;">  <input type="submit" value="přidat"> </p>
+        <input type="submit" value="přidat">
     <br>
     </h3>
-    </div>
 </form>
     <table>
         <tr>

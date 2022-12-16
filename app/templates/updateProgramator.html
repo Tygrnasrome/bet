@@ -5,11 +5,12 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
 {% endblock %}
 
-{% block body %} 
+{% block body %}
+<div class="Center">
 <form action="/programmer/update/{{programmer_to_update.id}}" method="post">
 
 
-    <div class="Center">
+
      <h1>
        <b>Upravit programátora ve výběru</b> 
     </h1>

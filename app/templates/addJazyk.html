@@ -5,38 +5,36 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
 {% endblock %}
 
-{% block body %} 
-<form action="/language/form/" method="post">
+{% block body %}
+<div class="Center">
+    <form action="/language/form/" method="post">
 
-    <div class="Center">
+         <h1>
+           <b>Přidat programátorský jazyk do výběru</b>
+        </h1>
+        <h3>
 
+            <b> všechna pole jsou povinná </b>
 
-     <h1>
-       <b>Přidat programátorský jazyk do výběru</b> 
-    </h1>
-    <h3>
+        </h3>
+        <br>
+        <table>
+            <tr>
+                <td>
+                    Název jazyku
+                </td>
+                <td>
+                    <input type="text" placeholder="název jazyku" id="name" name="name" required>
+                </td>
+            </tr>
 
-      <p style="text-align: center;"> <b> všechna pole jsou povinná </b> </p>
-
-    </h3>
-    <br>
-<table>
-    <tr>
-        <td>
-            Název jazyku
-        </td>
-        <td>
-            <input type="text" placeholder="název jazyku" id="name" name="name" required>
-        </td>
-    </tr>
-
-</table>
-<br>
-            <p style="text-align: center;">      <input type="submit" value="přidat"> </p>
-            <br>
+        </table>
+        <br>
+        <p style="text-align: center;">      <input type="submit" value="přidat"> </p>
+        <br>
     </form>
-        
-    
+
+
     <table>
         <tr>
 
