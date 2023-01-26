@@ -5,6 +5,72 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body
+        {
+            background: {{palette.body}};
+        }
+        ul li a:hover
+        {
+            background: {{palette.hover}};
+        }
+        ul li ul.h a
+        {
+            color: {{palette.text}};
+            background: {{palette.selected}};
+        }
+        ul li ul.h a:hover
+        {
+            background: {{palette.hover}};
+        }
+        ul li ul.h 
+        {
+            background-color: {{palette.base}};
+            color: {{palette.text}};
+        }
+        ul li a
+        {
+            color: {{palette.text}};
+            background: {{palette.base}};
+        }
+        ul
+        {
+            display: flex;
+            list-style: none;
+            background-color: {{palette.base}};
+            color: {{palette.text}};
+        }
+        div 
+        {
+            background-color: {{palette.divone}};
+            color: {{palette.text}};
+        }
+        div div
+        {
+            background-color: {{palette.divtwo}};
+        }
+        div div div
+        {
+            background-color: {{palette.divthree}};
+        }
+        .Center
+        {
+            color: {{palette.text}};
+            background-color: {{palette.divone}};
+        }
+        h1
+        {
+            color: {{palette.header}};
+        }
+        h2
+        {
+            color: {{palette.header}};
+        }
+        h3
+        {
+            color: {{palette.header}};
+        }
+    </style>
     {% block head %} 
 
     {% endblock %}

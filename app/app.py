@@ -66,6 +66,18 @@ class Filter():
 
     name = 0
 
+class Palette():
+    base = '#d18829'
+    selected = '#a56c22'
+    hover = '#92601e'
+    text = '#dee4e9'
+    header = '#d18023'
+    body = '#2b2b2b'
+    divone = '#555555'
+    divtwo = '#4b4b4b'
+    divthree = '#3b3b3b'
+    advanced = True
+
 @app.route('/')
 def index():
     db.create_all()
@@ -78,7 +90,7 @@ def index():
         Filter.tag_dict[int(tag.id)] = "on"
     Filter.tag_dict[0] = "on"
 
-    return render_template('index.html')
+    return render_template('index.html',palette=Palette)
 
 @app.route('/add/', methods=['POST', 'GET'])
 def addZaznam():  
@@ -114,18 +126,18 @@ def showForm():
     languages = Jazyk.query.order_by(Jazyk.id).all()
 
     tags = Tags.query.order_by(Tags.id).all()
-    return render_template('addZaznam.html',languages=languages, programmers=programmers, tags=tags)
+    return render_template('addZaznam.html',palette=Palette, languages=languages, programmers=programmers, tags=tags)
 
 @app.route('/language/')
 def showLanguageTable(): 
     languages = Jazyk.query.order_by(Jazyk.id).all()
-    return render_template('jazyky.html',languages=languages)
+    return render_template('jazyky.html',languages=languages,palette=Palette)
 
 @app.route('/language/form/', methods=['POST', 'GET'])
 def showLanguageForm():
     if request.method == 'GET':
         languages = Jazyk.query.order_by(Jazyk.id).all()
-        return render_template('addJazyk.html',languages=languages)
+        return render_template('addJazyk.html',languages=languages,palette=Palette)
     else:
         language_name = request.form['name']
         new_language = Jazyk(name=language_name)
@@ -135,14 +147,14 @@ def showLanguageForm():
         request.method = "GET"
         for language in languages:
             Filter.language_dict[language.id] = "on"
-        return render_template('addJazyk.html',languages=languages)
+        return render_template('addJazyk.html',languages=languages,palette=Palette)
 
 @app.route('/language/update/<int:id>', methods=['POST', 'GET'])
 def showLanguageUpdateForm(id):
     languages = Jazyk.query.order_by(Jazyk.id).all()
     if request.method == 'GET':
         language_to_update = Jazyk.query.get_or_404(id)
-        return render_template('updateJazyk.html',languages=languages, language_to_update=language_to_update)
+        return render_template('updateJazyk.html',languages=languages, language_to_update=language_to_update,palette=Palette)
     else:
         language_to_update = Jazyk.query.get_or_404(id)
         language_to_update.name = request.form['name']
@@ -161,13 +173,13 @@ def delLanguage(id):
 @app.route('/programmer/')
 def showTableProgrammer():
     programmers = Programator.query.order_by(Programator.id).all()
-    return render_template('programatori.html',programmers=programmers)
+    return render_template('programatori.html',programmers=programmers,palette=Palette)
 
 @app.route('/programmer/form/', methods=['POST', 'GET'])
 def showProgrammerForm():
     if request.method == 'GET':
         programmers = Programator.query.order_by(Programator.id).all()
-        return render_template('addProgramator.html',programmers=programmers)
+        return render_template('addProgramator.html',programmers=programmers,palette=Palette)
     else:
         programmer_name = request.form['name']
         new_programmer = Programator(name=programmer_name)
@@ -175,7 +187,7 @@ def showProgrammerForm():
         db.session.commit()
         programmers = Programator.query.order_by(Programator.id).all()
         request.method = "GET"
-        return render_template('addProgramator.html',programmers=programmers)
+        return render_template('addProgramator.html',programmers=programmers,palette=Palette)
 
 @app.route('/programmer/update/<int:id>', methods=['POST', 'GET'])
 def showProgrammerUpdateForm(id):
@@ -183,7 +195,7 @@ def showProgrammerUpdateForm(id):
     if request.method == 'GET':
         for programmer in programmers:
             if(id == programmer.id):
-                return render_template('updateProgramator.html',programmers=programmers, programmer_to_update=programmer)
+                return render_template('updateProgramator.html',programmers=programmers, programmer_to_update=programmer,palette=Palette)
     else:
         for programmer in programmers:
             if(id == programmer.id):
@@ -191,7 +203,7 @@ def showProgrammerUpdateForm(id):
         db.session.commit()
         programmers = Programator.query.order_by(Programator.id).all()
         request.method = "GET"
-        return render_template('addProgramator.html',programmers=programmers)
+        return render_template('addProgramator.html',programmers=programmers,palette=Palette)
 
 @app.route('/programmer/delete/<int:id>')
 def delProgrammer(id):
@@ -208,14 +220,14 @@ def delProgrammer(id):
 @app.route('/cat/')
 def showCatTable():
     tags = Tags.query.order_by(Tags.id).all()
-    return render_template('kategorie.html', tags=tags)
+    return render_template('kategorie.html', tags=tags,palette=Palette)
 
 
 @app.route('/cat/form/', methods=['POST', 'GET'])
 def showCatForm():
     if request.method == 'GET':
         tags = Tags.query.order_by(Tags.id).all()
-        return render_template('addKategorie.html', tags=tags)
+        return render_template('addKategorie.html', tags=tags,palette=Palette)
     else:
         tag_name = request.form['name']
         tag_barva = request.form['barva']
@@ -230,7 +242,7 @@ def showCatForm():
         Filter.tag_dict[0] = "on"
         for tag in tags:
             Filter.tag_dict[tag.id] = "on"
-        return render_template('addKategorie.html', tags=tags)
+        return render_template('addKategorie.html', tags=tags,palette=Palette)
 
 @app.route('/cat/delete/<int:id>')
 def delCat(id):
@@ -252,7 +264,7 @@ def updateCatForm(id):
     if request.method == 'GET':
         for tag in tags:
             if(id == tag.id):
-                return render_template('updateKategorie.html', tags=tags, tag_to_update=tag)
+                return render_template('updateKategorie.html', tags=tags, tag_to_update=tag,palette=Palette)
     else:
         tag_to_update = Tags.query.get_or_404(id)
         tag_to_update.name = request.form['name']
@@ -377,7 +389,7 @@ def zaznamy(serazeni):
     
     return render_template('zaznamy.html', records=records, languages=languages, programmers=programmers, tags=tags, cats=cats, \
     filtered_languages=Filter.language_dict, filtered_tags=Filter.tag_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter. \
-    time_to, max_hod=Filter.hodnoceni_to, min_hod=Filter.hodnoceni_from, sel_name=int(Filter.name), serazeni=serazeni)
+    time_to, max_hod=Filter.hodnoceni_to, min_hod=Filter.hodnoceni_from, sel_name=int(Filter.name), serazeni=serazeni,palette=Palette)
 
 
 @app.route('/zaznamy/set-serazeni/', methods=['POST', 'GET'])
@@ -427,7 +439,7 @@ def updateRecord(id):
     cats = Kategorie.query.order_by(Kategorie.id).all()
     tags = Tags.query.order_by(Tags.id).all()
     programmers = Programator.query.order_by(Programator.id).all()
-    return render_template('update.html', record=record_to_update,languages=languages, tags=tags, cats=cats, programmers=programmers)
+    return render_template('update.html', record=record_to_update,languages=languages, tags=tags, cats=cats, programmers=programmers,palette=Palette)
 
 @app.route('/delete/<int:id>')
 def deleteRecord(id):

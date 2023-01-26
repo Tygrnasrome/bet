@@ -1,7 +1,6 @@
 body
 {   
-    background-image: linear-gradient(rgb(0, 90, 94) 20%,rgb(1, 54, 21), rgb(57, 63, 2)) ;
-    color: white;
+    color: rgb(182, 182, 182);
     height: 100%;
     width: 100%;
     background-attachment: fixed;
@@ -17,43 +16,15 @@ h2{
 h3{
     text-align: center;
 }
-.Center
+div 
 {
-    background-color: grey;
+    background-color: #3b3b3b;
     width: fit-content;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    float: left;
     padding: 20px;
-    border-radius: 35px;
     word-break: normal;
     overflow: auto;
-}
-.Vpravo
-{
-    background-color: grey;
-    width:fit-content;
-    position: absolute;
-    top: 50%;
-    right: 15%;
-    transform: translate(50%,-50%);
-    padding: 20px;
-    border-radius: 35px;
-    word-break: normal;
-}
-.Vlevo
-{
-    background-color: grey;
-    width:fit-content;
-    position:absolute;
-    top: 50%;
-    left: 15%;
-    transform: translate(-50%,-50%);
-    padding: 20px;
-    border-radius: 35px;
-    word-break: normal;
-    max-width: 25%;
+    margin: 20px;
 }
 .Logo{
     position: absolute;
@@ -70,21 +41,6 @@ table
 button
 {
     width: 20%; height: 20%; color: black;
-}
-ul
-{
-    display: flex;
-    list-style: none;
-}
-
-header
-{
-    width: 100%;
-    background-color: red;
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
 }
 ul li
 {
@@ -110,7 +66,6 @@ display: block;
 ul li ul.h a
 {
     text-decoration: none;
-    color: black;
     font-size: 15px;
     text-align: left;
 }
@@ -120,18 +75,19 @@ ul li a
     display: block;
     text-transform: uppercase;
     text-decoration: none;
-    color: black;
     font-size: 35px;
     text-align: center;
     padding: 15px 30px;
 }
-ul li a:hover
-{
-    background: darkred;
-}
+
 *
 {
     padding: 0;
     margin: 0;
     font-family:sans-serif;
+}
+a
+{
+    color: #dee4e9;
+    text-underline-offset: 0;
 }
