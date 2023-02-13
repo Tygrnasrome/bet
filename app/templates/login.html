@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Vytvořit účet</title>
+<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+{% endblock %}
+
+{% block body %}
+<div >
+    <form action="/login" method="post">
+
+         <h1>
+           <b>Přihlásit se</b>
+        </h1>
+        <h3>
+            <b> Všechna pole jsou povinná </b>
+        </h3>
+        <br>
+        <table>
+            <tr>
+                <td>
+                    Email
+                </td>
+                <td>
+                    <input type="email" id="email" name="email" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Heslo
+                </td>
+                <td>
+                    <input type="password" id="password" name="password" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="remember"> pamatovat si mě</label>
+                </td>
+                <td>
+                    <input type="checkbox" name="remember" id="remember">
+                </td>
+            </tr>
+        </table>
+        <br>
+        <p style="text-align: center;">      <input type="submit" value="přihlásit se"> </p>
+        <br>
+    </form>
+
+{% endblock %}
