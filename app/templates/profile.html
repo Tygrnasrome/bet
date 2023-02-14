@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}" >
+
+{% endblock %}
+
+{% block body %}
+<img src="{{url_for('static', filename='images/logo.png')}}" alt="logo" height="90px" class="Logo">
+<div class="Center">
+    <h1>{{user.name}}</h1>
+    <h2>{{user.email}}</h2>
+</div>
+{% endblock %}

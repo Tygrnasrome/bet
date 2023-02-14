@@ -2,7 +2,7 @@
 
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from .models import User
 from .config import Palette, UI
 from . import db
@@ -13,7 +13,7 @@ auth = Blueprint('auth', __name__)
 @auth.route('/login/')
 def login():
     UI.active = "login"
-    return render_template('login.html',active=UI.active, palette=Palette)
+    return render_template('login.html', user = current_user,active=UI.active, palette=Palette)
 
 @auth.route('/login/', methods=['POST'])
 def login_post():
@@ -31,15 +31,21 @@ def login_post():
 
     # if the above check passes, then we know the user has the right credentials
     login_user(user, remember=remember)
-    return redirect(url_for('main.settings'))
+    return redirect(url_for('auth.profile'))
 
 @auth.route('/signup/')
+@login_required
 def signup():
     UI.active = "signup"
-    return render_template('signup.html',active=UI.active, palette=Palette)
+    if current_user.auth > 1:
+        redirect(url_for('main.index'))
+    return render_template('signup.html', user = current_user,active=UI.active, palette=Palette)
 
 @auth.route('/signup/', methods=['POST'])
+@login_required
 def signup_post():
+    if current_user.auth > 1:
+        redirect(url_for('main.index'))
     email = request.form.get('email')
     name = request.form.get('name')
     password = request.form.get('password')
@@ -59,6 +65,11 @@ def signup_post():
     db.session.commit()
 
     return redirect(url_for('auth.login'))
+
+@auth.route('/profile/')
+@login_required
+def profile():
+    return render_template('profile.html', user = current_user ,active=UI.active, palette=Palette)
 
 @auth.route('/logout/')
 @login_required

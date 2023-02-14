@@ -21,27 +21,31 @@ def index():
         Filter.tag_dict[int(tag.id)] = "on"
     Filter.tag_dict[0] = "on"
     UI.active = "home"
-    return render_template('index.html',active=UI.active,palette=Palette)
+    return render_template('index.html', user = current_user,active=UI.active,palette=Palette)
 
 @main.route('/language/')
+@login_required
 def showLanguageTable():
     languages = Jazyk.query.order_by(Jazyk.id).all()
     UI.active = "language"
-    return render_template('jazyky.html',active=UI.active,languages=languages,palette=Palette)
+    return render_template('jazyky.html', user = current_user,active=UI.active,languages=languages,palette=Palette)
 
 @main.route('/programmer/')
+@login_required
 def showTableProgrammer():
     UI.active = "programmer"
     programmers = Programator.query.order_by(Programator.id).all()
-    return render_template('programatori.html',active=UI.active,programmers=programmers,palette=Palette)
+    return render_template('programatori.html', user = current_user,active=UI.active,programmers=programmers,palette=Palette)
 
 @main.route('/cat/')
+@login_required
 def showCatTable():
     tags = Tags.query.order_by(Tags.id).all()
     UI.active = "cat"
-    return render_template('kategorie.html',active=UI.active, tags=tags,palette=Palette)
+    return render_template('kategorie.html', user = current_user,active=UI.active, tags=tags,palette=Palette)
 
 @main.route('/zaznamy/<int:serazeni>/', methods=['POST', 'GET'])
+@login_required
 def zaznamy(serazeni):
     cats = Kategorie.query.order_by(Kategorie.id).all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
@@ -153,16 +157,18 @@ def zaznamy(serazeni):
                 if (has == True):
                     records = records.filter(Denik.id != record.id)
     UI.active = "records"
-    return render_template('zaznamy.html',active=UI.active, records=records, languages=languages, programmers=programmers, tags=tags, cats=cats, \
+    return render_template('zaznamy.html', user = current_user,active=UI.active, records=records, languages=languages, programmers=programmers, tags=tags, cats=cats, \
     filtered_languages=Filter.language_dict, filtered_tags=Filter.tag_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter. \
     time_to, max_hod=Filter.hodnoceni_to, min_hod=Filter.hodnoceni_from, sel_name=int(Filter.name), serazeni=serazeni,palette=Palette)
 
 
 @main.route('/zaznamy/set-serazeni/', methods=['POST', 'GET'])
+@login_required
 def setSerazeniZaznamy():
     serazeni = request.form['serazeni']
     return redirect('/zaznamy/' + serazeni)
 @main.route('/zaznamy/reset-filter', methods=['POST', 'GET'])
+@login_required
 def OGzaznamy():
     languages = Jazyk.query.order_by(Jazyk.id).all()
     for language in languages:
