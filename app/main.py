@@ -1,13 +1,39 @@
 import sqlite3
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-from .models import Programator,Denik,Tags,User,Kategorie,Jazyk
+from .models import Programator,Denik,Tags,User,Kategorie,Jazyk, Palettes
 from flask import Blueprint
 from flask_login import login_required, current_user
 from .config import UI,Palette, Filter
 from . import db
 
 main = Blueprint('main', __name__)
+
+def resetPalette():
+    palettes = Palettes.query.order_by(Palettes.id).all()
+    used = False
+    for palette in palettes:
+        if palette.user_id == current_user.id:
+            Palette.base = palette.base
+            Palette.hover = palette.hover
+            Palette.selected = palette.selected
+            Palette.divone = palette.divone
+            Palette.divthree = palette.divthree
+            Palette.divtwo = palette.divtwo
+            Palette.body = palette.body
+            Palette.header = palette.header
+            Palette.text = palette.text
+            used = True
+    if not used:
+        Palette.base = Palette.def_base
+        Palette.hover = Palette.def_hover
+        Palette.selected = Palette.def_selected
+        Palette.divone = Palette.def_divone
+        Palette.divthree = Palette.def_divthree
+        Palette.divtwo = Palette.def_divtwo
+        Palette.body = Palette.def_body
+        Palette.header = Palette.def_header
+        Palette.text = Palette.def_text
 
 @main.route('/')
 def index():
@@ -27,18 +53,38 @@ def index():
 @login_required
 def settings():
     UI.active = 'settings'
+    palettes = Palettes.query.order_by(Palettes.id).all()
     if request.method == 'GET':
-        return render_template('settings.html', palette = Palette, active= UI.active, user=current_user )
+        return render_template('settings.html', palette = Palette, active= UI.active, user=current_user)
     else:
-        Palette.base = request.form['base']
-        Palette.hover = request.form['hover']
-        Palette.selected = request.form['selected']
-        Palette.divone = request.form['divone']
-        Palette.divthree = request.form['divthree']
-        Palette.divtwo = request.form['divtwo']
-        Palette.body = request.form['body']
-        Palette.header = request.form['header']
-        Palette.text = request.form['text']
+        exist = False
+        palette_base = request.form['base']
+        palette_hover = request.form['hover']
+        palette_selected = request.form['selected']
+        palette_divone = request.form['divone']
+        palette_divthree = request.form['divthree']
+        palette_divtwo = request.form['divtwo']
+        palette_body = request.form['body']
+        palette_header = request.form['header']
+        palette_text = request.form['text']
+        for palette in palettes:
+            if palette.user_id == current_user.id:
+               palette.base = palette_base
+               palette.hover = palette_hover
+               palette.selected = palette_selected
+               palette.divone = palette_divone
+               palette.divthree = palette_divthree
+               palette.divtwo = palette_divtwo
+               palette.body = palette_body
+               palette.header = palette_header
+               palette.text = palette_text
+               db.session.commit()
+               exist = True
+        if not exist:
+            new_palette = Palettes(base = palette_base,hover=palette_hover, selected=palette_selected, divone=palette_divone,divtwo=palette_divtwo,divthree=palette_divthree,body=palette_body,header=palette_header,text=palette_text, user_id=current_user.id)
+            db.session.add(new_palette)
+            db.session.commit()
+        resetPalette()
         return render_template('settings.html', palette = Palette, active= UI.active, user=current_user )
 
 @main.route('/language/')
@@ -53,7 +99,8 @@ def showLanguageTable():
 def showTableProgrammer():
     UI.active = "programmer"
     programmers = Programator.query.order_by(Programator.id).all()
-    return render_template('programatori.html', user = current_user,active=UI.active,programmers=programmers,palette=Palette)
+    users = User.query.order_by(User.id).all()
+    return render_template('programatori.html', user = current_user,active=UI.active,programmers=programmers,palette=Palette, users=users)
 
 @main.route('/cat/')
 @login_required

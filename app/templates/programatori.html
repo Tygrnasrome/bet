@@ -35,6 +35,32 @@
             {% endfor %}
 
     </table>
+    <div>
+        <table>
+            <tr>
+
+                <th style="padding-right:  20px;"> ID </th>
+                <th style="padding-right:  20px; word-break: normal"> Jméno účtu </th>
+            </tr>
+            {% for usr in users %}
+            <tr>
+                <td>
+                    {{usr.id}}
+                </td>
+
+                <td style="width: 125px; overflow-wrap: break-word; word-break: break-all;">
+
+                    {{usr.name}}
+                </td>
+                <td>
+                    <a href="/user/delete/{{usr.id}}"> smazat</a>
+                    <a href="/user/update/{{usr.id}}"> update</a>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
 </div>
 
 {% endblock %}

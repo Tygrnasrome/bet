@@ -6,9 +6,107 @@
 {% endblock %}
 
 {% block body %}
-<img src="{{url_for('static', filename='images/logo.png')}}" alt="logo" height="90px" class="Logo">
-<div class="Center">
-    <h1>{{user.name}}</h1>
-    <h2>{{user.email}}</h2>
+<div>
+    <div>
+        <h1>{{user.name}}</h1>
+        <h2>{{user.email}}</h2>
+    </div>
+    <div >
+        <h1>Nastavení</h1>
+        <h2>barvy</h2>
+        <form action="/settings/" method="post">
+            <table>
+                <tr>
+                    <td>
+                        <h3>text</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        odstavce
+                    </td>
+                    <td>
+                        <input type="color" name="text" id="text" value="{{user_palette.text}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        nadpisy
+                    </td>
+                    <td>
+                        <input type="color" name="header" id="header" value="{{user_palette.header}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h3>horní lišta</h3>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        základ
+                    </td>
+                    <td>
+                        <input type="color" name="base" id="base" value="{{user_palette.base}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        aktivní
+                    </td>
+                    <td>
+                        <input type="color" name="selected" id="selected" value="{{user_palette.selected}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        přejetí myši
+                    </td>
+                    <td>
+                        <input type="color" name="hover" id="hover" value="{{user_palette.hover}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h3>Pozadí</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        aplikace
+                    </td>
+                    <td>
+                        <input type="color" name="body" id="body" value="{{user_palette.body}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        jednoho odstavce
+                    </td>
+                    <td>
+                        <input type="color" name="divone" id="divone" value="{{user_palette.divone}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        dvou odstavců
+                    </td>
+                    <td>
+                        <input type="color" name="divtwo" id="divtwo" value="{{user_palette.divtwo}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        tří odstavců
+                    </td>
+                    <td>
+                        <input type="color" name="divthree" id="divthree" value="{{user_palette.divthree}}">
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="změnit barvy">
+        </form>
+    </div>
 </div>
 {% endblock %}

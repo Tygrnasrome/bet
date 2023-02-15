@@ -25,7 +25,15 @@ class Palette():
     divone = '#555555'
     divtwo = '#4b4b4b'
     divthree = '#3b3b3b'
-    advanced = True
+    def_base = '#d18829'
+    def_selected = '#a56c22'
+    def_hover = '#92601e'
+    def_text = '#dee4e9'
+    def_header = '#d18023'
+    def_body = '#2b2b2b'
+    def_divone = '#555555'
+    def_divtwo = '#4b4b4b'
+    def_divthree = '#3b3b3b'
 
 class UI():
     active = 'home'
