@@ -47,6 +47,11 @@ def index():
         Filter.tag_dict[int(tag.id)] = "on"
     Filter.tag_dict[0] = "on"
     UI.active = "home"
+    try:
+        if current_user.name:
+            resetPalette()
+    except:
+        pass
     return render_template('index.html', user = current_user,active=UI.active,palette=Palette)
 
 @main.route('/settings/', methods=['POST', 'GET'])

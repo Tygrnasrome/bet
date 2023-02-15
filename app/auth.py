@@ -9,6 +9,31 @@ from . import db
 
 auth = Blueprint('auth', __name__)
 
+def resetPalette():
+    palettes = Palettes.query.order_by(Palettes.id).all()
+    used = False
+    for palette in palettes:
+        if palette.user_id == current_user.id:
+            Palette.base = palette.base
+            Palette.hover = palette.hover
+            Palette.selected = palette.selected
+            Palette.divone = palette.divone
+            Palette.divthree = palette.divthree
+            Palette.divtwo = palette.divtwo
+            Palette.body = palette.body
+            Palette.header = palette.header
+            Palette.text = palette.text
+            used = True
+    if not used:
+        Palette.base = Palette.def_base
+        Palette.hover = Palette.def_hover
+        Palette.selected = Palette.def_selected
+        Palette.divone = Palette.def_divone
+        Palette.divthree = Palette.def_divthree
+        Palette.divtwo = Palette.def_divtwo
+        Palette.body = Palette.def_body
+        Palette.header = Palette.def_header
+        Palette.text = Palette.def_text
 
 @auth.route('/login/')
 def login():
@@ -31,6 +56,7 @@ def login_post():
 
     # if the above check passes, then we know the user has the right credentials
     login_user(user, remember=remember)
+    resetPalette()
     return redirect(url_for('auth.profile'))
 
 @auth.route('/signup/')
@@ -79,5 +105,14 @@ def profile():
 @login_required
 def logout():
     logout_user()
+    Palette.base = Palette.def_base
+    Palette.hover = Palette.def_hover
+    Palette.selected = Palette.def_selected
+    Palette.divone = Palette.def_divone
+    Palette.divthree = Palette.def_divthree
+    Palette.divtwo = Palette.def_divtwo
+    Palette.body = Palette.def_body
+    Palette.header = Palette.def_header
+    Palette.text = Palette.def_text
     return redirect(url_for('main.index'))
 
