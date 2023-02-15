@@ -9,6 +9,22 @@ from . import db
 
 data = Blueprint('data', __name__)
 
+@data.route('/upload/', methods=['POST', 'GET'])
+@login_required
+def upload():
+    if current_user.auth == 1:
+        UI.active = "upload"
+        return render_template('upload.html', user = current_user,active=UI.active,palette=Palette)
+    return redirect('/')
+
+@data.route('/backup/', methods=['POST', 'GET'])
+@login_required
+def backup():
+    if current_user.auth == 1:
+        UI.active = "backup"
+        return render_template('downloadBackUp.html', user = current_user,active=UI.active,palette=Palette)
+    return redirect('/')
+
 @data.route('/add/', methods=['POST', 'GET'])
 @login_required
 def addZaznam():

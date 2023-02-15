@@ -78,6 +78,9 @@
 <body>
     <header>
         <ul>
+            <li>
+            <img src="{{url_for('static', filename='images/logo.png')}}" alt="logo" height="58px" style="float: right; margin-top: 5px">
+            </li>
             <li><a href="http://localhost:8080/" {% if active == 'home' %} style="background-color: {{palette.selected}};" {% endif %} >Domů</a></li>
 
             <li><a href="#" {% if active == 'cat' or active == 'records' or active == 'programmer' or active == 'language' %} style="background-color: {{palette.selected}};" {% endif %}>Přehled</a>
@@ -107,13 +110,17 @@
                 </li>
                 {% if user.auth == 1 %}
                     <li><a href="http://localhost:8080/signup" {% if active == 'signup' %} style="background-color: {{palette.selected}};" {% endif %} > registrace nového účtu </a></li>
+                    <li><a href="#" {% if active == 'zalohovat' or active == 'upload' %} style="background-color: {{palette.selected}};" {% endif %}> záloha </a>
+                        <ul class="h">
+                            <li><a href="http://localhost:8080/upload" {% if active == 'upload' %} style="background-color: {{palette.base}};" {% endif %} > nahrát </a></li>
+                            <li><a href="http://localhost:8080/backup" {% if active == 'backup' %} style="background-color: {{palette.base}};" {% endif %}> vytvořit </a></li>
+                        </ul>
+                    </li>
                 {% endif %}
             {% else %}
                 <li><a href="http://localhost:8080/login" {% if active == 'login' %} style="background-color: {{palette.selected}};" {% endif %} > přihlášení </a></li>
             {% endif %}
-
-
-            <img src="{{url_for('static', filename='images/logo.png')}}" alt="logo" height="58px" style="float: right; margin-top: 5px">
+            <li> <a href="/settings/" {% if active == 'settings' %} style="background-color: {{palette.selected}};" {% endif %}><img src="{{url_for('static', filename='images/settings.png')}}" alt="logo" height="27px" style="margin-top: 5px"></a></li>
         </ul>
     </header>
     {% block body %} 

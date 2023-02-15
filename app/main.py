@@ -23,6 +23,24 @@ def index():
     UI.active = "home"
     return render_template('index.html', user = current_user,active=UI.active,palette=Palette)
 
+@main.route('/settings/', methods=['POST', 'GET'])
+@login_required
+def settings():
+    UI.active = 'settings'
+    if request.method == 'GET':
+        return render_template('settings.html', palette = Palette, active= UI.active, user=current_user )
+    else:
+        Palette.base = request.form['base']
+        Palette.hover = request.form['hover']
+        Palette.selected = request.form['selected']
+        Palette.divone = request.form['divone']
+        Palette.divthree = request.form['divthree']
+        Palette.divtwo = request.form['divtwo']
+        Palette.body = request.form['body']
+        Palette.header = request.form['header']
+        Palette.text = request.form['text']
+        return render_template('settings.html', palette = Palette, active= UI.active, user=current_user )
+
 @main.route('/language/')
 @login_required
 def showLanguageTable():
