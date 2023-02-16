@@ -7,7 +7,7 @@
 
 {% block body %}
 <div class="Center">
-    <form action="/programmer/form/" method="post">
+    <form action="/user/form/" method="post">
 
 
         <h1><b>Přidat programátora do výběru</b></h1>
@@ -33,18 +33,18 @@
             <th style="padding-right:  20px;"> Jméno programátora </th>
 
         </tr>
-        {% for programmer in programmers %}
+        {% for usr in users %}
         <tr>
             <td>
-                {{programmer.id}}
+                {{usr.id}}
             </td>
 
             <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">
-                {{programmer.name}}
+                {{usr.name}}
             </td>
             <td>
-                <a href="/programmer/delete/{{programmer.id}}"> smazat</a>
-                <a href="/programmer/update/{{programmer.id}}"> update</a>
+                <a href="/user/delete/{{usr.id}}"> smazat</a>
+                <a href="/user/update/{{usr.id}}"> update</a>
             </td>
         </tr>
         {% endfor %}

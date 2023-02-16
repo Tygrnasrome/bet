@@ -17,12 +17,12 @@
 
                 <td>
                     <select name="name" >
-                        {% for programmer in programmers %}
-                        <option value="{{programmer.id}}"
-                        {% if programmer.id == record.name %}
+                        {% for usr in users %}
+                        <option value="{{usr.id}}"
+                        {% if usr.id == record.name %}
                             selected
                         {% endif %}
-                        >{{programmer.name}}</option>
+                        >{{usr.name}}</option>
                         {% endfor %}
                     </select>
                 </td>

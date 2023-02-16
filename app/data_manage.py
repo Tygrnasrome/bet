@@ -1,10 +1,10 @@
 import sqlite3
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
-from .models import Programator,Denik,Tags,User,Kategorie,Jazyk
+from .models import Denik,Tags,User,Kategorie,Jazyk
 from flask import Blueprint
 from flask_login import login_required, current_user
-from .config import UI,Palette
+from .config import UI,Palette, user_config_auth, backup_config_auth, obj_config_auth
 from . import db
 
 data = Blueprint('data', __name__)
@@ -12,23 +12,27 @@ data = Blueprint('data', __name__)
 @data.route('/upload/', methods=['POST', 'GET'])
 @login_required
 def upload():
-    if current_user.auth == 1:
+    if current_user.auth == backup_config_auth:
         UI.active = "upload"
         return render_template('upload.html', user = current_user,active=UI.active,palette=Palette)
+    flash("Na tuto akci nemáte oprávnění")
     return redirect('/')
 
 @data.route('/backup/', methods=['POST', 'GET'])
 @login_required
 def backup():
-    if current_user.auth == 1:
+    if current_user.auth == backup_config_auth:
         UI.active = "backup"
         return render_template('downloadBackUp.html', user = current_user,active=UI.active,palette=Palette)
+    flash("Na tuto akci nemáte oprávnění")
     return redirect('/')
 
 @data.route('/add/', methods=['POST', 'GET'])
 @login_required
 def addZaznam():
-
+    if not current_user.auth <= obj_config_auth:
+        flash("Na tuto akci nemáte oprávnění")
+        return redirect('/')
     tags = Tags.query.order_by(Tags.id).all()
 
     #pokud nekdo prida neco do databaze, tak se spusti tato cast, a pak se přeseměruje na view /zaznamy/
@@ -57,16 +61,22 @@ def addZaznam():
 @data.route('/form/')
 @login_required
 def showForm():
-    programmers = Programator.query.order_by(Programator.id).all()
+    if not current_user.auth <= obj_config_auth:
+        flash("Na tuto akci nemáte oprávnění")
+        return redirect('/')
+    users = User.query.order_by(User.id).all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
 
     tags = Tags.query.order_by(Tags.id).all()
     UI.active = "addRecord"
-    return render_template('addZaznam.html', user = current_user,active=UI.active,palette=Palette, languages=languages, programmers=programmers, tags=tags)
+    return render_template('addZaznam.html', user = current_user,active=UI.active,palette=Palette, languages=languages, users=users, tags=tags)
 
 @data.route('/language/form/', methods=['POST', 'GET'])
 @login_required
 def showLanguageForm():
+    if not current_user.auth <= obj_config_auth:
+        flash("Na tuto akci nemáte oprávnění")
+        return redirect('/')
     UI.active = "addLanguage"
     if request.method == 'GET':
         languages = Jazyk.query.order_by(Jazyk.id).all()
@@ -85,6 +95,9 @@ def showLanguageForm():
 @data.route('/language/update/<int:id>', methods=['POST', 'GET'])
 @login_required
 def showLanguageUpdateForm(id):
+    if not current_user.auth <= obj_config_auth:
+        flash("Na tuto akci nemáte oprávnění")
+        return redirect('/')
     languages = Jazyk.query.order_by(Jazyk.id).all()
     UI.active = "addJazyk"
     if request.method == 'GET':
@@ -101,61 +114,76 @@ def showLanguageUpdateForm(id):
 @data.route('/language/delete/<int:id>')
 @login_required
 def delLanguage(id):
+    if not current_user.auth <= obj_config_auth:
+        flash("Na tuto akci nemáte oprávnění")
+        return redirect('/')
     language_to_del = Jazyk.query.get_or_404(id)
     db.session.delete(language_to_del)
     db.session.commit()
     return redirect('/language/form/')
 
-@data.route('/programmer/form/', methods=['POST', 'GET'])
+@data.route('/user/form/', methods=['POST', 'GET'])
 @login_required
-def showProgrammerForm():
-    UI.active = "addProgrammer"
+def showUserForm():
+    if not current_user.auth <= user_config_auth:
+        flash("Na tuto akci nemáte oprávnění")
+        return redirect('/')
+    UI.active = "signup"
     if request.method == 'GET':
-        programmers = Programator.query.order_by(Programator.id).all()
-        return render_template('addProgramator.html', user = current_user,active=UI.active,programmers=programmers,palette=Palette)
+        users = User.query.order_by(User.id).all()
+        return render_template('signup.html', user = current_user,active=UI.active,users=users,palette=Palette)
     else:
-        programmer_name = request.form['name']
-        new_programmer = Programator(name=programmer_name)
-        db.session.add(new_programmer)
+        user_name = request.form['name']
+        new_user = User(name=user_name)
+        db.session.add(new_user)
         db.session.commit()
-        programmers = Programator.query.order_by(Programator.id).all()
+        users = User.query.order_by(User.id).all()
         request.method = "GET"
-        return render_template('addProgramator.html', user = current_user,active=UI.active,programmers=programmers,palette=Palette)
+        return render_template('signup.html', user = current_user,active=UI.active,users=users,palette=Palette)
 
-@data.route('/programmer/update/<int:id>', methods=['POST', 'GET'])
+@data.route('/user/update/<int:id>', methods=['POST', 'GET'])
 @login_required
-def showProgrammerUpdateForm(id):
-    UI.active = "addProgrammer"
-    programmers = Programator.query.order_by(Programator.id).all()
+def showUserUpdateForm(id):
+    if not current_user.auth <= user_config_auth:
+        flash("Na tuto akci nemáte oprávnění")
+        return redirect('/')
+    UI.active = "signup"
+    users = User.query.order_by(User.id).all()
     if request.method == 'GET':
-        for programmer in programmers:
-            if(id == programmer.id):
-                return render_template('updateProgramator.html', user = current_user,active=UI.active,programmers=programmers, programmer_to_update=programmer,palette=Palette)
+        for usr in users:
+            if(id == usr.id):
+                return render_template('updateUser.html', user = current_user,active=UI.active,users=users, user_to_update=user,palette=Palette)
     else:
-        for programmer in programmers:
-            if(id == programmer.id):
-                programmer.name = request.form['name']
+        for usr in users:
+            if(id == usr.id):
+                usr.name = request.form['name']
         db.session.commit()
-        programmers = Programator.query.order_by(Programator.id).all()
+        users = User.query.order_by(User.id).all()
         request.method = "GET"
-        return render_template('addProgramator.html', user = current_user,active=UI.active,programmers=programmers,palette=Palette)
+        return render_template('signup.html', user = current_user,active=UI.active,users=users,palette=Palette)
 
-@data.route('/programmer/delete/<int:id>')
+@data.route('/user/delete/<int:id>')
 @login_required
-def delProgrammer(id):
-    programmer_to_del = Programator.query.get_or_404(id)
+def delUser(id):
+    if not current_user.auth <= user_config_auth:
+        flash("Na tuto akci nemáte oprávnění")
+        return redirect('/')
+    user_to_del = User.query.get_or_404(id)
     records = Denik.query.order_by(Denik.id).all()
     for record in records:
-        if(record.name == programmer_to_del.id):
+        if(record.name == user_to_del.id):
             db.session.delete(record)
             db.session.commit()
-    db.session.delete(programmer_to_del)
+    db.session.delete(user_to_del)
     db.session.commit()
-    return redirect('/programmer/form/')
+    return redirect('/user/form/')
 
 @data.route('/cat/form/', methods=['POST', 'GET'])
 @login_required
 def showCatForm():
+    if not current_user.auth <= obj_config_auth:
+        flash("Na tuto akci nemáte oprávnění")
+        return redirect('/')
     UI.active = "addCat"
     if request.method == 'GET':
         tags = Tags.query.order_by(Tags.id).all()
@@ -179,6 +207,9 @@ def showCatForm():
 @data.route('/cat/delete/<int:id>')
 @login_required
 def delCat(id):
+    if not current_user.auth <= obj_config_auth:
+        flash("Na tuto akci nemáte oprávnění")
+        return redirect('/')
     cats = Kategorie.query.order_by(Kategorie.id).all()
     tag_to_del = Tags.query.get_or_404(id)
     for cat in cats:
@@ -194,6 +225,9 @@ def delCat(id):
 @data.route('/cat/update/<int:id>', methods=['POST', 'GET'])
 @login_required
 def updateCatForm(id):
+    if not current_user.auth <= obj_config_auth:
+        flash("Na tuto akci nemáte oprávnění")
+        return redirect('/')
     tags = Tags.query.order_by(Tags.id).all()
     UI.active = "addCat"
     if request.method == 'GET':
@@ -211,17 +245,23 @@ def updateCatForm(id):
 @data.route('/update-form/<int:id>')
 @login_required
 def updateRecord(id):
+    if not current_user.auth <= obj_config_auth:
+        flash("Na tuto akci nemáte oprávnění")
+        return redirect('/')
     record_to_update = Denik.query.get_or_404(id)
     languages = Jazyk.query.order_by(Jazyk.id).all()
     cats = Kategorie.query.order_by(Kategorie.id).all()
     tags = Tags.query.order_by(Tags.id).all()
-    programmers = Programator.query.order_by(Programator.id).all()
+    users = User.query.order_by(User.id).all()
     UI.active = "addRecord"
-    return render_template('update.html', user = current_user,active=UI.active, record=record_to_update,languages=languages, tags=tags, cats=cats, programmers=programmers,palette=Palette)
+    return render_template('update.html', user = current_user,active=UI.active, record=record_to_update,languages=languages, tags=tags, cats=cats, users=users,palette=Palette)
 
 @data.route('/delete/<int:id>')
 @login_required
 def deleteRecord(id):
+    if not current_user.auth <= obj_config_auth:
+        flash("Na tuto akci nemáte oprávnění")
+        return redirect('/')
     record_to_del = Denik.query.get_or_404(id)
 
     cats = Kategorie.query.order_by(Kategorie.id).all()
@@ -237,6 +277,9 @@ def deleteRecord(id):
 @data.route('/update-add/<int:id>', methods=['POST', 'GET'])
 @login_required
 def updateAddZaznam(id):
+    if not current_user.auth <= obj_config_auth:
+        flash("Na tuto akci nemáte oprávnění")
+        return redirect('/')
     record_to_update = Denik.query.get_or_404(id)
     record_to_update.name = request.form['name']
     record_to_update.time_spent = request.form['time_spent']

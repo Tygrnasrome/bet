@@ -1,13 +1,19 @@
 from flask_login import UserMixin
 from . import db
+from datetime import datetime
 
-class Programator(db.Model):
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
+    name = db.Column(db.String(100))
+    auth = db.Column(db.Integer, nullable=False)
+    created_date = db.Column(db.String(30), default=datetime.utcnow)
+#emergency command: record_date = datetime.strptime(record_date, '%Y-%m-%d')
 
 class Denik(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Integer, db.ForeignKey(Programator.id))
+    name = db.Column(db.Integer, db.ForeignKey(User.id))
     jazyk_id = db.Column(db.Integer, nullable=False)
     popis = db.Column(db.String(200), nullable=False)
     hodnoceni = db.Column(db.Integer, nullable=False)
@@ -28,13 +34,6 @@ class Kategorie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     owned_id = db.Column(db.Integer, nullable=False)
     type_id = db.Column(db.Integer, nullable=False)
-
-class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
-    name = db.Column(db.String(1000))
-    auth = db.Column(db.Integer, nullable=False)
 
 class Palettes(db.Model):
     id = db.Column(db.Integer, primary_key=True)

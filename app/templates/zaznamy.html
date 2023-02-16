@@ -50,9 +50,9 @@
         <select name="name" style="width: 200px;">
 
             <option value="0"> všichni </option>
-            {% for programmer in programmers %}
-            <option value="{{programmer.id}}"
-            {% if programmer.id == sel_name %} selected {% endif %}>{{programmer.name}}</option>
+            {% for usr in users %}
+            <option value="{{usr.id}}"
+            {% if usr.id == sel_name %} selected {% endif %}>{{usr.name}}</option>
             {% endfor %}
 
         </select>  
@@ -115,10 +115,10 @@
     {% for record in records %}
     <tr>
         <td>{{record.id}}</td>
-        <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">{% for programmer in programmers %}
+        <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">{% for usr in users %}
 
-            {% if programmer.id == record.name %}
-                {{programmer.name}}
+            {% if usr.id == record.name %}
+                {{usr.name}}
             {% endif %}
         {% endfor %}</td>
 

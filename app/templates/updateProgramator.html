@@ -7,7 +7,7 @@
 
 {% block body %}
 <div class="Center">
-<form action="/programmer/update/{{programmer_to_update.id}}" method="post">
+<form action="/user/update/{{user_to_update.id}}" method="post">
 
 
 
@@ -24,7 +24,7 @@
         Jméno programátora
     </td>
     <td>
-    <input type="text" placeholder="jméno" id="name" name="name" value="{{programmer_to_update.name}}">
+    <input type="text" placeholder="jméno" id="name" name="name" value="{{user_to_update.name}}">
     </tr>
 </table>
     </form>
@@ -37,17 +37,17 @@
             <th> id </th>
             <th> Jméno programátora </th>
         </tr>
-            {% for programmer in programmers %}
+            {% for usr in users %}
             <tr>
                 <td>
-                    {{programmer.id}}
+                    {{usr.id}}
                 </td>
                 <td>
-                    {{programmer.name}}
+                    {{usr.name}}
                 </td>
                 <td>
-                    <a href="/programmer/delete/{{programmer.id}}"> smazat</a>
-                    <a href="/programmer/update/{{programmer.id}}"> smazat</a>
+                    <a href="/user/delete/{{usr.id}}"> smazat</a>
+                    <a href="/user/update/{{usr.id}}"> smazat</a>
                 </td>
             </tr>
             {% endfor %}

@@ -10,37 +10,16 @@
 
     <h1>
         <b>Seznam programátorů</b> 
-     </h1>
-    <table>
-        <tr>
-
-            <th style="padding-right:  20px;"> ID </th>
-            <th style="padding-right:  20px; word-break: normal"> Jméno programátora </th>
-        </tr>
-            {% for programmer in programmers %}
-            <tr>
-                <td>
-                    {{programmer.id}}
-                </td>
-
-                <td style="width: 125px; overflow-wrap: break-word; word-break: break-all;">
-
-                    {{programmer.name}}
-                </td>
-                <td>
-                    <a href="/programmer/delete/{{programmer.id}}"> smazat</a>
-                    <a href="/programmer/update/{{programmer.id}}"> update</a>
-                </td>
-            </tr>
-            {% endfor %}
-
-    </table>
+    </h1>
     <div>
         <table>
             <tr>
 
                 <th style="padding-right:  20px;"> ID </th>
-                <th style="padding-right:  20px; word-break: normal"> Jméno účtu </th>
+                <th style="padding-right:  20px; word-break: normal"> Jméno </th>
+                <th style="padding-right:  20px; word-break: normal"> Pravomoc </th>
+                <th style="padding-right:  20px; word-break: normal"> Email </th>
+
             </tr>
             {% for usr in users %}
             <tr>
@@ -52,10 +31,30 @@
 
                     {{usr.name}}
                 </td>
+                {% if user.auth <= 1 or user.id == usr.id %}
+                <td>
+                    {{usr.auth}}
+                </td>
+                {% else %}
+                <td>
+                    -----
+                </td>
+                {% endif %}
+                {% if user.auth <= 1 or user.id == usr.id %}
+                <td>
+                    {{usr.email}}
+                </td>
+                {% else %}
+                <td>
+                    -----
+                </td>
+                {% endif %}
+                {% if user.auth <= 2 %}
                 <td>
                     <a href="/user/delete/{{usr.id}}"> smazat</a>
                     <a href="/user/update/{{usr.id}}"> update</a>
                 </td>
+                {% endif %}
             </tr>
             {% endfor %}
 

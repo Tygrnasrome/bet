@@ -1,10 +1,11 @@
 import sqlite3
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-from .models import Programator,Denik,Tags,User,Kategorie,Jazyk, Palettes
+from .models import Denik,Tags,User,Kategorie,Jazyk, Palettes
 from flask import Blueprint
 from flask_login import login_required, current_user
 from .config import UI,Palette, Filter
+from werkzeug.security import generate_password_hash
 from . import db
 
 main = Blueprint('main', __name__)
@@ -35,9 +36,17 @@ def resetPalette():
         Palette.header = Palette.def_header
         Palette.text = Palette.def_text
 
+def setAdminAcc():
+    admin_acc = User(id=1,name='Petr Pavel', email='petr@pavel.com', password=generate_password_hash('PetrPavel', method='sha256'), auth=1)
+    db.session.add(admin_acc)
+    db.session.commit()
 @main.route('/')
 def index():
     db.create_all()
+    try:
+        admin_acc = User.query.get_or_404(1)
+    except:
+        setAdminAcc()
     languages = Jazyk.query.order_by(Jazyk.id).all()
     for language in languages:
         Filter.language_dict[int(language.id)] = "on"
@@ -99,13 +108,13 @@ def showLanguageTable():
     UI.active = "language"
     return render_template('jazyky.html', user = current_user,active=UI.active,languages=languages,palette=Palette)
 
-@main.route('/programmer/')
+@main.route('/user/')
 @login_required
-def showTableProgrammer():
-    UI.active = "programmer"
-    programmers = Programator.query.order_by(Programator.id).all()
+def showTableUser():
+    UI.active = "user"
     users = User.query.order_by(User.id).all()
-    return render_template('programatori.html', user = current_user,active=UI.active,programmers=programmers,palette=Palette, users=users)
+    users = User.query.order_by(User.id).all()
+    return render_template('programatori.html', user = current_user,active=UI.active,users=users,palette=Palette)
 
 @main.route('/cat/')
 @login_required
@@ -120,7 +129,7 @@ def zaznamy(serazeni):
     cats = Kategorie.query.order_by(Kategorie.id).all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
     records = db.session.query(Denik).order_by(Denik.date).all()
-    programmers = Programator.query.order_by(Programator.id).all()
+    users = User.query.order_by(User.id).all()
     tags = Tags.query.order_by(Tags.id).all()
     if(serazeni == 1):
         #datum od nejdříve
@@ -227,7 +236,7 @@ def zaznamy(serazeni):
                 if (has == True):
                     records = records.filter(Denik.id != record.id)
     UI.active = "records"
-    return render_template('zaznamy.html', user = current_user,active=UI.active, records=records, languages=languages, programmers=programmers, tags=tags, cats=cats, \
+    return render_template('zaznamy.html', user = current_user,active=UI.active, records=records, languages=languages, users=users, tags=tags, cats=cats, \
     filtered_languages=Filter.language_dict, filtered_tags=Filter.tag_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter. \
     time_to, max_hod=Filter.hodnoceni_to, min_hod=Filter.hodnoceni_from, sel_name=int(Filter.name), serazeni=serazeni,palette=Palette)
 

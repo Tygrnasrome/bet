@@ -23,8 +23,8 @@
                 </td>
                 <td>
                     <select name="name" style="width: 172px;" >
-                        {% for programmer in programmers %}
-                        <option value="{{programmer.id}}">{{programmer.name}}</option>
+                        {% for usr in users %}
+                        <option value="{{usr.id}}">{{usr.name}}</option>
                         {% endfor %}
                     </select>
             </tr>

@@ -12,6 +12,13 @@
          <h1>
            <b>Přihlásit se</b>
         </h1>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
         <h3>
             <b> Všechna pole jsou povinná </b>
         </h3>
@@ -46,5 +53,4 @@
         <p style="text-align: center;">      <input type="submit" value="přihlásit se"> </p>
         <br>
     </form>
-
 {% endblock %}

@@ -12,6 +12,13 @@
          <h1>
            <b>Vytvořit účet</b>
         </h1>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
         <h3>
             <b> všechna pole jsou povinná </b>
         </h3>

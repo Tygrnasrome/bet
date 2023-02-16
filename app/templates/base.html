@@ -83,21 +83,26 @@
             </li>
             <li><a href="http://localhost:8080/" {% if active == 'home' %} style="background-color: {{palette.selected}};" {% endif %} >Domů</a></li>
 
-            <li><a href="#" {% if active == 'cat' or active == 'records' or active == 'programmer' or active == 'language' %} style="background-color: {{palette.selected}};" {% endif %}>Přehled</a>
+            <li><a href="#" {% if active == 'cat' or active == 'records' or active == 'user' or active == 'language' %} style="background-color: {{palette.selected}};" {% endif %}>Přehled</a>
                 <ul class="h">
                     <li><a href="http://localhost:8080/zaznamy/1/" {% if active == 'records' %} style="background-color: {{palette.base}};" {% endif %}>Záznamy</a></li>
                     <li><a href="http://localhost:8080/cat/" {% if active == 'cat' %} style="background-color: {{palette.base}};" {% endif %}>Štítky</a></li>
-                    <li><a href="http://localhost:8080/programmer/" {% if active == 'programmer' %} style="background-color: {{palette.base}};" {% endif %}>Programátoři</a></li>
+                    <li><a href="http://localhost:8080/user/" {% if active == 'user' %} style="background-color: {{palette.base}};" {% endif %}>Programátoři</a></li>
                     <li><a href="http://localhost:8080/language/" {% if active == 'language' %} style="background-color: {{palette.base}};" {% endif %}>Programovací jazyky</a></li>
                 </ul>
             </li>
 
-            <li><a href="#" {% if active == 'addCat' or active == 'addRecord' or active == 'addProgrammer' or active == 'addLanguage' %} style="background-color: {{palette.selected}};" {% endif %}>Přidat</a>
+            <li><a href="#" {% if active == 'addCat' or active == 'addRecord' or active == 'signup' or active == 'addLanguage' %} style="background-color: {{palette.selected}};" {% endif %}>Přidat</a>
               <ul class="h">
-                 <li><a href="http://localhost:8080/form/" {% if active == 'addRecord' %} style="background-color: {{palette.base}};" {% endif %}><b>Záznam</b></a></li>
-                 <li><a href="http://localhost:8080/cat/form" {% if active == 'addCat' %} style="background-color: {{palette.base}};" {% endif %}><b>Štítek</b></a></li>
-                 <li><a href="http://localhost:8080/programmer/form" {% if active == 'addProgrammer' %} style="background-color: {{palette.base}};" {% endif %}><b>Programátora</b></a></li>
-                 <li><a href="http://localhost:8080/language/form" {% if active == 'addLanguage' %} style="background-color: {{palette.base}};" {% endif %}><b>Programovací jazyk</b></a></li>
+                <li><a href="http://localhost:8080/form/" {% if active == 'addRecord' %} style="background-color: {{palette.base}};" {% endif %}><b>Záznam</b></a></li>
+                <li><a href="http://localhost:8080/cat/form" {% if active == 'addCat' %} style="background-color: {{palette.base}};" {% endif %}><b>Štítek</b></a></li>
+                <li><a href="http://localhost:8080/language/form" {% if active == 'addLanguage' %} style="background-color: {{palette.base}};" {% endif %}><b>Programovací jazyk</b></a></li>
+                {% if user.id %}
+                    {% if user.auth <= 2 %}
+                        <li><a href="http://localhost:8080/user/form" {% if active == 'signup' %} style="background-color: {{palette.base}};" {% endif %}><b>Účet</b></a></li>
+                    {% endif %}
+                {% endif %}
+
               </ul>
             </li>
 
@@ -109,7 +114,6 @@
                     </ul>
                 </li>
                 {% if user.auth == 1 %}
-                    <li><a href="http://localhost:8080/signup" {% if active == 'signup' %} style="background-color: {{palette.selected}};" {% endif %} > registrace nového účtu </a></li>
                     <li><a href="#" {% if active == 'zalohovat' or active == 'upload' %} style="background-color: {{palette.selected}};" {% endif %}> záloha </a>
                         <ul class="h">
                             <li><a href="http://localhost:8080/upload" {% if active == 'upload' %} style="background-color: {{palette.base}};" {% endif %} > nahrát </a></li>
