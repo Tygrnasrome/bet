@@ -55,7 +55,7 @@
             {% if usr.id == sel_name %} selected {% endif %}>{{usr.name}}</option>
             {% endfor %}
 
-        </select>  
+        </select>
         <h4>Štítky</h4>
             <input type="checkbox" id="bezkatky0" name="0" 
             {% if filtered_tags[0] == "on" %}
@@ -104,11 +104,11 @@
     <tr>
         <th style="padding-right:  20px; text-align: left;">id</th>
         <th style="padding-right:  20px; text-align: left;">jméno</th>
-        <th style="padding-right:  20px; text-align: left;">jazyk</th>
-        <th style="padding-right:  20px; text-align: left;">čas strávený v min</th>
+        <th style="padding-right:  20px; text-align: left;"><a href="http://localhost:8080/zaznamy/7/">jazyk</a></th>
+        <th style="padding-right:  20px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 3 %}4{% else %}3{% endif %}/">čas strávený v min</a></th>
         <th style="text-align: left;">popis</th>
-        <th style="padding-right:  30px; text-align: left;">datum</th>
-        <th style="padding-right:  30px; text-align: left;">hodnoceni</th>
+        <th style="padding-right:  30px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 1 %}2{% else %}1{% endif %}/">datum</a></th>
+        <th style="padding-right:  30px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 5 %}6{% else %}5{% endif %}/">hodnoceni </a></th>
         <th style="padding-right:  30px; text-align: left;">Štítky</th>
         <th style="padding-right:  30px; text-align: left;">možnosti</th>
     </tr>
@@ -147,8 +147,10 @@
                 {% endif %}
             {% endfor %}
         </td>
+        {% if user.auth <= 2 or user.id == record.name %}
         <td> <a href="/update-form/{{record.id}}"> upravit</a>  <br>
             <a href="/delete/{{record.id}}"> smazat</a>  </td>
+        {% endif %}
     </tr>
     {% endfor %}
     </table>

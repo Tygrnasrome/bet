@@ -10,6 +10,32 @@
     <div>
         <h1>{{user.name}}</h1>
         <h2>{{user.email}}</h2>
+        <h3>{{user.date_created}}</h3>
+    </div>
+    <div>
+        <h1>
+            Aktivita
+        </h1>
+        {% if stat['num'] > 0 %}
+        <div>
+            <div>
+                <h3>Počet záznamů</h3>
+                {{stat['num']}}
+            </div>
+            <div>
+                <h3>Strávený čas programováním</h3>
+                {{stat['time']}} min
+            </div>
+            <div>
+                <h3>Používané jazyky</h3>
+                {% for language in languages %}
+                {% if stat[language.id] != 0 %}
+                    {{language.name}}: {{stat[language.id]/stat['time'] *100}}%
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
     </div>
     <div >
         <h1>Nastavení</h1>

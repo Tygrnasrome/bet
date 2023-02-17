@@ -3,7 +3,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
-from .models import User, Palettes
+from .models import User, Palettes, Denik, Jazyk
 from .config import Palette, UI
 from . import db
 
@@ -99,10 +99,19 @@ def signup_post():
 @login_required
 def profile():
     palettes = Palettes.query.order_by(Palettes.id).all()
+    languages = Jazyk.query.order_by(Jazyk.id).all()
+    records = Denik.query.filter_by(name=current_user.id).all()
+    stat = {'num':0, 'time':0}
+    for language in languages:
+        stat[int(language.id)] = int(0)
+    for record in records:
+        stat['num'] += 1
+        stat['time'] += record.time_spent
+        stat[int(record.jazyk_id)] += record.time_spent
     for palette in palettes:
         if palette.user_id == current_user.id:
-            return render_template('profile.html', user = current_user ,active=UI.active, palette=Palette, user_palette=palette)
-    return render_template('profile.html', user = current_user ,active=UI.active, palette=Palette, user_palette=Palette)
+            return render_template('profile.html', user = current_user ,active=UI.active, palette=Palette, user_palette=palette, stat=stat, languages=languages)
+    return render_template('profile.html', user = current_user ,active=UI.active, palette=Palette, user_palette=Palette, stat=stat, languages=languages)
 
 @auth.route('/logout/')
 @login_required

@@ -24,7 +24,9 @@
                 <td>
                     <select name="name" style="width: 172px;" >
                         {% for usr in users %}
+                        {% if user.auth <= 2 or usr.id == user.id %}
                         <option value="{{usr.id}}">{{usr.name}}</option>
+                        {% endif %}
                         {% endfor %}
                     </select>
             </tr>

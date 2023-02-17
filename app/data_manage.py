@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from .models import Denik,Tags,User,Kategorie,Jazyk
 from flask import Blueprint
 from flask_login import login_required, current_user
-from .config import UI,Palette, user_config_auth, backup_config_auth, obj_config_auth
+from .config import UI,Palette, user_config_auth, backup_config_auth, obj_config_auth, Filter
 from . import db
 
 data = Blueprint('data', __name__)

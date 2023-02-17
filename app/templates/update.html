@@ -18,11 +18,13 @@
                 <td>
                     <select name="name" >
                         {% for usr in users %}
+                        {% if user.auth <= 2 or usr.id == user.id %}
                         <option value="{{usr.id}}"
                         {% if usr.id == record.name %}
                             selected
                         {% endif %}
                         >{{usr.name}}</option>
+                        {% endif %}
                         {% endfor %}
                     </select>
                 </td>
