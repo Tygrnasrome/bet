@@ -4,9 +4,9 @@ from datetime import datetime
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), unique=True)
+    email = db.Column(db.String(100))
     password = db.Column(db.String(100))
-    name = db.Column(db.String(100))
+    name = db.Column(db.String(100), unique=True)
     auth = db.Column(db.Integer, nullable=False)
     created_date = db.Column(db.String(30), default=datetime.utcnow)
 #emergency command: record_date = datetime.strptime(record_date, '%Y-%m-%d')

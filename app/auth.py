@@ -43,19 +43,29 @@ def login():
 
 @auth.route('/login/', methods=['POST'])
 def login_post():
-    email = request.form.get('email')
+    name = request.form.get('name')
+    if name == '':
+        flash('Vyplňte prosím povinná pole')
+        return redirect(url_for('auth.login')) # pokud není zadáno jméno, nebo email správně
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
 
-    user = User.query.filter_by(email=email).first()
+    user_name = User.query.filter_by(name=name).first()
+    user_email = User.query.filter_by(email=name).first()
+    user = user_name
+    if not user_name and not user_email:
+        flash('Špatné přihlašovací údaje')
+        return redirect(url_for('auth.login')) # pokud není zadáno jméno, nebo email správně
+    if not user_name:
+        user = user_email
+        if not check_password_hash(user_email.password, password):
+            flash('Špatné heslo (emailový login)')
+            return redirect(url_for('auth.login')) # špatné heslo u email loginu
+    else:
+        if not check_password_hash(user_name.password, password):
+                    flash('Špatné heslo')
+                    return redirect(url_for('auth.login')) # špatné heslo u name loginu
 
-    # check if user actually exists
-    # take the user supplied password, hash it, and compare it to the hashed password in database
-    if not user or not check_password_hash(user.password, password): 
-        flash('Please check your login details and try again.')
-        flash(user.password)
-        flash(password)
-        return redirect(url_for('auth.login')) # if user doesn't exist or password is wrong, reload the page
 
     # if the above check passes, then we know the user has the right credentials
     login_user(user, remember=remember)
@@ -67,6 +77,7 @@ def login_post():
 def signup():
     UI.active = "signup"
     if current_user.auth > 1:
+        flash('Na tuto akci nemáte oprávnění')
         redirect(url_for('main.index'))
     return render_template('signup.html', user = current_user,active=UI.active, palette=Palette)
 
@@ -80,10 +91,16 @@ def signup_post():
     password = request.form.get('password')
     auth = request.form.get('auth')
 
-    user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
+    user = User.query.filter_by(email=email).first() # pokud vrátí user, email je již v databázi
 
-    if user: # if a user is found, we want to redirect back to signup page so user can try again  
-        flash('Email address already exists')
+    if user and not email == '':
+        flash('Tento email je již využívaný jiným účtem')
+        return redirect(url_for('auth.signup'))
+
+    user = User.query.filter_by(name=name).first() # pokud vrátí user, jméno je již v databázi
+
+    if user:
+        flash('Toto jméno je již využívané')
         return redirect(url_for('auth.signup'))
 
     # create new user with the form data. Hash the password so plaintext version isn't saved.
@@ -94,6 +111,37 @@ def signup_post():
     db.session.commit()
 
     return redirect(url_for('auth.login'))
+
+@auth.route('/change/email', methods=['GET','POST'])
+@login_required
+def changeEmail():
+    if request.method == 'GET':
+        return render_template('changeEmail.html', user = current_user ,active=UI.active, palette=Palette)
+    else:
+        email = request.form.get('email')
+        user = User.query.filter_by(email=email).first()
+        if user and not email == '':
+            flash('Tento email je již využívaný jiným účtem')
+            return redirect(url_for('auth.changeEmail'))
+        current_user.email = email
+        db.session.commit()
+        return redirect(url_for('auth.profile'))
+
+@auth.route('/change/password', methods=['GET','POST'])
+@login_required
+def changePassword():
+    if request.method == 'GET':
+        return render_template('changePassword.html', user = current_user ,active=UI.active, palette=Palette)
+    else:
+        password = request.form.get('password')
+        password_again = request.form.get('password_again')
+        user = User.query.filter_by(email=email).first()
+        if user and not email == '':
+            flash('Tento email je již využívaný jiným účtem')
+            return redirect(url_for('auth.changeEmail'))
+        current_user.email = email
+        db.session.commit()
+        return redirect(url_for('auth.profile'))
 
 @auth.route('/profile/')
 @login_required

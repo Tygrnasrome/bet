@@ -37,14 +37,14 @@ def resetPalette():
         Palette.text = Palette.def_text
 
 def setAdminAcc():
-    admin_acc = User(id=1,name='Petr Pavel', email='petr@pavel.com', password=generate_password_hash('PetrPavel', method='sha256'), auth=1)
+    admin_acc = User(id=0,name='admin', email='', password=generate_password_hash('1234', method='sha256'), auth=1)
     db.session.add(admin_acc)
     db.session.commit()
 @main.route('/')
 def index():
     db.create_all()
     try:
-        admin_acc = User.query.get_or_404(1)
+        admin_acc = User.query.get_or_404(0)
     except:
         setAdminAcc()
     languages = Jazyk.query.order_by(Jazyk.id).all()
@@ -123,6 +123,11 @@ def showCatTable():
     UI.active = "cat"
     return render_template('kategorie.html', user = current_user,active=UI.active, tags=tags,palette=Palette)
 
+@main.route('/redirect/my/history/', methods=['GET'])
+@login_required
+def redirectHistory():
+    Filter.name = current_user.id
+    return redirect('/zaznamy/1/')
 @main.route('/zaznamy/<int:serazeni>/', methods=['POST', 'GET'])
 @login_required
 def zaznamy(serazeni):

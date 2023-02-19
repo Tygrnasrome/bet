@@ -7,10 +7,27 @@
 
 {% block body %}
 <div>
+    <h1>{{user.name}}</h1>
+    <h3> profil účtu </h3>
     <div>
-        <h1>{{user.name}}</h1>
-        <h2>{{user.email}}</h2>
-        <h3>{{user.date_created}}</h3>
+        <h1>Osobní informace</h1>
+        <h2>Jméno: </h2> {{user.name}}
+        <h2>Email: </h2>
+            {% if user.email %}
+            {{user.email}}
+            {% else %}
+            nemáte přiřazený žádný email
+            {% endif %}
+            <a href="/change/email">změnit</a>
+        <h2>Pravomoc: </h2>
+        {% if user.auth == 1 %}
+        admin
+        {% else %}
+        zaměstnanec
+        {% endif %}
+        <h2>Heslo</h2>
+        <a href="/change/password">změnit</a>
+        <h2> datum založení účtu: </h2> {{user.created_date}}
     </div>
     <div>
         <h1>
@@ -34,7 +51,10 @@
                 {% endif %}
                 {% endfor %}
             </div>
+            <a href="/redirect/my/history/">Zobrazit historii </a>
         </div>
+        {% else %}
+         Ještě nemáte žádné záznamy, pro sledování aktivity si je vytvořte <a href="/form/">zde</a>
         {% endif %}
     </div>
     <div >
