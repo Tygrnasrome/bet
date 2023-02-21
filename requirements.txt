@@ -4,3 +4,4 @@ sqlalchemy
 flask_sqlalchemy
 Flask-SQLAlchemy
 flask_login
+falcon
