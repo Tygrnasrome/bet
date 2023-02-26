@@ -1,26 +1,12 @@
-#import os
+import falcon
 
-#import sqlite3
-#from flask import Flask, render_template, request, redirect
-#from flask_sqlalchemy import SQLAlchemy
-#from datetime import datetime
+class PersonalDetailsResource():
 
-#app = Flask(__name__)
-
-#app.config.from_mapping(
-#    DATABASE=os.path.join(app.instance_path, 'tourdeflask.sqlite'),
-#)
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///denik.db'
-#db = SQLAlchemy(app)
-
-
-# ensure the instance folder exists
-#try:
-#    os.makedirs(app.instance_path)
-#except OSError:
-#    pass
-
-
-
-#if __name__ == '__main__':
-#    app.run(debug=true)
+    def on_get(self, request, response):
+        response.status = '200 OK'
+        response.set_header('Content-Type', 'text/plain')
+        response.body = (
+            'name: Honza\n'
+            'surname: Javorek\n'
+            'Socks_size: 42\n'
+        )

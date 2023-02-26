@@ -1,5 +1,6 @@
 import sqlite3
-from flask import Flask, render_template, request, redirect
+import json
+from flask import Flask, render_template, request, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from .models import Denik,Tags,User,Kategorie,Jazyk, Palettes
 from flask import Blueprint
@@ -7,6 +8,7 @@ from flask_login import login_required, current_user
 from .config import UI,Palette, Filter
 from werkzeug.security import generate_password_hash
 from . import db
+
 
 main = Blueprint('main', __name__)
 
@@ -287,3 +289,10 @@ def OGzaznamy():
         pass
 
     return redirect('/zaznamy/1/')
+@main.route('/API', methods=['GET'])
+def get_API():
+    data = []
+    records = db.session.query(Denik).order_by(Denik.id).all()
+    for record in records:
+        data.append(record.id)
+    return jsonify(data)
