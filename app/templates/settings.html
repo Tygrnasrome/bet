@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
+<title>Nastavení</title>
 <link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}" >
 
 {% endblock %}
@@ -9,17 +10,17 @@
 
 <div >
     <h1>Nastavení</h1>
-    <h2>barvy</h2>
+    <h2>Barvy</h2>
     <form action="/settings/" method="post">
         <table>
             <tr>
                 <td>
-                    <h3>text</h3>
+                    <h3>Text</h3>
                 </td>
             </tr>
             <tr>
                 <td>
-                    odstavce
+                    Odstavce
                 </td>
                 <td>
                     <input type="color" name="text" id="text" value="{{palette.text}}">
@@ -27,7 +28,7 @@
             </tr>
             <tr>
                 <td>
-                    nadpisy
+                    Nadpisy
                 </td>
                 <td>
                     <input type="color" name="header" id="header" value="{{palette.header}}">
@@ -35,13 +36,13 @@
             </tr>
             <tr>
                 <td>
-                    <h3>horní lišta</h3>
+                    <h3>Horní lišta</h3>
                 </td>
 
             </tr>
             <tr>
                 <td>
-                    základ
+                    Základ
                 </td>
                 <td>
                     <input type="color" name="base" id="base" value="{{palette.base}}">
@@ -49,7 +50,7 @@
             </tr>
             <tr>
                 <td>
-                    aktivní
+                    Aktivní
                 </td>
                 <td>
                     <input type="color" name="selected" id="selected" value="{{palette.selected}}">
@@ -57,7 +58,7 @@
             </tr>
             <tr>
                 <td>
-                    přejetí myši
+                    Přejetí myši
                 </td>
                 <td>
                     <input type="color" name="hover" id="hover" value="{{palette.hover}}">
@@ -70,7 +71,7 @@
             </tr>
             <tr>
                 <td>
-                    aplikace
+                    Aplikace
                 </td>
                 <td>
                     <input type="color" name="body" id="body" value="{{palette.body}}">
@@ -78,7 +79,7 @@
             </tr>
             <tr>
                 <td>
-                    jednoho odstavce
+                    Jednoho odstavce
                 </td>
                 <td>
                     <input type="color" name="divone" id="divone" value="{{palette.divone}}">
@@ -86,7 +87,7 @@
             </tr>
             <tr>
                 <td>
-                    dvou odstavců
+                    Dvou odstavců
                 </td>
                 <td>
                     <input type="color" name="divtwo" id="divtwo" value="{{palette.divtwo}}">
@@ -94,14 +95,14 @@
             </tr>
             <tr>
                 <td>
-                    tří odstavců
+                    Tří odstavců
                 </td>
                 <td>
                     <input type="color" name="divthree" id="divthree" value="{{palette.divthree}}">
                 </td>
             </tr>
         </table>
-        <input type="submit" value="změnit barvy">
+        <input type="submit" value="Změnit Barvy" width="auto">
     </form>
 </div>
 {% endblock %}

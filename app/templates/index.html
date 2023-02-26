@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
-{% block head %} 
+{% block head %}
+<title>Domov</title>
 <link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}" >
 
 {% endblock %}
@@ -16,7 +17,7 @@
     {% endif %}
     {% endwith %}
 </div>
-<div class="Center">
+<div>
     <h1>Programátorský deník</h1>
     <h4>Co to je?</h4>
     Tato aplikace je deník, ve kterém si můžete ukládat, co jste v jakém programovacím jazyce dělali <br> Tady si můžete ukládat programovací jazyky, programátory, pracuje-li Vás na projektu více, hodnotit práci, zadat čas, jak dlouho jste nad tím strávili a popisovat, co se kde dělalo.
