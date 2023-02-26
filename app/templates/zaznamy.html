@@ -111,7 +111,7 @@
         <th style="padding-right:  20px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 3 %}4{% else %}3{% endif %}/">Čas strávený v min</a></th>
         <th style="text-align: left;">Popis</th>
         <th style="padding-right:  30px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 1 %}2{% else %}1{% endif %}/">Datum</a></th>
-        <th style="padding-right:  30px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 5 %}6{% else %}5{% endif %}/">Hodnocení </a></th>
+        <th style="padding-right:  30px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 5 %}6{% else %}5{% endif %}/">Hodnocení</a></th>
         <th style="padding-right:  30px; text-align: left;">Štítky</th>
         <th style="padding-right:  30px; text-align: left;">Možnosti</th>
     </tr>
@@ -152,7 +152,7 @@
         </td>
         {% if user.auth <= 2 or user.id == record.name %}
         <td> <a href="/update-form/{{record.id}}"> upravit</a>  <br>
-            <a href="/delete/{{record.id}}" class="smazat"> smazat</a>  </td>
+            <a href="/delete/{{record.id}}" > smazat</a>  </td>
         {% endif %}
     </tr>
     {% endfor %}
