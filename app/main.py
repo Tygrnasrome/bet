@@ -300,3 +300,26 @@ def get_API():
     for record in records:
         data.append([record.id,record.date,record.time_spent,language_dict[record.jazyk_id],record.hodnoceni, record.popis])
     return jsonify(data)
+@main.route('/API/ID/<int:id>', methods=['GET'])
+def get_API_by_ID(id):
+    data = []
+    language_dict = {}
+    records = db.session.query(Denik).filter_by(id=id)
+    languages = db.session.query(Jazyk).order_by(Jazyk.id).all()
+    for language in languages:
+        language_dict[language.id] = language.name
+    for record in records:
+        data.append([record.id,record.date,record.time_spent,language_dict[record.jazyk_id],record.hodnoceni, record.popis])
+    return jsonify(data)
+"""
+@main.route('/API/PL/<str:prog_lang>', methods=['GET'])
+def get_API_by_prog_lang(prog_lang):
+    data = []
+    language_dict = {}
+    records = db.session.query(Denik).filter_by(id=id)
+    languages = db.session.query(Jazyk).order_by(Jazyk.id).all()
+    for language in languages:
+        language_dict[language.id] = language.name
+    for record in records:
+        data.append([record.id,record.date,record.time_spent,language_dict[record.jazyk_id],record.hodnoceni, record.popis])
+    return jsonify(data) """
