@@ -87,7 +87,11 @@
                 <ul class="h">
                     <li><a href="http://localhost:8080/zaznamy/1/" {% if active == 'records' %} style="background-color: {{palette.base}};" {% endif %}>Záznamy</a></li>
                     <li><a href="http://localhost:8080/cat/" {% if active == 'cat' %} style="background-color: {{palette.base}};" {% endif %}>Štítky</a></li>
-                    <li><a href="http://localhost:8080/user/" {% if active == 'user' %} style="background-color: {{palette.base}};" {% endif %}>Programátoři</a></li>
+                    {% if user.name %}
+                        {% if user.auth <= 1 %}
+                            <li><a href="http://localhost:8080/user/" {% if active == 'user' %} style="background-color: {{palette.base}};" {% endif %}>Programátoři</a></li>
+                        {% endif %}
+                    {% endif %}
                     <li><a href="http://localhost:8080/language/" {% if active == 'language' %} style="background-color: {{palette.base}};" {% endif %}>Programovací jazyky</a></li>
                 </ul>
             </li>
@@ -114,12 +118,7 @@
                     </ul>
                 </li>
                 {% if user.auth == 1 %}
-                    <li><a href="#" {% if active == 'zalohovat' or active == 'upload' %} style="background-color: {{palette.selected}};" {% endif %}> záloha </a>
-                        <ul class="h">
-                            <li><a href="http://localhost:8080/upload" {% if active == 'upload' %} style="background-color: {{palette.base}};" {% endif %} > nahrát </a></li>
-                            <li><a href="http://localhost:8080/backup" {% if active == 'backup' %} style="background-color: {{palette.base}};" {% endif %}> vytvořit </a></li>
-                        </ul>
-                    </li>
+                    <li><a href="http://localhost:8080/backup" {% if active == 'backup' %} style="background-color: {{palette.selected}};" {% endif %}> zálohy </a></li>
                 {% endif %}
             {% else %}
                 <li><a href="http://localhost:8080/login" {% if active == 'login' %} style="background-color: {{palette.selected}};" {% endif %} > přihlášení </a></li>

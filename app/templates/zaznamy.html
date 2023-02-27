@@ -46,10 +46,11 @@
         <input type="number" placeholder="do" name="hodnoceni_to" value="{{max_hod}}" required style="width: 55px;">
         <br>
         <br>
+        {% if user.auth <= 1 %}
        <h4>Programátor</h4>
         <select name="name" style="width: 200px;">
 
-            <option value="0"> všichni </option>
+            <option value="-1"> všichni </option>
             {% for usr in users %}
             <option value="{{usr.id}}"
             {% if usr.id == sel_name %} selected {% endif %}>{{usr.name}}</option>
@@ -58,6 +59,7 @@
         </select>
         <br>
         <br>
+        {% endif %}
         <h4>Štítky</h4>
             <input type="checkbox" id="bezkatky0" name="0" 
             {% if filtered_tags[0] == "on" %}
@@ -116,45 +118,47 @@
         <th style="padding-right:  30px; text-align: left;">Možnosti</th>
     </tr>
     {% for record in records %}
-    <tr>
-        <td>{{record.id}}</td>
-        <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">{% for usr in users %}
+        {% if user.auth <= 1 or user.id == record.name %}
+        <tr>
+            <td>{{record.id}}</td>
+            <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">{% for usr in users %}
 
-            {% if usr.id == record.name %}
-                {{usr.name}}
-            {% endif %}
-        {% endfor %}</td>
-
-        <td style=" text-align: center;">
-
-            {% for language in languages %}
-                {% if language.id == record.jazyk_id %}
-                    {{language.name}}
+                {% if usr.id == record.name %}
+                    {{usr.name}}
                 {% endif %}
-            {% endfor %}
+            {% endfor %}</td>
+
+            <td style=" text-align: center;">
+
+                {% for language in languages %}
+                    {% if language.id == record.jazyk_id %}
+                        {{language.name}}
+                    {% endif %}
+                {% endfor %}
+                </td>
+            
+            <td style="text-align: center;">{{record.time_spent}}</td>
+            <td style=" width: 200px; word-wrap: break-word; word-break: break-all;">{{record.popis}}</td>
+            <td>{{record.date}}</td>
+            <td style="text-align: center;">{{record.hodnoceni}}</td>
+            <td>
+                {% for cat in cats %}
+                    {% if cat.owned_id == record.id %}
+                        {% for tag in tags %}
+                            {% if cat.type_id == tag.id %}
+                            <p style="color: {{tag.barva}};">{{tag.name}}</p>
+                                <br>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
             </td>
-        
-        <td style="text-align: center;">{{record.time_spent}}</td>
-        <td style=" width: 200px; word-wrap: break-word; word-break: break-all;">{{record.popis}}</td>
-        <td>{{record.date}}</td>
-        <td style="text-align: center;">{{record.hodnoceni}}</td>
-        <td>
-            {% for cat in cats %}
-                {% if cat.owned_id == record.id %}
-                    {% for tag in tags %}
-                        {% if cat.type_id == tag.id %}
-                        <p style="color: {{tag.barva}};">{{tag.name}}</p>
-                             <br>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            {% endfor %}
-        </td>
-        {% if user.auth <= 2 or user.id == record.name %}
-        <td> <a href="/update-form/{{record.id}}"> upravit</a>  <br>
-            <a href="/delete/{{record.id}}" > smazat</a>  </td>
+            {% if user.auth <= 1 or user.id == record.name %}
+            <td> <a href="/update-form/{{record.id}}"> upravit</a>  <br>
+                <a href="/delete/{{record.id}}" > smazat</a>  </td>
+            {% endif %}
+        </tr>
         {% endif %}
-    </tr>
     {% endfor %}
     </table>
 </div>

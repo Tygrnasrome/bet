@@ -3,8 +3,6 @@ import os
 from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-
-
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 
@@ -20,7 +18,8 @@ def create_app():
     app.config.from_mapping(
         DATABASE=os.path.join(app.instance_path, 'tourdeflask.sqlite'),
     )
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///denik.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///denik.db'    
+    app.config['UPLOAD_FOLDER'] = os.path.abspath("app/static/backups/") #useless command (no impact on code)
     db.init_app(app)
 
     login_manager = LoginManager()
@@ -48,7 +47,6 @@ def create_app():
     @login_manager.unauthorized_handler
     def unauthorized_handler():
         return redirect(url_for('auth.login'))
-
     return app
 
 # ensure the instance folder exists

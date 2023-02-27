@@ -1,11 +1,11 @@
 import sqlite3
 import json
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect, jsonify, flash
 from flask_sqlalchemy import SQLAlchemy
 from .models import Denik,Tags,User,Kategorie,Jazyk, Palettes
 from flask import Blueprint
 from flask_login import login_required, current_user
-from .config import UI,Palette, Filter
+from .config import UI,Palette, Filter, obj_config_auth
 from werkzeug.security import generate_password_hash
 from . import db
 
@@ -113,6 +113,9 @@ def showLanguageTable():
 @main.route('/user/')
 @login_required
 def showTableUser():
+    if not current_user.auth <= obj_config_auth:
+        flash("Na tuto akci nemáte oprávnění","error")
+        return redirect('/')
     UI.active = "user"
     users = User.query.order_by(User.id).all()
     users = User.query.order_by(User.id).all()
@@ -214,10 +217,13 @@ def zaznamy(serazeni):
         Filter.hodnoceni_to = request.form['hodnoceni_to']
         Filter.hodnoceni_from = request.form['hodnoceni_from']
         Filter.hodnoceni_to = request.form['hodnoceni_to']
-        Filter.name = request.form['name']
+        try:
+            Filter.name = request.form['name']
+        except:
+            Filter.name = current_user.id
 
     #zde se provádí filtrace
-    if (int(Filter.name) != int(0)):
+    if (int(Filter.name) != int(-1)):
         records = records.filter(Denik.name == Filter.name)
     records = records.filter(Denik.date <= Filter.date_to).filter(Denik.date >= Filter.date_from)
     records = records.filter(Denik.time_spent >= Filter.time_from).filter(Denik.time_spent <= Filter.time_to)

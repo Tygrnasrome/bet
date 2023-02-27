@@ -1,0 +1,20 @@
+obj_type,id,name,jazyk_id,popis,hodnoceni,date,time_spent
+record,1,1,2,hej,4,2023-02-02,84
+record,2,0,1,okay,5,2023-02-09,52
+record,3,1,2,not working,5,2023-01-30,3
+record,4,0,2,kkkk,5,2023-02-02,8
+record,5,1,1,nono,1,2023-02-02,99
+obj_type,id,name,email,password,auth,created_date
+user,0,admin,,sha256$bmysEP1HZ9O8acb3$8e00728682a3f48954b24ce56aef27bd15cf9aa80ce93cf0034c2ecb2c701366,1,2023-02-19 14:34:24.041918
+user,1,Pavel Škop,pskop.k10@gmail.com,sha256$Q43whodaOoKbcQOw$8c3eb8be32955d96e7874c9fa85def4f87a8091b3f319a13cf00d98e37640dc1,2,2023-02-19 18:03:09.520228
+obj_type,id,name
+language,1,Python
+language,2,Java
+language,3,HolyC
+language,4,C
+language,5,C++
+obj_type,id,name,barva,popis
+tag,1,nefunk4n9,#bf2222,kdo ví
+obj_type,id,owned_id,type_id
+cat,1,4,1
+obj_type,id,user_id,base,selected,hover,text,header,body,divone,divtwo,divthree

@@ -7,8 +7,65 @@
 {% endblock %}
 
 {% block body %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div>
+<p>{{ message }}</p>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
 <div class="Center">
-    <h1>Stáhnout si zálohový soubor</h1>
-    <h2>Vyčkejte na počátek stahování</h2>
+    <h1>Zálohovat aktuální data</h1>
+    <form action="/backup/" method="post">
+    <table>
+        <tr>
+            <td>
+                název/popis zálohy (čas zálohy bude uložen automaticky)
+            </td>
+            <td>
+                
+                    <input type="text" name="desc" id="desc" required>
+                
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Zazálohovat">
+    </form>
+    <h1> Importovat zálohu ze souboru </h1>
+    <h2> Připojte soubor </h2>
+    <form action = "/upload/" method = "post" 
+    enctype = "multipart/form-data">
+        <input type = "file" name = "file" required/>
+        <input type = "text" name="desc" id="desc" required/>
+        <input type="submit" value="importovat soubor">
+        
+    </form>   
+</div>
+<div>
+    <h1>
+        Seznam všech záloh
+    </h1>
+    <h2>
+        Při použití zálohy budou ztracena všechna neuložená data
+    </h2>
+    <table>
+        <tr>
+            <th> čas </th>
+            <th> název / popis </th>
+        </tr>
+        {% for backup in backup_dict %}
+        <tr>
+            <td> {{backup}}</td>
+            <td> {{backup_dict[backup]}}</td>
+            <td>
+                <a href="/backup/download/{{backup}}"> stáhnout</a>
+                <a href="/backup/use/{{backup}}"> použít </a>
+                <a href="/backup/delete/{{backup}}"> smazat</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 </div>
 {% endblock %}
