@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block head %} 
+{% block head %}
+<title>Domov</title>
 <link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}" >
 
 {% endblock %}
 
 {% block body %}
-
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     {% for message in messages %}

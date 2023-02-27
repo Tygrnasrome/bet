@@ -6,13 +6,13 @@
 {% endblock %}
 
 {% block body %}    
-<div class="Vlevo">
+<div>
     <h1>
       <b> Záznamy v deníku </b>
     </h1>
     <form action="/zaznamy/{{serazeni}}/" method="post">
-        <h2>filtry:</h2>
-        <h4>jazyky</h4>
+        <h2>Filtry:</h2>
+        <h4>Jazyky</h4>
         {% for language in languages %}
 
             <label for="{{language.name}}">{{language.name}}</label>
@@ -56,6 +56,8 @@
             {% endfor %}
 
         </select>
+        <br>
+        <br>
         <h4>Štítky</h4>
             <input type="checkbox" id="bezkatky0" name="0" 
             {% if filtered_tags[0] == "on" %}
@@ -77,40 +79,41 @@
        <p style="text-align: center;" ><input type="submit" value="filtrovat"> </p>
 
     </form>
+    <br>
     <form action="/zaznamy/reset-filter" method="get">
         <p style="text-align: center;" >    <input type="submit" value="reset filtru"> </p>
     </form>
-</div>
-
-<div class="Vpravo">
+    <br>
+    <br>
+    <br>
     <form action="/zaznamy/set-serazeni/" method="post">
         <h2>Seřazení:</h2>
         <select name="serazeni" >
-            <option value="1" {% if serazeni == 1 %} selected {% endif %}>datum od nejdříve</option>
-            <option value="2" {% if serazeni == 2 %} selected {% endif %}>datum od nejpozději</option>
-            <option value="3" {% if serazeni == 3 %} selected {% endif %}>čas od nejvíce</option>
-            <option value="4" {% if serazeni == 4 %} selected {% endif %}>čas od nejméně</option>
-            <option value="5" {% if serazeni == 5 %} selected {% endif %}>hodnocení od nejvíce</option>
-            <option value="6" {% if serazeni == 6 %} selected {% endif %}>hodnocení od nejméně</option>
-            <option value="7" {% if serazeni == 7 %} selected {% endif %}>programovací jazyk</option>
+            <option value="1" {% if serazeni == 1 %} selected {% endif %}>Datum vzestupně</option>
+            <option value="2" {% if serazeni == 2 %} selected {% endif %}>Datum sestupně</option>
+            <option value="3" {% if serazeni == 3 %} selected {% endif %}>Čas sestupně</option>
+            <option value="4" {% if serazeni == 4 %} selected {% endif %}>Čas vzestupně</option>
+            <option value="5" {% if serazeni == 5 %} selected {% endif %}>Hodnocení sestupně</option>
+            <option value="6" {% if serazeni == 6 %} selected {% endif %}>Hodnocení vzestupně</option>
+            <option value="7" {% if serazeni == 7 %} selected {% endif %}>Programovací jazyk abecedně</option>
         </select>
-        <input type="submit" value="seřadit"> 
+        <input type="submit" value="Seřadit">
     </form>
 </div>
 
-<div class="Center">
+<div>
 
     <table>
     <tr>
-        <th style="padding-right:  20px; text-align: left;">id</th>
-        <th style="padding-right:  20px; text-align: left;">jméno</th>
-        <th style="padding-right:  20px; text-align: left;"><a href="http://localhost:8080/zaznamy/7/">jazyk</a></th>
-        <th style="padding-right:  20px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 3 %}4{% else %}3{% endif %}/">čas strávený v min</a></th>
-        <th style="text-align: left;">popis</th>
-        <th style="padding-right:  30px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 1 %}2{% else %}1{% endif %}/">datum</a></th>
-        <th style="padding-right:  30px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 5 %}6{% else %}5{% endif %}/">hodnoceni </a></th>
+        <th style="padding-right:  20px; text-align: left;">ID</th>
+        <th style="padding-right:  20px; text-align: left;">Jméno</th>
+        <th style="padding-right:  20px; text-align: left;"><a href="http://localhost:8080/zaznamy/7/">Jazyk</a></th>
+        <th style="padding-right:  20px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 3 %}4{% else %}3{% endif %}/">Čas strávený v min</a></th>
+        <th style="text-align: left;">Popis</th>
+        <th style="padding-right:  30px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 1 %}2{% else %}1{% endif %}/">Datum</a></th>
+        <th style="padding-right:  30px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 5 %}6{% else %}5{% endif %}/">Hodnocení</a></th>
         <th style="padding-right:  30px; text-align: left;">Štítky</th>
-        <th style="padding-right:  30px; text-align: left;">možnosti</th>
+        <th style="padding-right:  30px; text-align: left;">Možnosti</th>
     </tr>
     {% for record in records %}
     <tr>
@@ -149,7 +152,7 @@
         </td>
         {% if user.auth <= 2 or user.id == record.name %}
         <td> <a href="/update-form/{{record.id}}"> upravit</a>  <br>
-            <a href="/delete/{{record.id}}"> smazat</a>  </td>
+            <a href="/delete/{{record.id}}" > smazat</a>  </td>
         {% endif %}
     </tr>
     {% endfor %}

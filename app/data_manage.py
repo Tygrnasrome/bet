@@ -6,8 +6,42 @@ from flask import Blueprint
 from flask_login import login_required, current_user
 from .config import UI,Palette, user_config_auth, backup_config_auth, obj_config_auth, Filter, cat_config_auth
 from . import db
+import csv
 
 data = Blueprint('data', __name__)
+
+def exportCsv():
+    with open('export.csv', 'w') as f:
+        out = csv.writer(f)
+        # records
+        out.writerow(['obj_type','id', 'name', 'jazyk_id', 'popis', 'hodnoceni', 'date', 'time_spent'])
+        for record in Denik.query.order_by(Denik.id).all():
+            out.writerow(['record',record.id, record.name, record.jazyk_id, record.popis, record.hodnoceni, record.date, record.time_spent])
+        # users
+        out.writerow(['obj_type','id', 'name', 'email', 'password', 'auth', 'created_date'])
+        for user in User.query.order_by(User.id).all():
+            out.writerow(['user',user.id, user.name, user.email, user.password, user.auth, user.created_date])
+        # languages
+        out.writerow(['obj_type','id', 'name'])
+        for language in Jazyk.query.order_by(Jazyk.id).all():
+            out.writerow(['language',language.id, language.name])
+        # tag
+        out.writerow(['obj_type','id', 'name', 'barva', 'popis'])
+        for tag in Tags.query.order_by(Tags.id).all():
+            out.writerow(['tag',tag.id, tag.name, tag.barva, tag.popis])
+
+def importCsv():
+    with open('export.csv', 'r') as f:
+        csv_reader = csv.reader(f)
+        header = False
+        for row in csv.reader:
+            header = False
+            value_id = 0
+            value_dict = {}
+            for value in row:
+                value_dict[value_id] = value
+                value += 1
+                
 
 @data.route('/upload/', methods=['POST', 'GET'])
 @login_required
@@ -15,7 +49,7 @@ def upload():
     if current_user.auth == backup_config_auth:
         UI.active = "upload"
         return render_template('upload.html', user = current_user,active=UI.active,palette=Palette)
-    flash("Na tuto akci nemáte oprávnění")
+    flash("Na tuto akci nemáte oprávnění","error")
     return redirect('/')
 
 @data.route('/backup/', methods=['POST', 'GET'])
@@ -23,8 +57,9 @@ def upload():
 def backup():
     if current_user.auth == backup_config_auth:
         UI.active = "backup"
+        exportCsv()
         return render_template('downloadBackUp.html', user = current_user,active=UI.active,palette=Palette)
-    flash("Na tuto akci nemáte oprávnění")
+    flash("Na tuto akci nemáte oprávnění","error")
     return redirect('/')
 
 @data.route('/add/', methods=['POST', 'GET'])
@@ -69,7 +104,7 @@ def showForm():
 @login_required
 def showLanguageForm():
     if not current_user.auth <= obj_config_auth:
-        flash("Na tuto akci nemáte oprávnění")
+        flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
     UI.active = "addLanguage"
     if request.method == 'GET':
@@ -90,7 +125,7 @@ def showLanguageForm():
 @login_required
 def showLanguageUpdateForm(id):
     if not current_user.auth <= obj_config_auth:
-        flash("Na tuto akci nemáte oprávnění")
+        flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
     languages = Jazyk.query.order_by(Jazyk.id).all()
     UI.active = "addJazyk"
@@ -109,7 +144,7 @@ def showLanguageUpdateForm(id):
 @login_required
 def delLanguage(id):
     if not current_user.auth <= obj_config_auth:
-        flash("Na tuto akci nemáte oprávnění")
+        flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
     language_to_del = Jazyk.query.get_or_404(id)
     db.session.delete(language_to_del)
@@ -120,7 +155,7 @@ def delLanguage(id):
 @login_required
 def showUserForm():
     if not current_user.auth <= user_config_auth:
-        flash("Na tuto akci nemáte oprávnění")
+        flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
     UI.active = "signup"
     if request.method == 'GET':
@@ -139,7 +174,7 @@ def showUserForm():
 @login_required
 def showUserUpdateForm(id):
     if not current_user.auth <= user_config_auth:
-        flash("Na tuto akci nemáte oprávnění")
+        flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
     UI.active = "signup"
     users = User.query.order_by(User.id).all()
@@ -160,7 +195,7 @@ def showUserUpdateForm(id):
 @login_required
 def delUser(id):
     if not current_user.auth <= user_config_auth:
-        flash("Na tuto akci nemáte oprávnění")
+        flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
     user_to_del = User.query.get_or_404(id)
     records = Denik.query.order_by(Denik.id).all()
@@ -176,7 +211,7 @@ def delUser(id):
 @login_required
 def showCatForm():
     if not current_user.auth <= cat_config_auth:
-        flash("Na tuto akci nemáte oprávnění")
+        flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
     UI.active = "addCat"
     if request.method == 'GET':
@@ -202,7 +237,7 @@ def showCatForm():
 @login_required
 def delCat(id):
     if not current_user.auth <= cat_config_auth:
-        flash("Na tuto akci nemáte oprávnění")
+        flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
     cats = Kategorie.query.order_by(Kategorie.id).all()
     tag_to_del = Tags.query.get_or_404(id)
@@ -220,7 +255,7 @@ def delCat(id):
 @login_required
 def updateCatForm(id):
     if not current_user.auth <= cat_config_auth:
-        flash("Na tuto akci nemáte oprávnění")
+        flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
     tags = Tags.query.order_by(Tags.id).all()
     UI.active = "addCat"
@@ -240,7 +275,7 @@ def updateCatForm(id):
 @login_required
 def updateRecord(id):
     if not current_user.auth <= obj_config_auth:
-        flash("Na tuto akci nemáte oprávnění")
+        flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
     record_to_update = Denik.query.get_or_404(id)
     languages = Jazyk.query.order_by(Jazyk.id).all()
@@ -254,7 +289,7 @@ def updateRecord(id):
 @login_required
 def deleteRecord(id):
     if not current_user.auth <= obj_config_auth:
-        flash("Na tuto akci nemáte oprávnění")
+        flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
     record_to_del = Denik.query.get_or_404(id)
 
@@ -272,7 +307,7 @@ def deleteRecord(id):
 @login_required
 def updateAddZaznam(id):
     if not current_user.auth <= obj_config_auth:
-        flash("Na tuto akci nemáte oprávnění")
+        flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
     record_to_update = Denik.query.get_or_404(id)
     record_to_update.name = request.form['name']

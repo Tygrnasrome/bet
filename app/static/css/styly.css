@@ -44,8 +44,8 @@ button
 }
 ul li
 {
-position: relative;
-display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 ul li ul.h li
 {
@@ -54,10 +54,10 @@ display: block;
 ul li ul.h 
 {
     width: 100%;
-position:absolute;
-display: none;
-background-color: red;
-z-index: 999;
+    position:absolute;
+    display: none;
+    background-color: red;
+    z-index: 999;
 }
 ul li:hover ul.h
 {
@@ -89,5 +89,14 @@ ul li a
 a
 {
     color: #dee4e9;
-    text-underline-offset: 0;
+    text-underline-offset: auto;
+}
+.smazat
+{
+    color:#E10600;
+    text-decoration-style: dotted;
+}
+.set
+{
+    float: right;
 }
