@@ -152,7 +152,7 @@
         </td>
         {% if user.auth <= 2 or user.id == record.name %}
         <td> <a href="/update-form/{{record.id}}"> upravit</a>  <br>
-            <a href="/delete/{{record.id}}" > smazat</a>  </td>
+            <a href="/delete/{{record.id}}" class="smazat"> smazat</a>  </td>
         {% endif %}
     </tr>
     {% endfor %}
