@@ -24,11 +24,14 @@
                 <td>
                     {{language.name}}
                 </td>
+                
+                {% if user.auth <= 1 %}
                 <td>
                     <a href="/language/delete/{{language.id}}"> smazat</a>
                     <a href="/language/update/{{language.id}}"> upravit</a>
 
                 </td>
+                {% endif %}
             </tr>
             {% endfor %}
 

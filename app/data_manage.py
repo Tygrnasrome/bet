@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from .models import Denik,Tags,User,Kategorie,Jazyk
 from flask import Blueprint
 from flask_login import login_required, current_user
-from .config import UI,Palette, user_config_auth, backup_config_auth, obj_config_auth, Filter
+from .config import UI,Palette, user_config_auth, backup_config_auth, obj_config_auth, Filter, cat_config_auth
 from . import db
 
 data = Blueprint('data', __name__)
@@ -30,9 +30,6 @@ def backup():
 @data.route('/add/', methods=['POST', 'GET'])
 @login_required
 def addZaznam():
-    if not current_user.auth <= obj_config_auth:
-        flash("Na tuto akci nemáte oprávnění")
-        return redirect('/')
     tags = Tags.query.order_by(Tags.id).all()
 
     #pokud nekdo prida neco do databaze, tak se spusti tato cast, a pak se přeseměruje na view /zaznamy/
@@ -61,9 +58,6 @@ def addZaznam():
 @data.route('/form/')
 @login_required
 def showForm():
-    if not current_user.auth <= obj_config_auth:
-        flash("Na tuto akci nemáte oprávnění")
-        return redirect('/')
     users = User.query.order_by(User.id).all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
 
@@ -181,7 +175,7 @@ def delUser(id):
 @data.route('/cat/form/', methods=['POST', 'GET'])
 @login_required
 def showCatForm():
-    if not current_user.auth <= obj_config_auth:
+    if not current_user.auth <= cat_config_auth:
         flash("Na tuto akci nemáte oprávnění")
         return redirect('/')
     UI.active = "addCat"
@@ -207,7 +201,7 @@ def showCatForm():
 @data.route('/cat/delete/<int:id>')
 @login_required
 def delCat(id):
-    if not current_user.auth <= obj_config_auth:
+    if not current_user.auth <= cat_config_auth:
         flash("Na tuto akci nemáte oprávnění")
         return redirect('/')
     cats = Kategorie.query.order_by(Kategorie.id).all()
@@ -225,7 +219,7 @@ def delCat(id):
 @data.route('/cat/update/<int:id>', methods=['POST', 'GET'])
 @login_required
 def updateCatForm(id):
-    if not current_user.auth <= obj_config_auth:
+    if not current_user.auth <= cat_config_auth:
         flash("Na tuto akci nemáte oprávnění")
         return redirect('/')
     tags = Tags.query.order_by(Tags.id).all()

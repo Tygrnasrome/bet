@@ -45,7 +45,7 @@ def login():
 def login_post():
     name = request.form.get('name')
     if name == '':
-        flash('Vyplňte prosím povinná pole')
+        flash('Vyplňte prosím povinná pole','error')
         return redirect(url_for('auth.login')) # pokud není zadáno jméno, nebo email správně
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
@@ -54,16 +54,16 @@ def login_post():
     user_email = User.query.filter_by(email=name).first()
     user = user_name
     if not user_name and not user_email:
-        flash('Špatné přihlašovací údaje')
+        flash('Špatné přihlašovací údaje','error')
         return redirect(url_for('auth.login')) # pokud není zadáno jméno, nebo email správně
     if not user_name:
         user = user_email
         if not check_password_hash(user_email.password, password):
-            flash('Špatné heslo (emailový login)')
+            flash('Špatné heslo (emailový login)','error')
             return redirect(url_for('auth.login')) # špatné heslo u email loginu
     else:
         if not check_password_hash(user_name.password, password):
-                    flash('Špatné heslo')
+                    flash('Špatné heslo','error')
                     return redirect(url_for('auth.login')) # špatné heslo u name loginu
 
 
@@ -94,13 +94,13 @@ def signup_post():
     user = User.query.filter_by(email=email).first() # pokud vrátí user, email je již v databázi
 
     if user and not email == '':
-        flash('Tento email je již využívaný jiným účtem')
+        flash('Tento email je již využívaný jiným účtem','error')
         return redirect(url_for('auth.signup'))
 
     user = User.query.filter_by(name=name).first() # pokud vrátí user, jméno je již v databázi
 
     if user:
-        flash('Toto jméno je již využívané')
+        flash('Toto jméno je již využívané','error')
         return redirect(url_for('auth.signup'))
 
     # create new user with the form data. Hash the password so plaintext version isn't saved.
@@ -121,7 +121,7 @@ def changeEmail():
         email = request.form.get('email')
         user = User.query.filter_by(email=email).first()
         if user and not email == '':
-            flash('Tento email je již využívaný jiným účtem')
+            flash('Tento email je již využívaný jiným účtem','error')
             return redirect(url_for('auth.changeEmail'))
         current_user.email = email
         db.session.commit()
@@ -134,13 +134,19 @@ def changePassword():
         return render_template('changePassword.html', user = current_user ,active=UI.active, palette=Palette)
     else:
         password = request.form.get('password')
-        password_again = request.form.get('password_again')
-        user = User.query.filter_by(email=email).first()
-        if user and not email == '':
-            flash('Tento email je již využívaný jiným účtem')
-            return redirect(url_for('auth.changeEmail'))
-        current_user.email = email
+        if not check_password_hash(current_user.password, password):
+            flash('Špatné heslo','error')
+            return redirect(url_for('auth.changePassword')) # špatné heslo 
+        
+        new_password = request.form.get('new_password')
+        new_password_again = request.form.get('new_password_again')
+
+        if not new_password == new_password_again:
+            flash('Nově zadaná hesla se neshodují','error')
+            return redirect(url_for('auth.changePassword')) # neshodují se nově zadaná hesla
+        current_user.password = generate_password_hash(new_password, method='sha256') 
         db.session.commit()
+        flash('Heslo bylo úspěšně změněno','message')
         return redirect(url_for('auth.profile'))
 
 @auth.route('/profile/')

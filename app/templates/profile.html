@@ -6,9 +6,21 @@
 {% endblock %}
 
 {% block body %}
+
 <div>
     <h1>{{user.name}}</h1>
     <h3> profil účtu </h3>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+<div>
+    <p>{{ message }}</p>
+</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    
     <div>
         <h1>Osobní informace</h1>
         <h2>Jméno: </h2> {{user.name}}

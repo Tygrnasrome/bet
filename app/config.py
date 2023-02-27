@@ -41,5 +41,6 @@ class UI():
 
 error_dict = {'name':0, 'jazyk_id':0,'popis':0,'hodnoceni':0,'date':0,'time_spent':0}
 backup_config_auth = 1
-user_config_auth = 2
-obj_config_auth = 3
+user_config_auth = 1
+obj_config_auth = 1
+cat_config_auth = 2
