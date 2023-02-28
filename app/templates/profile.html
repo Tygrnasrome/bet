@@ -59,7 +59,7 @@
                 <h3>Používané jazyky</h3>
                 {% for language in languages %}
                 {% if stat[language.id] != 0 %}
-                    {{language.name}}: {{stat[language.id]/stat['time'] *100}}%
+                    {{language.name}}: {{'%0.2f' | format(stat[language.id]/stat['time'] *100)}}%
                 {% endif %}
                 {% endfor %}
             </div>
