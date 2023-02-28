@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Změnit e-mail</title>
+<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+{% endblock %}
+
+{% block body %}
+<div >
+    <form action="/change/email/{{user_profile.id}}" method="post">
+
+        <h1>
+            <b>Změnit email účtu: {{user_profile.name}}</b>
+        </h1>
+        <h2>
+            Nechte prázdné, pokud chcete email neuvádět
+        </h2>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <br>
+        <table>
+            <tr>
+                <td>
+                    Email
+                </td>
+                <td>
+                    <input type="email" id="email" name="email" value="{{user_profile.email}}">
+                </td>
+            </tr>
+        </table>
+        <br>
+        <p style="text-align: center;">      <input type="submit" value="změnit"> </p>
+        <br>
+    </form>
+    {% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}" >
+
+{% endblock %}
+
+{% block body %}
+
+<div>
+    <h1>{{user_profile.name}}</h1>
+    <h3> profil účtu </h3>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+<div>
+    <p>{{ message }}</p>
+</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    
+    <div>
+        <h1>Osobní informace</h1>
+        <h2>Jméno: </h2> {{user_profile.name}} <a href="/change/name/{{user_profile.id}}">změnit</a>
+        <h2>Email: </h2>
+            {% if user_profile.email %}
+            {{user_profile.email}}
+            {% else %}
+            nemáte přiřazený žádný email
+            {% endif %}
+            <a href="/change/email/{{user_profile.id}}">změnit</a>
+        <h2>Pravomoc: </h2>
+        {% if user_profile.auth == 1 %}
+        admin
+        {% else %}
+        zaměstnanec
+        {% endif %}
+        <a href="/change/auth/{{user_profile.id}}">změnit</a>
+        <h2>Heslo</h2>
+        <a href="/change/password/{{user_profile.id}}">změnit</a>
+        <h2> datum založení účtu: </h2> {{user_profile.created_date}}
+    </div>
+    <div>
+        <h1>
+            Aktivita
+        </h1>
+        {% if stat['num'] > 0 %}
+        <div>
+            <div>
+                <h3>Počet záznamů</h3>
+                {{stat['num']}}
+            </div>
+            <div>
+                <h3>Strávený čas programováním</h3>
+                {{stat['time']}} min
+            </div>
+            <div>
+                <h3>Používané jazyky</h3>
+                {% for language in languages %}
+                {% if stat[language.id] != 0 %}
+                    {{language.name}}: {{'%0.2f' | format(stat[language.id]/stat['time'] *100)}}%
+                {% endif %}
+                {% endfor %}
+            </div>
+            <a href="/redirect/profile/config/{{user_profile}}">Zobrazit historii </a>
+        </div>
+        {% else %}
+         Ještě nemáte žádné záznamy, pro sledování aktivity je vytvořte <a href="/form/">zde</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

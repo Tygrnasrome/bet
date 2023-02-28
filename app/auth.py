@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
 from .models import User, Palettes, Denik, Jazyk
-from .config import Palette, UI
+from .config import Palette, UI, user_config_auth
 from . import db
 
 auth = Blueprint('auth', __name__)
@@ -127,6 +127,25 @@ def changeEmail():
         db.session.commit()
         return redirect(url_for('auth.profile'))
 
+@auth.route('/change/email/<int:id>', methods=['GET','POST'])
+@login_required
+def changeEmailConfig(id):
+    if not current_user.auth <= user_config_auth:
+        flash("Na tuto akci nemáte oprávnění","error")
+        return redirect('/')
+    user_profile = User.query.filter_by(id=id).first()
+    if request.method == 'GET':
+        return render_template('changeEmailConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
+    else:
+        email = request.form.get('email')
+        user = User.query.filter_by(email=email).first()
+        if user and not email == '':
+            flash('Tento email je již využívaný jiným účtem','error')
+            return redirect(url_for('auth.changeEmailConfig', id=id))
+        user_profile.email = email
+        db.session.commit()
+        return redirect(url_for('auth.profileConfig', id=id))
+
 @auth.route('/change/password', methods=['GET','POST'])
 @login_required
 def changePassword():
@@ -149,6 +168,66 @@ def changePassword():
         flash('Heslo bylo úspěšně změněno','message')
         return redirect(url_for('auth.profile'))
 
+@auth.route('/change/password/<int:id>', methods=['GET','POST'])
+@login_required
+def changePasswordConfig(id):
+    if not current_user.auth <= user_config_auth:
+        flash("Na tuto akci nemáte oprávnění","error")
+        return redirect('/')
+    user_profile = User.query.filter_by(id=id).first()
+    if request.method == 'GET':
+        return render_template('changePasswordConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
+    else:
+        password = request.form.get('password')
+        if not check_password_hash(current_user.password, password):
+            flash('Špatné heslo','error')
+            return redirect(url_for('auth.changePasswordConfig', id=id)) # špatné heslo admina
+        
+        new_password = request.form.get('new_password')
+        new_password_again = request.form.get('new_password_again')
+
+        if not new_password == new_password_again:
+            flash('Nově zadaná hesla se neshodují','error')
+            return redirect(url_for('auth.changePasswordConfig', id=id)) # neshodují se nově zadaná hesla 
+        user_profile.password = generate_password_hash(new_password, method='sha256') 
+        db.session.commit()
+        flash('Heslo bylo úspěšně změněno','message')
+        return redirect(url_for('auth.profileConfig', id=id))
+
+@auth.route('/change/name/<int:id>', methods=['GET','POST'])
+@login_required
+def changeNameConfig(id):
+    if not current_user.auth <= user_config_auth:
+        flash("Na tuto akci nemáte oprávnění","error")
+        return redirect('/')
+    user_profile = User.query.filter_by(id=id).first()
+    if request.method == 'GET':
+        return render_template('changeNameConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
+    else:
+        name = request.form.get('name')
+        user = User.query.filter_by(name=name).first()
+        if user:
+            flash('Toto jméno je již využívané jiným účtem','error')
+            return redirect(url_for('auth.changeNameConfig', id=id))
+        user_profile.name = name
+        db.session.commit()
+        return redirect(url_for('auth.profileConfig', id=id))
+
+@auth.route('/change/auth/<int:id>', methods=['GET','POST'])
+@login_required
+def changeAuthConfig(id):
+    if not current_user.auth <= user_config_auth:
+        flash("Na tuto akci nemáte oprávnění","error")
+        return redirect('/')
+    user_profile = User.query.filter_by(id=id).first()
+    if request.method == 'GET':
+        return render_template('changeAuthConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
+    else:
+        auth = request.form.get('auth')
+        user_profile.auth = auth
+        db.session.commit()
+        return redirect(url_for('auth.profileConfig', id=id))
+
 @auth.route('/profile/')
 @login_required
 def profile():
@@ -166,6 +245,28 @@ def profile():
         if palette.user_id == current_user.id:
             return render_template('profile.html', user = current_user ,active=UI.active, palette=Palette, user_palette=palette, stat=stat, languages=languages)
     return render_template('profile.html', user = current_user ,active=UI.active, palette=Palette, user_palette=Palette, stat=stat, languages=languages)
+
+@auth.route('/profile/config/<int:id>')
+@login_required
+def profileConfig(id):
+    if not current_user.auth <= user_config_auth:
+        flash("Na tuto akci nemáte oprávnění","error")
+        return redirect('/')
+    palettes = Palettes.query.order_by(Palettes.id).all()
+    languages = Jazyk.query.order_by(Jazyk.id).all()
+    records = Denik.query.filter_by(name=id).all()
+    user_profile = User.query.filter_by(id=id).first()
+    stat = {'num':0, 'time':0}
+    for language in languages:
+        stat[int(language.id)] = int(0)
+    for record in records:
+        stat['num'] += 1
+        stat['time'] += record.time_spent
+        stat[int(record.jazyk_id)] += record.time_spent
+    for palette in palettes:
+        if palette.user_id == user_profile.id:
+            return render_template('profileConfig.html', user = current_user ,active=UI.active, palette=Palette, user_palette=palette, stat=stat, languages=languages, user_profile=user_profile)
+    return render_template('profileConfig.html', user = current_user ,active=UI.active, palette=Palette, user_palette=Palette, stat=stat, languages=languages, user_profile=user_profile)
 
 @auth.route('/logout/')
 @login_required

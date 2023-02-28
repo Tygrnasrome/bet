@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Změnit oprávnění</title>
+<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+{% endblock %}
+
+{% block body %}
+<div >
+    <form action="/change/auth/{{user_profile.id}}" method="post">
+
+        <h1>
+            <b>Změnit oprávnění účtu: {{user_profile.name}}</b>
+        </h1>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <br>
+        <table>
+            <tr>
+                <td>
+                    Oprávnění
+                </td>
+                <td>
+                    <input type="radio" Name = "auth" id="1" value="1" required selected> <label for="1">admin </label>
+                    <input type="radio" Name = "auth" id="2" value="2" required {% if user_profile.auth == 2 %} selected {% endif %}> <label for="2"> zaměstnanec </label>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <p style="text-align: center;">      <input type="submit" value="změnit"> </p>
+        <br>
+    </form>
+    {% endblock %}

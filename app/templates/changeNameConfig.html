@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Změnit jméno</title>
+<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+{% endblock %}
+
+{% block body %}
+<div >
+    <form action="/change/name/{{user_profile.id}}" method="post">
+
+        <h1>
+            <b>Změnit jméno účtu: {{user_profile.name}}</b>
+        </h1>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <br>
+        <table>
+            <tr>
+                <td>
+                    Jméno
+                </td>
+                <td>
+                    <input type="text" id="name" name="name" value="{{user_profile.name}}">
+                </td>
+            </tr>
+        </table>
+        <br>
+        <p style="text-align: center;">      <input type="submit" value="změnit"> </p>
+        <br>
+    </form>
+    {% endblock %}
