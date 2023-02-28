@@ -295,14 +295,4 @@ def OGzaznamy():
         pass
 
     return redirect('/zaznamy/1/')
-@main.route('/API', methods=['GET'])
-def get_API():
-    data = []
-    language_dict = {}
-    records = db.session.query(Denik).order_by(Denik.id).all()
-    languages = db.session.query(Jazyk).order_by(Jazyk.id).all()
-    for language in languages:
-        language_dict[language.id] = language.name
-    for record in records:
-        data.append([record.id,record.date,record.time_spent,language_dict[record.jazyk_id],record.hodnoceni, record.popis])
-    return jsonify(data)
+

@@ -33,16 +33,20 @@ def create_app():
         # since the user_id is just the primary key of our user table, use it in the query for the user
         return User.query.get(int(user_id))
 
+    # blueprint for api parts of app
+    from .api import api as api_blueprint
+    app.register_blueprint(api_blueprint)
     # blueprint for auth routes in our app
     from .auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint)
-
+    app.register_blueprint(auth_blueprint)    
+    # blueprint for data managing parts of app
+    from .data_manage import data as data_blueprint
+    app.register_blueprint(data_blueprint)
     # blueprint for non-auth parts of app
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
-    from .data_manage import data as data_blueprint
-    app.register_blueprint(data_blueprint)
+
 
     @login_manager.unauthorized_handler
     def unauthorized_handler():
