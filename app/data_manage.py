@@ -185,7 +185,6 @@ def backup():
     flash("Na tuto akci nemáte oprávnění","error")
     return redirect('/')
 
-#not functional
 @data.route('/backup/download/<string:name>')
 @login_required
 def downloadFile(name):
@@ -193,7 +192,7 @@ def downloadFile(name):
         flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
     path = "app/static/backups/{name}.csv"
-
+    flash('Stahování by mělo každou chvíli začít','notice')
     return send_file(os.path.abspath(path.format(name = name)), as_attachment=True)
 
 @data.route('/backup/delete/<string:name>')
@@ -206,6 +205,7 @@ def deleteFile(name):
     path = path.format(name=name)
     os.remove(path)
     delBackup(name)
+    flash('Záloha byla smazána','message')
     return redirect('/backup/')
 
 @data.route('/upload/', methods = ['POST'])
@@ -217,7 +217,7 @@ def upload_file():
     
     
     newBackup(f.filename.replace('.csv',''),desc)
-    flash('soubor importován úspěšně')
+    flash('soubor importován úspěšně','meassage')
     return redirect('/backup/')
 
 @data.route('/add/', methods=['POST', 'GET'])
@@ -238,6 +238,7 @@ def addZaznam():
     new_record = Denik(name=record_name,jazyk_id=record_jazyk ,popis=record_popis,hodnoceni=record_hodnoceni,time_spent=record_time, date=record_date)
     db.session.add(new_record)
     db.session.commit()
+    flash('Záznam vytvořen','message')
     for tag in tags:
         try:
             request.form[str(tag.id)]
@@ -273,6 +274,7 @@ def showLanguageForm():
         new_language = Jazyk(name=language_name)
         db.session.add(new_language)
         db.session.commit()
+        flash('Programovací jazyk vytvořen','message')
         languages = Jazyk.query.order_by(Jazyk.id).all()
         request.method = "GET"
         for language in languages:
@@ -294,6 +296,7 @@ def showLanguageUpdateForm(id):
         language_to_update = Jazyk.query.get_or_404(id)
         language_to_update.name = request.form['name']
         db.session.commit()
+        flash('Programovací jazyk změněn','message')
         for language in languages:
             Filter.language_dict[language.id] = "on"
         return redirect('/language/form/')
@@ -307,8 +310,9 @@ def delLanguage(id):
     language_to_del = Jazyk.query.get_or_404(id)
     db.session.delete(language_to_del)
     db.session.commit()
+    flash('Programovací jazyk smazán','message')
     return redirect('/language/form/')
-
+"""
 @data.route('/user/form/', methods=['POST', 'GET'])
 @login_required
 def showUserForm():
@@ -324,6 +328,7 @@ def showUserForm():
         new_user = User(name=user_name)
         db.session.add(new_user)
         db.session.commit()
+        flash('User přidán','message')
         users = User.query.order_by(User.id).all()
         request.method = "GET"
         return render_template('signup.html', user = current_user,active=UI.active,users=users,palette=Palette)
@@ -348,7 +353,7 @@ def showUserUpdateForm(id):
         users = User.query.order_by(User.id).all()
         request.method = "GET"
         return render_template('signup.html', user = current_user,active=UI.active,users=users,palette=Palette)
-
+"""
 @data.route('/user/delete/<int:id>')
 @login_required
 def delUser(id):
@@ -363,6 +368,7 @@ def delUser(id):
             db.session.commit()
     db.session.delete(user_to_del)
     db.session.commit()
+    flash('Uživatel a jeho záznamy smazány','message')
     return redirect('/user/form/')
 
 @data.route('/cat/form/', methods=['POST', 'GET'])
@@ -383,6 +389,7 @@ def showCatForm():
         new_tag = Tags(name=tag_name, barva=tag_barva, popis=tag_popis)
         db.session.add(new_tag)
         db.session.commit()
+        flash('Štítek vytvořen','message')
         tags = Tags.query.order_by(Tags.id).all()
         request.method = "GET"
         tags = Tags.query.order_by(Tags.id).all()
@@ -404,7 +411,7 @@ def delCat(id):
             cat_to_del = Kategorie.query.get_or_404(cat.id)
             db.session.delete(cat_to_del)
             db.session.commit()
-
+    flash('Štítek smazán včetně zmínek v záznamech','message')
     db.session.delete(tag_to_del)
     db.session.commit()
     return redirect('/cat/form/')
@@ -428,6 +435,7 @@ def updateCatForm(id):
         tag_to_update.popis = request.form['popis']
 
         db.session.commit()
+        flash('Štítek změněn','message')
         return redirect('/cat/form/')
 @data.route('/update-form/<int:id>')
 @login_required
@@ -459,6 +467,7 @@ def deleteRecord(id):
             db.session.commit()
     db.session.delete(record_to_del)
     db.session.commit()
+    flash('Záznam smazán','message')
     return redirect('/zaznamy/1')
 
 @data.route('/update-add/<int:id>', methods=['POST', 'GET'])
@@ -492,6 +501,6 @@ def updateAddZaznam(id):
         except:
             pass
 
-
+    flash('Záznam změněn','message')
     db.session.commit()
     return redirect('/zaznamy/1')

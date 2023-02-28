@@ -7,19 +7,18 @@
 {% endblock %}
 
 {% block body %}
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-<div>
-    <p>{{ message }}</p>
-</div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
+
 
 <div class="Center">
     <h1>Programátorský deník</h1>
-    <h4>Co to je?</h4>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <p class="{{ category }}">{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <h4>Co to je?</h4>  
     Tato aplikace je deník, ve kterém si můžete ukládat, co jste v jakém programovacím jazyce dělali <br> Tady si můžete ukládat programovací jazyky, programátory, pracuje-li Vás na projektu více, hodnotit práci, zadat čas, jak dlouho jste nad tím strávili a popisovat, co se kde dělalo.
     <h4>A jak se to používá?</h4>
     První si zajděte pod záložku "PŘIDAT" do sekce "PROGRAMÁTORA" A zadejte jméno (a příjmení) programátora a klikněte na tlačítko přidat. Poté udělejte to samé s programovacími jazyky v záložce "PŘIDAT" - "PROGRAMOVACÍ JAZYKY".

@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 # init SQLAlchemy so we can use it later in our models
@@ -50,6 +50,7 @@ def create_app():
 
     @login_manager.unauthorized_handler
     def unauthorized_handler():
+        flash('Pro tuto akci se musíte přihlásit','error')
         return redirect(url_for('auth.login'))
     return app
 

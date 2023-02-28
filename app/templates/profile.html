@@ -11,12 +11,10 @@
     <h1>{{user.name}}</h1>
     <h3> profil účtu </h3>
 
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    {% for message in messages %}
-<div>
-    <p>{{ message }}</p>
-</div>
+    {% for category, message in messages %}
+    <p class="{{ category }}">{{ message }}</p>
     {% endfor %}
     {% endif %}
     {% endwith %}

@@ -100,3 +100,18 @@ a
 {
     float: right;
 }
+.error
+{
+    text-align: center;
+    background-color: #c00c0681;
+}
+.message
+{
+    text-align: center;
+    background-color: #4e9907b6;
+}
+.notice
+{
+    text-align: center;
+    background-color: #4e9907b6;
+}

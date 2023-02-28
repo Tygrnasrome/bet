@@ -18,6 +18,13 @@
         <b> všechna pole jsou povinná </b> 
     </h3>
     <br>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <p class="{{ category }}">{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 <table>
         <tr>
         <td>

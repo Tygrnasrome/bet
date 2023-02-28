@@ -68,6 +68,7 @@ def login_post():
 
 
     # if the above check passes, then we know the user has the right credentials
+    flash('Uživatel přihlášen','notice')
     login_user(user, remember=remember)
     resetPalette()
     return redirect(url_for('auth.profile'))
@@ -109,7 +110,7 @@ def signup_post():
     # add the new user to the database
     db.session.add(new_user)
     db.session.commit()
-
+    flash('Účet byl úspěšně vytvořen','message')
     return redirect(url_for('auth.login'))
 
 @auth.route('/change/email', methods=['GET','POST'])
@@ -123,8 +124,11 @@ def changeEmail():
         if user and not email == '':
             flash('Tento email je již využívaný jiným účtem','error')
             return redirect(url_for('auth.changeEmail'))
+        old_email = current_user.email
         current_user.email = email
         db.session.commit()
+        msg = 'Email byl úspěšně změněn z {old} na {new}'
+        flash(msg.format(old=old_email, new=email),'message')
         return redirect(url_for('auth.profile'))
 
 @auth.route('/change/email/<int:id>', methods=['GET','POST'])
@@ -142,8 +146,11 @@ def changeEmailConfig(id):
         if user and not email == '':
             flash('Tento email je již využívaný jiným účtem','error')
             return redirect(url_for('auth.changeEmailConfig', id=id))
+        old_email = user_profile.email
         user_profile.email = email
         db.session.commit()
+        msg = 'Email byl úspěšně změněn z {old} na {new}'
+        flash(msg.format(old=old_email, new=email),'message')
         return redirect(url_for('auth.profileConfig', id=id))
 
 @auth.route('/change/password', methods=['GET','POST'])
@@ -209,8 +216,11 @@ def changeNameConfig(id):
         if user:
             flash('Toto jméno je již využívané jiným účtem','error')
             return redirect(url_for('auth.changeNameConfig', id=id))
+        old_name = user_profile.name
         user_profile.name = name
         db.session.commit()
+        msg = 'Jméno bylo úspěšně změněno z {old} na {new}'
+        flash(msg.format(old=old_name, new=name),'message')
         return redirect(url_for('auth.profileConfig', id=id))
 
 @auth.route('/change/auth/<int:id>', methods=['GET','POST'])
@@ -226,6 +236,7 @@ def changeAuthConfig(id):
         auth = request.form.get('auth')
         user_profile.auth = auth
         db.session.commit()
+        flash('Pravomoc byla úspěšně změněna','message')
         return redirect(url_for('auth.profileConfig', id=id))
 
 @auth.route('/profile/')
@@ -272,6 +283,7 @@ def profileConfig(id):
 @login_required
 def logout():
     logout_user()
+    flash('Uživatel úspěšně odhlášen','message')
     Palette.base = Palette.def_base
     Palette.hover = Palette.def_hover
     Palette.selected = Palette.def_selected

@@ -7,17 +7,15 @@
 {% endblock %}
 
 {% block body %}
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<div>
-<p>{{ message }}</p>
-</div>
-{% endfor %}
-{% endif %}
-{% endwith %}
 <div class="Center">
     <h1>Zálohovat aktuální data</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <p class="{{ category }}">{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     <form action="/backup/" method="post">
     <table>
         <tr>
