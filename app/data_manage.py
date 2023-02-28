@@ -1,6 +1,4 @@
-import sqlite3
 from flask import Flask, render_template, request, redirect, flash
-from flask_sqlalchemy import SQLAlchemy
 from .models import Denik,Tags,User,Kategorie,Jazyk
 from flask import Blueprint
 from flask_login import login_required, current_user
