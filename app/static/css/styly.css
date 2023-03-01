@@ -105,13 +105,15 @@ a
     text-align: center;
     background-color: #c00c0681;
 }
-.message
+.message, .notice
 {
     text-align: center;
     background-color: #4e9907b6;
 }
-.notice
+.login
 {
-    text-align: center;
-    background-color: #4e9907b6;
+    background-color: white;
+    color: black;
+    margin: 5px;
+    border-radius: 1px;
 }

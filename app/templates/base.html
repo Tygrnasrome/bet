@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <link rel="icon" href="{{url_for('static', filename='images/favicon.ico')}}" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styly1.css')}}" >
     <style>
         body
         {
@@ -39,6 +40,7 @@
             list-style: none;
             background-color: {{palette.base}};
             color: {{palette.text}};
+            margin: 5px;
         }
         div 
         {
@@ -53,23 +55,11 @@
         {
             background-color: {{palette.divthree}};
         }
-        .Center
-        {
-            color: {{palette.text}};
-            background-color: {{palette.divone}};
-        }
-        h1
+        h1, h2, h3
         {
             color: {{palette.header}};
         }
-        h2
-        {
-            color: {{palette.header}};
-        }
-        h3
-        {
-            color: {{palette.header}};
-        }
+
     </style>
     {% block head %} 
 
@@ -78,6 +68,7 @@
 <body>
     <header>
         <ul>
+
             <li>
             <img src="{{url_for('static', filename='images/logo.png')}}" alt="logo" height="58px" style="float: right; margin-top: 5px">
             </li>
@@ -121,9 +112,10 @@
                     <li><a href="http://localhost:8080/backup" {% if active == 'backup' %} style="background-color: {{palette.selected}};" {% endif %}> zálohy </a></li>
                 {% endif %}
             {% else %}
-                <li style="float: right;"><a href="http://localhost:8080/login" {% if active == 'login' %} style="background-color: {{palette.selected}};" {% endif %} > přihlášení </a></li>
+                <li><a class="login" href="http://localhost:8080/login" {% if active == 'login' %} {% endif %} > přihlášení </a></li>
             {% endif %}
-            <li style="float: right;"> <a href="/settings/" class="set" {% if active == 'settings' %} style="background-color: {{palette.selected}};" {% endif %}><img src="{{url_for('static', filename='images/settings.png')}}" alt="logo" height="27px" style="margin-top: 5px"></a></li>
+            <li> <a href="/settings/" class="set" {% if active == 'settings' %} style="background-color: {{palette.selected}};" {% endif %}><img src="{{url_for('static', filename='images/settings.png')}}" alt="logo" height="27px" style="margin-top: 5px"></a></li>
+
         </ul>
     </header>
     {% block body %} 
