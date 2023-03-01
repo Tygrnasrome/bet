@@ -16,7 +16,7 @@ def resetPalette():
     palettes = Palettes.query.order_by(Palettes.id).all()
     used = False
     for palette in palettes:
-        if palette.user_id == current_user.id:
+        if palette.user_id == current_user.id and palette.in_use == 'on':
             Palette.base = palette.base
             Palette.hover = palette.hover
             Palette.selected = palette.selected
@@ -83,6 +83,8 @@ def settings():
         palette_body = request.form['body']
         palette_header = request.form['header']
         palette_text = request.form['text']
+        palette_in_use = 'off'
+        palette_in_use = request.form.get('in_use')
         for palette in palettes:
             if palette.user_id == current_user.id:
                palette.base = palette_base
@@ -94,10 +96,11 @@ def settings():
                palette.body = palette_body
                palette.header = palette_header
                palette.text = palette_text
+               palette.in_use = palette_in_use
                db.session.commit()
                exist = True
         if not exist:
-            new_palette = Palettes(base = palette_base,hover=palette_hover, selected=palette_selected, divone=palette_divone,divtwo=palette_divtwo,divthree=palette_divthree,body=palette_body,header=palette_header,text=palette_text, user_id=current_user.id)
+            new_palette = Palettes(base = palette_base,hover=palette_hover, selected=palette_selected, divone=palette_divone,divtwo=palette_divtwo,divthree=palette_divthree,body=palette_body,header=palette_header,text=palette_text, user_id=current_user.id, in_use=palette_in_use)
             db.session.add(new_palette)
             db.session.commit()
         resetPalette()
@@ -108,7 +111,7 @@ def settings():
 def showLanguageTable():
     languages = Jazyk.query.order_by(Jazyk.id).all()
     UI.active = "language"
-    return render_template('jazyky.html', user = current_user,active=UI.active,languages=languages,palette=Palette)
+    return render_template('language/jazyky.html', user = current_user,active=UI.active,languages=languages,palette=Palette)
 
 @main.route('/user/')
 @login_required
@@ -119,14 +122,14 @@ def showTableUser():
     UI.active = "user"
     users = User.query.order_by(User.id).all()
     users = User.query.order_by(User.id).all()
-    return render_template('programatori.html', user = current_user,active=UI.active,users=users,palette=Palette)
+    return render_template('user/programatori.html', user = current_user,active=UI.active,users=users,palette=Palette)
 
 @main.route('/cat/')
 @login_required
 def showCatTable():
     tags = Tags.query.order_by(Tags.id).all()
     UI.active = "cat"
-    return render_template('kategorie.html', user = current_user,active=UI.active, tags=tags,palette=Palette)
+    return render_template('cat/kategorie.html', user = current_user,active=UI.active, tags=tags,palette=Palette)
 
 @main.route('/redirect/my/history/', methods=['GET'])
 @login_required
@@ -249,7 +252,7 @@ def zaznamy(serazeni):
                 if (has == True):
                     records = records.filter(Denik.id != record.id)
     UI.active = "records"
-    return render_template('zaznamy.html', user = current_user,active=UI.active, records=records, languages=languages, users=users, tags=tags, cats=cats, \
+    return render_template('record/zaznamy.html', user = current_user,active=UI.active, records=records, languages=languages, users=users, tags=tags, cats=cats, \
     filtered_languages=Filter.language_dict, filtered_tags=Filter.tag_dict, min_date=Filter.date_from, max_date=Filter.date_to, min_time=Filter.time_from, max_time=Filter. \
     time_to, max_hod=Filter.hodnoceni_to, min_hod=Filter.hodnoceni_from, sel_name=int(Filter.name), serazeni=serazeni,palette=Palette)
 

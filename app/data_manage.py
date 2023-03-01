@@ -80,9 +80,9 @@ def exportCsv(name, desc):
         for cat in Kategorie.query.order_by(Kategorie.id).all():
             out.writerow(['cat',cat.id, cat.owned_id, cat.type_id])
         # palettes
-        out.writerow(['obj_type','id', 'user_id', 'base', 'selected', 'hover', 'text', 'header', 'body', 'divone', 'divtwo', 'divthree'])
+        out.writerow(['obj_type','id', 'user_id', 'base', 'selected', 'hover', 'text', 'header', 'body', 'divone', 'divtwo', 'divthree','in_use'])
         for palette in Palettes.query.order_by(Palettes.id).all():
-            out.writerow(['palette',palette.id, palette.user_id, palette.base, palette.selected, palette.hover, palette.text, palette.header, palette.body, palette.divone, palette.divtwo, palette.divthree])
+            out.writerow(['palette',palette.id, palette.user_id, palette.base, palette.selected, palette.hover, palette.text, palette.header, palette.body, palette.divone, palette.divtwo, palette.divthree, palette.in_use])
     newBackup(name,desc)
     flash('Záloha byla úspěšně vytvořena','message')
 
@@ -116,7 +116,7 @@ def importCsv(name):
                 db.session.add(Kategorie(id=value_dict[1],owned_id=value_dict[2],type_id=value_dict[3]))
                 db.session.commit()
             if value_dict[0] == 'palette':
-                db.session.add(Palettes(id=value_dict[1],user_id=value_dict[2],base=value_dict[3] ,selected=value_dict[4],hover=value_dict[5],text=value_dict[6], header=value_dict[7], body=value_dict[8], divone=value_dict[9], divtwo=value_dict[10], divthree=value_dict[11]))
+                db.session.add(Palettes(id=value_dict[1],user_id=value_dict[2],base=value_dict[3] ,selected=value_dict[4],hover=value_dict[5],text=value_dict[6], header=value_dict[7], body=value_dict[8], divone=value_dict[9], divtwo=value_dict[10], divthree=value_dict[11], in_use=value_dict[12]))
                 db.session.commit()
     # declaration necessities (init functions)
     languages = Jazyk.query.order_by(Jazyk.id).all()
@@ -132,7 +132,7 @@ def importCsv(name):
                 palettes = Palettes.query.order_by(Palettes.id).all()
         used = False
         for palette in palettes:
-            if palette.user_id == current_user.id:
+            if palette.user_id == current_user.id and palette.in_use == 'on':
                 Palette.base = palette.base
                 Palette.hover = palette.hover
                 Palette.selected = palette.selected
@@ -175,7 +175,7 @@ def backup():
         UI.active = "backup"
         if request.method == 'GET':
             backupListUpKeep()
-            return render_template('downloadBackUp.html', user = current_user,active=UI.active,palette=Palette, backup_dict=backup_dict)
+            return render_template('backup/downloadBackUp.html', user = current_user,active=UI.active,palette=Palette, backup_dict=backup_dict)
         else:
             desc = request.form["desc"]
             name = datetime.now().strftime("%m-%d-%Y_%H:%M:%S")
@@ -257,7 +257,7 @@ def showForm():
 
     tags = Tags.query.order_by(Tags.id).all()
     UI.active = "addRecord"
-    return render_template('addZaznam.html', user = current_user,active=UI.active,palette=Palette, languages=languages, users=users, tags=tags)
+    return render_template('record/addZaznam.html', user = current_user,active=UI.active,palette=Palette, languages=languages, users=users, tags=tags)
 
 @data.route('/language/form/', methods=['POST', 'GET'])
 @login_required
@@ -268,7 +268,7 @@ def showLanguageForm():
     UI.active = "addLanguage"
     if request.method == 'GET':
         languages = Jazyk.query.order_by(Jazyk.id).all()
-        return render_template('addJazyk.html', user = current_user,active=UI.active,languages=languages,palette=Palette)
+        return render_template('language/addJazyk.html', user = current_user,active=UI.active,languages=languages,palette=Palette)
     else:
         language_name = request.form['name']
         new_language = Jazyk(name=language_name)
@@ -279,7 +279,7 @@ def showLanguageForm():
         request.method = "GET"
         for language in languages:
             Filter.language_dict[language.id] = "on"
-        return render_template('addJazyk.html', user = current_user,active=UI.active,languages=languages,palette=Palette)
+        return render_template('language/addJazyk.html', user = current_user,active=UI.active,languages=languages,palette=Palette)
 
 @data.route('/language/update/<int:id>', methods=['POST', 'GET'])
 @login_required
@@ -291,7 +291,7 @@ def showLanguageUpdateForm(id):
     UI.active = "addJazyk"
     if request.method == 'GET':
         language_to_update = Jazyk.query.get_or_404(id)
-        return render_template('updateJazyk.html', user = current_user,active=UI.active,languages=languages, language_to_update=language_to_update,palette=Palette)
+        return render_template('language/updateJazyk.html', user = current_user,active=UI.active,languages=languages, language_to_update=language_to_update,palette=Palette)
     else:
         language_to_update = Jazyk.query.get_or_404(id)
         language_to_update.name = request.form['name']
@@ -360,16 +360,20 @@ def delUser(id):
     if not current_user.auth <= user_config_auth:
         flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
+     
     user_to_del = User.query.get_or_404(id)
-    records = Denik.query.order_by(Denik.id).all()
-    for record in records:
-        if(record.name == user_to_del.id):
-            db.session.delete(record)
-            db.session.commit()
-    db.session.delete(user_to_del)
-    db.session.commit()
-    flash('Uživatel a jeho záznamy smazány','message')
-    return redirect('/user/form/')
+    if user_to_del.auth > 1:
+        records = Denik.query.order_by(Denik.id).all()
+        for record in records:
+            if(record.name == user_to_del.id):
+                db.session.delete(record)
+                db.session.commit()
+        db.session.delete(user_to_del)
+        db.session.commit()
+        flash('Uživatel a jeho záznamy smazány','message')
+    else:
+        flash('Uživatel nemůže být smazán, kvůli vysokému oprávnění','error')
+    return redirect('/user/')
 
 @data.route('/cat/form/', methods=['POST', 'GET'])
 @login_required
@@ -380,7 +384,7 @@ def showCatForm():
     UI.active = "addCat"
     if request.method == 'GET':
         tags = Tags.query.order_by(Tags.id).all()
-        return render_template('addKategorie.html', user = current_user,active=UI.active, tags=tags,palette=Palette)
+        return render_template('cat/addKategorie.html', user = current_user,active=UI.active, tags=tags,palette=Palette)
     else:
         tag_name = request.form['name']
         tag_barva = request.form['barva']
@@ -396,7 +400,7 @@ def showCatForm():
         Filter.tag_dict[0] = "on"
         for tag in tags:
             Filter.tag_dict[tag.id] = "on"
-        return render_template('addKategorie.html', user = current_user,active=UI.active, tags=tags,palette=Palette)
+        return render_template('cat/addKategorie.html', user = current_user,active=UI.active, tags=tags,palette=Palette)
 
 @data.route('/cat/delete/<int:id>')
 @login_required
@@ -427,7 +431,7 @@ def updateCatForm(id):
     if request.method == 'GET':
         for tag in tags:
             if(id == tag.id):
-                return render_template('updateKategorie.html', user = current_user,active=UI.active, tags=tags, tag_to_update=tag,palette=Palette)
+                return render_template('cat/updateKategorie.html', user = current_user,active=UI.active, tags=tags, tag_to_update=tag,palette=Palette)
     else:
         tag_to_update = Tags.query.get_or_404(id)
         tag_to_update.name = request.form['name']
@@ -449,7 +453,7 @@ def updateRecord(id):
     tags = Tags.query.order_by(Tags.id).all()
     users = User.query.order_by(User.id).all()
     UI.active = "addRecord"
-    return render_template('update.html', user = current_user,active=UI.active, record=record_to_update,languages=languages, tags=tags, cats=cats, users=users,palette=Palette)
+    return render_template('record/update.html', user = current_user,active=UI.active, record=record_to_update,languages=languages, tags=tags, cats=cats, users=users,palette=Palette)
 
 @data.route('/delete/<int:id>')
 @login_required

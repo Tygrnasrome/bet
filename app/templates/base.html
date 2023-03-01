@@ -103,7 +103,7 @@
                 {% if user.name %}
                     {% if user.auth <= 1 %}
                         <li><a href="http://localhost:8080/language/form" {% if active == 'addLanguage' %} style="background-color: {{palette.base}};" {% endif %}><b>Programovací jazyk</b></a></li>
-                        <li><a href="http://localhost:8080/user/form" {% if active == 'signup' %} style="background-color: {{palette.base}};" {% endif %}><b>Účet</b></a></li>
+                        <li><a href="/signup/" {% if active == 'signup' %} style="background-color: {{palette.base}};" {% endif %}><b>Účet</b></a></li>
                     {% endif %}
                 {% endif %}
 

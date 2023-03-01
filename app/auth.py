@@ -13,7 +13,7 @@ def resetPalette():
     palettes = Palettes.query.order_by(Palettes.id).all()
     used = False
     for palette in palettes:
-        if palette.user_id == current_user.id:
+        if palette.user_id == current_user.id and palette.in_use == 'on':
             Palette.base = palette.base
             Palette.hover = palette.hover
             Palette.selected = palette.selected
@@ -39,7 +39,7 @@ def resetPalette():
 def login():
     UI.active = "login"
     users = User.query.order_by(User.id).all()
-    return render_template('login.html', user = current_user,active=UI.active, palette=Palette, users=users)
+    return render_template('user/login.html', user = current_user,active=UI.active, palette=Palette, users=users)
 
 @auth.route('/login/', methods=['POST'])
 def login_post():
@@ -80,7 +80,7 @@ def signup():
     if current_user.auth > 1:
         flash('Na tuto akci nemáte oprávnění')
         redirect(url_for('main.index'))
-    return render_template('signup.html', user = current_user,active=UI.active, palette=Palette)
+    return render_template('user/signup.html', user = current_user,active=UI.active, palette=Palette)
 
 @auth.route('/signup/', methods=['POST'])
 @login_required
@@ -111,13 +111,13 @@ def signup_post():
     db.session.add(new_user)
     db.session.commit()
     flash('Účet byl úspěšně vytvořen','message')
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('auth.signup'))
 
 @auth.route('/change/email', methods=['GET','POST'])
 @login_required
 def changeEmail():
     if request.method == 'GET':
-        return render_template('changeEmail.html', user = current_user ,active=UI.active, palette=Palette)
+        return render_template('user/changeEmail.html', user = current_user ,active=UI.active, palette=Palette)
     else:
         email = request.form.get('email')
         user = User.query.filter_by(email=email).first()
@@ -139,7 +139,7 @@ def changeEmailConfig(id):
         return redirect('/')
     user_profile = User.query.filter_by(id=id).first()
     if request.method == 'GET':
-        return render_template('changeEmailConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
+        return render_template('user/changeEmailConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
     else:
         email = request.form.get('email')
         user = User.query.filter_by(email=email).first()
@@ -157,7 +157,7 @@ def changeEmailConfig(id):
 @login_required
 def changePassword():
     if request.method == 'GET':
-        return render_template('changePassword.html', user = current_user ,active=UI.active, palette=Palette)
+        return render_template('user/changePassword.html', user = current_user ,active=UI.active, palette=Palette)
     else:
         password = request.form.get('password')
         if not check_password_hash(current_user.password, password):
@@ -183,7 +183,7 @@ def changePasswordConfig(id):
         return redirect('/')
     user_profile = User.query.filter_by(id=id).first()
     if request.method == 'GET':
-        return render_template('changePasswordConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
+        return render_template('user/changePasswordConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
     else:
         password = request.form.get('password')
         if not check_password_hash(current_user.password, password):
@@ -209,7 +209,7 @@ def changeNameConfig(id):
         return redirect('/')
     user_profile = User.query.filter_by(id=id).first()
     if request.method == 'GET':
-        return render_template('changeNameConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
+        return render_template('user/changeNameConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
     else:
         name = request.form.get('name')
         user = User.query.filter_by(name=name).first()
@@ -231,7 +231,7 @@ def changeAuthConfig(id):
         return redirect('/')
     user_profile = User.query.filter_by(id=id).first()
     if request.method == 'GET':
-        return render_template('changeAuthConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
+        return render_template('user/changeAuthConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
     else:
         auth = request.form.get('auth')
         user_profile.auth = auth
@@ -254,8 +254,8 @@ def profile():
         stat[int(record.jazyk_id)] += record.time_spent
     for palette in palettes:
         if palette.user_id == current_user.id:
-            return render_template('profile.html', user = current_user ,active=UI.active, palette=Palette, user_palette=palette, stat=stat, languages=languages)
-    return render_template('profile.html', user = current_user ,active=UI.active, palette=Palette, user_palette=Palette, stat=stat, languages=languages)
+            return render_template('user/profile.html', user = current_user ,active=UI.active, palette=Palette, user_palette=palette, stat=stat, languages=languages)
+    return render_template('user/profile.html', user = current_user ,active=UI.active, palette=Palette, user_palette=Palette, stat=stat, languages=languages)
 
 @auth.route('/profile/config/<int:id>')
 @login_required
@@ -276,8 +276,8 @@ def profileConfig(id):
         stat[int(record.jazyk_id)] += record.time_spent
     for palette in palettes:
         if palette.user_id == user_profile.id:
-            return render_template('profileConfig.html', user = current_user ,active=UI.active, palette=Palette, user_palette=palette, stat=stat, languages=languages, user_profile=user_profile)
-    return render_template('profileConfig.html', user = current_user ,active=UI.active, palette=Palette, user_palette=Palette, stat=stat, languages=languages, user_profile=user_profile)
+            return render_template('user/profileConfig.html', user = current_user ,active=UI.active, palette=Palette, user_palette=palette, stat=stat, languages=languages, user_profile=user_profile)
+    return render_template('user/profileConfig.html', user = current_user ,active=UI.active, palette=Palette, user_palette=Palette, stat=stat, languages=languages, user_profile=user_profile)
 
 @auth.route('/logout/')
 @login_required

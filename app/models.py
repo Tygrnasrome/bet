@@ -8,7 +8,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(100), unique=True)
     auth = db.Column(db.Integer, nullable=False)
-    created_date = db.Column(db.String(30), default=datetime.utcnow)
+    created_date = db.Column(db.String(30), default=datetime.utcnow().strftime("%m-%d-%Y"))
 
 class Denik(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -46,3 +46,4 @@ class Palettes(db.Model):
     divone = db.Column(db.String(20), nullable=False)
     divtwo = db.Column(db.String(20), nullable=False)
     divthree = db.Column(db.String(20), nullable=False)
+    in_use = db.Column(db.String(5), default='on')
