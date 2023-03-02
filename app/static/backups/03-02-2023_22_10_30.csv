@@ -9,8 +9,8 @@ language,2,Java
 language,3,HolyC
 language,5,C++
 obj_type,id,name,barva,popis
-tag,1,nefunk4n9,#bf2222,kdo ví
+tag,1,nefunkční,#bf2222,kdo ví
 obj_type,id,owned_id,type_id
 cat,1,4,1
 obj_type,id,user_id,base,selected,hover,text,header,body,divone,divtwo,divthree,in_use
-palette,1,0,#ce29d1,#a56c22,#92601e,#dee4e9,#d18023,#2b2b2b,#555555,#4b4b4b,#3b3b3b,True
+palette,1,0,#d129b2,#a5228d,#941e7b,#dee4e9,#d123a3,#2b2b2b,#555555,#4b4b4b,#3b3b3b,

@@ -109,12 +109,13 @@ def signup_post():
     # add the new user to the database
     db.session.add(new_user)
     db.session.commit()
-    flash('Účet byl úspěšně vytvořen','message')
+    flash('Účet byl vytvořen','message')
     return redirect(url_for('auth.signup'))
 
 @auth.route('/change/email', methods=['GET','POST'])
 @login_required
 def changeEmail():
+    UI.active = "profile"
     if request.method == 'GET':
         return render_template('user/changeEmail.html', user = current_user ,active=UI.active, palette=Palette)
     else:
@@ -126,7 +127,7 @@ def changeEmail():
         old_email = current_user.email
         current_user.email = email
         db.session.commit()
-        msg = 'Email byl úspěšně změněn z {old} na {new}'
+        msg = 'Email byl změněn z {old} na {new}'
         flash(msg.format(old=old_email, new=email),'message')
         return redirect(url_for('auth.profile'))
 
@@ -136,6 +137,7 @@ def changeEmailConfig(id):
     if not current_user.auth <= user_config_auth:
         flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
+    UI.active = "none"
     user_profile = User.query.filter_by(id=id).first()
     if request.method == 'GET':
         return render_template('user/changeEmailConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
@@ -148,7 +150,7 @@ def changeEmailConfig(id):
         old_email = user_profile.email
         user_profile.email = email
         db.session.commit()
-        msg = 'Email byl úspěšně změněn z {old} na {new}'
+        msg = 'Email byl změněn z {old} na {new}'
         flash(msg.format(old=old_email, new=email),'message')
         return redirect(url_for('auth.profileConfig', id=id))
 
@@ -156,6 +158,7 @@ def changeEmailConfig(id):
 @login_required
 def changePassword():
     if request.method == 'GET':
+        UI.active = "profile"
         return render_template('user/changePassword.html', user = current_user ,active=UI.active, palette=Palette)
     else:
         password = request.form.get('password')
@@ -171,7 +174,7 @@ def changePassword():
             return redirect(url_for('auth.changePassword')) # neshodují se nově zadaná hesla
         current_user.password = generate_password_hash(new_password, method='sha256') 
         db.session.commit()
-        flash('Heslo bylo úspěšně změněno','message')
+        flash('Heslo bylo změněno','message')
         return redirect(url_for('auth.profile'))
 
 @auth.route('/change/password/<int:id>', methods=['GET','POST'])
@@ -180,6 +183,7 @@ def changePasswordConfig(id):
     if not current_user.auth <= user_config_auth:
         flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
+    UI.active = "none"
     user_profile = User.query.filter_by(id=id).first()
     if request.method == 'GET':
         return render_template('user/changePasswordConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
@@ -197,7 +201,7 @@ def changePasswordConfig(id):
             return redirect(url_for('auth.changePasswordConfig', id=id)) # neshodují se nově zadaná hesla 
         user_profile.password = generate_password_hash(new_password, method='sha256') 
         db.session.commit()
-        flash('Heslo bylo úspěšně změněno','message')
+        flash('Heslo bylo změněno','message')
         return redirect(url_for('auth.profileConfig', id=id))
 
 @auth.route('/change/name/<int:id>', methods=['GET','POST'])
@@ -206,6 +210,7 @@ def changeNameConfig(id):
     if not current_user.auth <= user_config_auth:
         flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
+    UI.active = "none"
     user_profile = User.query.filter_by(id=id).first()
     if request.method == 'GET':
         return render_template('user/changeNameConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
@@ -218,7 +223,7 @@ def changeNameConfig(id):
         old_name = user_profile.name
         user_profile.name = name
         db.session.commit()
-        msg = 'Jméno bylo úspěšně změněno z {old} na {new}'
+        msg = 'Jméno bylo změněno z {old} na {new}'
         flash(msg.format(old=old_name, new=name),'message')
         return redirect(url_for('auth.profileConfig', id=id))
 
@@ -228,6 +233,7 @@ def changeAuthConfig(id):
     if not current_user.auth <= user_config_auth:
         flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
+    UI.active = "none"
     user_profile = User.query.filter_by(id=id).first()
     if request.method == 'GET':
         return render_template('user/changeAuthConfig.html', user = current_user ,active=UI.active, palette=Palette, user_profile=user_profile)
@@ -235,7 +241,7 @@ def changeAuthConfig(id):
         auth = request.form.get('auth')
         user_profile.auth = auth
         db.session.commit()
-        flash('Pravomoc byla úspěšně změněna','message')
+        flash('Pravomoc byla změněna','message')
         return redirect(url_for('auth.profileConfig', id=id))
 
 @auth.route('/profile/')
@@ -245,6 +251,7 @@ def profile():
     languages = Jazyk.query.order_by(Jazyk.id).all()
     records = Denik.query.filter_by(name=current_user.id).all()
     stat = {'num':0, 'time':0}
+    UI.active = "profile"
     for language in languages:
         stat[int(language.id)] = int(0)
     for record in records:
@@ -262,6 +269,7 @@ def profileConfig(id):
     if not current_user.auth <= user_config_auth:
         flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
+    UI.active = "none"
     palettes = Palettes.query.order_by(Palettes.id).all()
     languages = Jazyk.query.order_by(Jazyk.id).all()
     records = Denik.query.filter_by(name=id).all()
@@ -282,7 +290,7 @@ def profileConfig(id):
 @login_required
 def logout():
     logout_user()
-    flash('Uživatel úspěšně odhlášen','message')
+    flash('Uživatel odhlášen','message')
     Palette.base = Palette.def_base
     Palette.hover = Palette.def_hover
     Palette.selected = Palette.def_selected

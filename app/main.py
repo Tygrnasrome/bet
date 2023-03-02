@@ -240,7 +240,7 @@ def zaznamy(serazeni):
                 if (int(record.id) == int(cat.owned_id)):
                     has = True
             if (has == False):
-                records = records.filter(int(Denik.id) !=  int(record.id))
+                records = records.filter(Denik.id !=  int(record.id))
     for language in languages:
         if(not Filter.language_dict[int(language.id)]):
             records = records.filter(Denik.jazyk_id !=  language.id)

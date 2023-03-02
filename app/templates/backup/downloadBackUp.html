@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Stahuji Zálohu</title>
+<title>Zálohy</title>
 <link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}" >
 
 {% endblock %}
@@ -10,18 +10,6 @@
 <div class="Center">
     <h1>Zálohovat aktuální data</h1>
     <form action="/backup/" method="post">
-    <table>
-        <tr>
-            <td>
-                název/popis zálohy (čas zálohy bude uložen automaticky)
-            </td>
-            <td>
-                
-                    <input type="text" name="desc" id="desc" required>
-                
-            </td>
-        </tr>
-    </table>
     <input type="submit" value="Exportovat"/>
     </form>
     <h1> Importovat zálohu ze souboru </h1>
@@ -29,7 +17,6 @@
     <form action = "/upload/" method = "post" 
     enctype = "multipart/form-data">
         <input type = "file" name = "file" required/>
-        <input type = "text" name="desc" id="desc" required/>
         <input type="submit" value="importovat soubor">
         
     </form>   
@@ -44,14 +31,12 @@
     <table>
         <tr>
             <th> čas </th>
-            <th> název / popis </th>
         </tr>
         {% for backup in backup_dict %}
         <tr>
             <td> {{backup}}</td>
-            <td> {{backup_dict[backup]}}</td>
             <td>
-                <a href="/backup/download/{{backup}}"> Stáhount </a>
+                <a href="/backup/download/{{backup}}"> Stáhnout </a>
                 <a href="/backup/use/{{backup}}"> Importovat </a>
                 <a href="/backup/delete/{{backup}}" class="smazat confirmation"> Smazat</a>
             </td>

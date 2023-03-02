@@ -107,7 +107,6 @@
 
     <table>
     <tr>
-        <th style="padding-right:  20px; text-align: left;">ID</th>
         <th style="padding-right:  20px; text-align: left;">Jméno</th>
         <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/7/">Jazyk</a></th>
         <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/{% if serazeni == 3 %}4{% else %}3{% endif %}/">Čas strávený v min</a></th>
@@ -120,7 +119,6 @@
     {% for record in records %}
         {% if user.auth <= 1 or user.id == record.name %}
         <tr>
-            <td>{{record.id}}</td>
             <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">{% for usr in users %}
 
                 {% if usr.id == record.name %}

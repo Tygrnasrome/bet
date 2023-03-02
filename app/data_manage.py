@@ -30,18 +30,18 @@ def backupListUpKeep():
                 for value in row: #every value in row
                     value_dict[value_id] = value #save value in dict so we can recall on it later    
                     value_id += int(1)
-                backup_dict[value_dict[0]] = value_dict[1] # adds one backup in dict (time is value 0, name is value 1)
+                backup_dict[value_dict[0]] = 1 # adds one backup in dict (time is value 0)
             header = False
 
-def newBackup(name, desc):
+def newBackup(name):
     backupListUpKeep()
-    backup_dict[name] = desc
+    backup_dict[name] = 1
     filename = "app/static/backups/backup.csv"
     with open(os.path.abspath(filename), 'w') as f:
         out = csv.writer(f)
-        out.writerow(['name','desc'])
+        out.writerow(['name'])
         for backup in backup_dict:
-            out.writerow([backup,backup_dict[backup]])
+            out.writerow([backup])
 
 def delBackup(name):
     backupListUpKeep()
@@ -49,12 +49,12 @@ def delBackup(name):
     filename = "app/static/backups/backup.csv"
     with open(os.path.abspath(filename), 'w') as f:
         out = csv.writer(f)
-        out.writerow(['name','desc'])
+        out.writerow(['name'])
         for backup in backup_dict:
-            out.writerow([backup,backup_dict[backup]])
-        flash('Záloha byla úspěšně smazána','message')
+            out.writerow([backup])
+        flash('Záloha byla smazána','message')
 
-def exportCsv(name, desc):
+def exportCsv(name):
     filename = "app/static/backups/{name}.csv"
     backupListUpKeep()
     with open(os.path.abspath(filename.format(name = name)), 'w') as f:
@@ -83,8 +83,8 @@ def exportCsv(name, desc):
         out.writerow(['obj_type','id', 'user_id', 'base', 'selected', 'hover', 'text', 'header', 'body', 'divone', 'divtwo', 'divthree','in_use'])
         for palette in Palettes.query.order_by(Palettes.id).all():
             out.writerow(['palette',palette.id, palette.user_id, palette.base, palette.selected, palette.hover, palette.text, palette.header, palette.body, palette.divone, palette.divtwo, palette.divthree, palette.in_use])
-    newBackup(name,desc)
-    flash('Záloha byla úspěšně vytvořena','message')
+    newBackup(name)
+    flash('Záloha byla vytvořena','message')
 
 def importCsv(name):
     filename = "app/static/backups/{name}.csv"
@@ -155,7 +155,7 @@ def importCsv(name):
             Palette.text = Palette.def_text
     except:
         pass
-    flash('Záloha byla úspěšně nahrána','message')
+    flash('Záloha byla nahrána','message')
             
 @data.route('/backup/use/<string:name>', methods=['POST', 'GET'])
 @login_required
@@ -177,9 +177,8 @@ def backup():
             backupListUpKeep()
             return render_template('backup/downloadBackUp.html', user = current_user,active=UI.active,palette=Palette, backup_dict=backup_dict)
         else:
-            desc = request.form["desc"]
             name = datetime.now().strftime("%m-%d-%Y_%H:%M:%S")
-            exportCsv(name,desc)
+            exportCsv(name)
             request.method = 'GET'
             return redirect('/backup/')
     flash("Na tuto akci nemáte oprávnění","error")
@@ -192,7 +191,6 @@ def downloadFile(name):
         flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
     path = "app/static/backups/{name}.csv"
-    flash('Stahování by mělo každou chvíli začít','notice')
     return send_file(os.path.abspath(path.format(name = name)), as_attachment=True)
 
 @data.route('/backup/delete/<string:name>')
@@ -201,23 +199,20 @@ def deleteFile(name):
     if not current_user.auth <= backup_config_auth:
         flash("Na tuto akci nemáte oprávnění","error")
         return redirect('/')
+    name = name.replace(' ','')
     path = "app/static/backups/{name}.csv"
     path = path.format(name=name)
     os.remove(path)
     delBackup(name)
-    flash('Záloha byla smazána','message')
     return redirect('/backup/')
 
 @data.route('/upload/', methods = ['POST'])
 @login_required
 def upload_file():
     f = request.files['file']
-    desc = request.form['desc']
     f.save(os.path.join('app/static/backups/',secure_filename(f.filename)))
-    
-    
-    newBackup(f.filename.replace('.csv',''),desc)
-    flash('soubor importován úspěšně','meassage')
+    newBackup(secure_filename(f.filename).replace('.csv','').replace(' ',''))
+    flash('Soubor importován','message')
     return redirect('/backup/')
 
 @data.route('/add/', methods=['POST', 'GET'])

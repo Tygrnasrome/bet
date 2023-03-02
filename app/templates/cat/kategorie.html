@@ -11,17 +11,12 @@
         <h1>Seznam Štítků</h1>
         <table>
             <tr>
-                <th style="padding-right:  20px;"> ID </th>
                 <th style="padding-right:  20px;"> Název štítku </th>
                 <th style="padding-right:  20px;"> Barva štítku</th>
                 <th style="padding-right:  20px;"> Popis štítku</th>
             </tr>
                 {% for tag in tags %}
                 <tr>
-                    <td>
-                        {{tag.id}}
-                    </td>
-
                     <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">
                         {{tag.name}}
                     </td>

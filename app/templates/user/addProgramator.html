@@ -30,16 +30,11 @@
     </form>
     <table>
         <tr>
-            <th style="padding-right:  20px;"> ID </th>
             <th style="padding-right:  20px;"> Jméno programátora </th>
 
         </tr>
         {% for usr in users %}
         <tr>
-            <td>
-                {{usr.id}}
-            </td>
-
             <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">
                 {{usr.name}}
             </td>
