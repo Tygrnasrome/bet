@@ -11,20 +11,12 @@
 
         <h1><b>Upravit programátorský jazyk ve výběru</b></h1>
 
-        <h3><b> všechna pole jsou povinná </b></h3>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <p class="{{ category }}">{{ message }}</p>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
         <br>
 
         <table>
             <tr>
 
-                <td>Název jazyku</td>
+                <td>Název jazyku <span class="povinnost">*</span></td>
 
                 <td>
                     <input type="text" placeholder="název jazyku" id="name" name="name" required value="{{language_to_update.name}}">

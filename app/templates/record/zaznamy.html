@@ -10,13 +10,6 @@
     <h1>
       <b> Záznamy v deníku </b>
     </h1>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <p class="{{ category }}">{{ message }}</p>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
     <form action="/zaznamy/{{serazeni}}/" method="post">
         <h2>Filtry:</h2>
         <h4>Jazyky</h4>
@@ -31,26 +24,26 @@
         {% endfor %}
         <br>
         <br>
-        <h4>Čas programování</h4>
+        <h4>Čas strávený v minutách</h4>
         <label for="time_from">od</label>
-        <input type="number" placeholder="od" name="time_from" value="{{min_time}}" required style="width: 55px;">
+        <input type="number" placeholder="od" id="time_from" name="time_from" value="{{min_time}}" required style="width: 55px;">
         <label for="time_to">do</label>
-        <input type="number" placeholder="do" name="time_to" value="{{max_time}}" required style="width: 55px;">
+        <input type="number" placeholder="do" id="time_to" name="time_to" value="{{max_time}}" required style="width: 55px;">
         <br>
         <br>
 
         <h4>Datum</h4>
         <label for="date_from">od</label>
-        <input type="date" name="date_from" value="{{min_date}}" required>
-        <label for="date_from">do</label>
-        <input type="date" name="date_to" value="{{max_date}}" required>
+        <input type="date" id="date_from" name="date_from" value="{{min_date}}" required>
+        <label for="date_to">do</label>
+        <input type="date" id="date_to" name="date_to" value="{{max_date}}" required>
         <br>
         <br>
         <h4>Hodnocení</h4>
         <label for="hodnoceni_from">od</label>
-        <input type="number" placeholder="od" name="hodnoceni_from" value="{{min_hod}}" required style="width: 55px;">
+        <input type="number" placeholder="od" id="hodnoceni_from" name="hodnoceni_from" value="{{min_hod}}" required style="width: 55px;">
         <label for="hodnoceni_to">do</label>
-        <input type="number" placeholder="do" name="hodnoceni_to" value="{{max_hod}}" required style="width: 55px;">
+        <input type="number" placeholder="do" id="hodnoceni_to" name="hodnoceni_to" value="{{max_hod}}" required style="width: 55px;">
         <br>
         <br>
         {% if user.auth <= 1 %}
@@ -72,7 +65,7 @@
             {% if filtered_tags[0] == "on" %}
             checked
             {% endif %}>
-            <label for="bezkatky0">  bez kategorie</label>
+            <label for="bezkatky0">  Bez kategorie</label>
         {% for tag in tags %}
             <input type="checkbox" id="{{tag.name}}" name="{{tag.name}}"
             
@@ -116,11 +109,11 @@
     <tr>
         <th style="padding-right:  20px; text-align: left;">ID</th>
         <th style="padding-right:  20px; text-align: left;">Jméno</th>
-        <th style="padding-right:  20px; text-align: left;"><a href="http://localhost:8080/zaznamy/7/">Jazyk</a></th>
-        <th style="padding-right:  20px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 3 %}4{% else %}3{% endif %}/">Čas strávený v min</a></th>
+        <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/7/">Jazyk</a></th>
+        <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/{% if serazeni == 3 %}4{% else %}3{% endif %}/">Čas strávený v min</a></th>
         <th style="text-align: left;">Popis</th>
-        <th style="padding-right:  30px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 1 %}2{% else %}1{% endif %}/">Datum</a></th>
-        <th style="padding-right:  30px; text-align: left;"><a href="http://localhost:8080/zaznamy/{% if serazeni == 5 %}6{% else %}5{% endif %}/">Hodnocení</a></th>
+        <th style="padding-right:  30px; text-align: left;"><a href="/zaznamy/{% if serazeni == 1 %}2{% else %}1{% endif %}/">Datum</a></th>
+        <th style="padding-right:  30px; text-align: left;"><a href="/zaznamy/{% if serazeni == 5 %}6{% else %}5{% endif %}/">Hodnocení</a></th>
         <th style="padding-right:  30px; text-align: left;">Štítky</th>
         <th style="padding-right:  30px; text-align: left;">Možnosti</th>
     </tr>
@@ -161,8 +154,8 @@
                 {% endfor %}
             </td>
             {% if user.auth <= 1 or user.id == record.name %}
-            <td> <a href="/update-form/{{record.id}}"> upravit</a>  <br>
-                <a href="/delete/{{record.id}}" class="smazat"> smazat</a>  </td>
+            <td> <a href="/update-form/{{record.id}}">Upravit</a>  <br>
+                <a href="/delete/{{record.id}}" class="smazat confirmation">Smazat</a>  </td>
             {% endif %}
         </tr>
 
@@ -170,5 +163,6 @@
     {% endfor %}
     </table>
 </div>
+
 
 {% endblock %}

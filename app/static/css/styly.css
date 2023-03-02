@@ -111,11 +111,15 @@ a
     margin: 10px;
     border-radius: 1px;
 }
-.group 			  { 
+.povinnost{
+    color: orangered;
+}
+/*.group 			  {
   position:relative; 
   margin-bottom:45px; 
   display: block;
-}
+}*/
+/*
 input 				{
   font-size:18px;
   padding:10px 10px 10px 5px;
@@ -126,8 +130,9 @@ input 				{
   margin: 10 px;
 }
 input:focus 		{ outline:none; }
+*/
 
-/* LABEL ======================================= */
+/*!*!* LABEL ======================================= *!
 label 				 {
   color:#999; 
   font-size:18px;
@@ -141,14 +146,14 @@ label 				 {
   -webkit-transition:0.2s ease all;
 }
 
-/* active state */
+!* active state *!
 input:focus ~ label, input:valid ~ label 		{
   top:-20px;
   font-size:14px;
   color:{{palette.header}};
 }
 
-/* BOTTOM BARS ================================= */
+!* BOTTOM BARS ================================= *!
 .bar 	{ position:relative; display:block; width:300px; }
 .bar:before, .bar:after 	{
   content:'';
@@ -168,12 +173,12 @@ input:focus ~ label, input:valid ~ label 		{
   right:50%; 
 }
 
-/* active state */
+!* active state *!
 input:focus ~ .bar:before, input:focus ~ .bar:after {
   width:50%;
 }
 
-/* HIGHLIGHTER ================================== */
+!* HIGHLIGHTER ================================== *!
 .highlight {
   position:absolute;
   height:60%; 
@@ -184,14 +189,14 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
   opacity:0.5;
 }
 
-/* active state */
+!* active state *!
 input:focus ~ .highlight {
   -webkit-animation:inputHighlighter 0.3s ease;
   -moz-animation:inputHighlighter 0.3s ease;
   animation:inputHighlighter 0.3s ease;
 }
 
-/* ANIMATIONS ================ */
+!* ANIMATIONS ================ *!
 @-webkit-keyframes inputHighlighter {
 	from { background:#5264AE; }
   to 	{ width:0; background:transparent; }
@@ -204,5 +209,5 @@ input:focus ~ .highlight {
 	from { background:#5264AE; }
   to 	{ width:0; background:transparent; }
 }
-/*Button*/
+!*Button*!*/
 

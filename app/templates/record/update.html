@@ -9,50 +9,115 @@
 <div class="Center">
     <form action="/update-add/{{record.id}}" method="post">
         <h1><b>Upravit záznam</b></h1>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <p class="{{ category }}">{{ message }}</p>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
+
         <br>
+        <table>
+            <tr>
+                <td>
+                    <label for="name">Programátor</label>
+                </td>
+                <td>
+                    <select name="name" id="name">
+                        {% for usr in users %}
+                        {% if user.auth <= 2 or usr.id == user.id %}
+                        <option value="{{usr.id}}"
+                                {% if usr.id == record.name %}
+                                selected
+                                {% endif %}
+                        >{{usr.name}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+            </tr>
+            <tr>
+            <td>
+                Programovací jazyk
+            </td>
+            <td>
+                <select name="jazyk_id" >
+                    {% for language in languages %}
+                    <option value="{{language.id}}">{{language.name}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            </tr>
+            <tr>
+                <td>Čas strávený v minutách</td>
+
+                <td>
+                    <input type="number" placeholder="čas" id="time_spent" name="time_spent" value="{{record.time_spent}}">
+                </td>
+            </tr>
+
+            <tr>
+                <td>Datum</td>
+                <td>
+                    <input type="date" placeholder="datum" name="date" value="{{record.date}}">
+                </td>
+            </tr>
+            <tr>
+                <td><label for="popis">Popis</label></td>
+
+                <td>
+                    <textarea rows="5" cols="12" name="popis" id="popis" value="{{record.popis}}"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Škála hodnocení naši práce
+                </td>
+                <td>
+                    {% for i in range(5) %}
+                    <input type="radio" Name = "hodnoceni" value="{{i+1}}"
+                           {% if i+1 == record.hodnoceni %}
+                           checked
+                           {% endif %}
+                    >{{i+1}}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td> Štítky </td>
+                <td>
+                    {% for tag in tags %}
+                    <label for="{{tag.id}}" style="color: {{tag.barva}};">{{tag.name}}</label>
+                    <input type="checkbox" id="{{tag.id}}" name="{{tag.id}}"
+                           {% for cat in cats %}
+                           {% if cat.owned_id == record.id and cat.type_id == tag.id %}
+                           checked
+                           {% endif %}
+                           {% endfor %}>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% for cat in cats %}
+            <tr>
+                <td> {{cat.name}}</td>
+                <td>
+                    {% if cat.type == String(200) %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
         <table>
             <tr>
 
                 <td>Programátor</td>
 
                 <td>
-                    <select name="name" >
-                        {% for usr in users %}
-                        {% if user.auth <= 2 or usr.id == user.id %}
-                        <option value="{{usr.id}}"
-                        {% if usr.id == record.name %}
-                            selected
-                        {% endif %}
-                        >{{usr.name}}</option>
-                        {% endif %}
-                        {% endfor %}
-                    </select>
+
                 </td>
             </tr>
 
             <tr>
 
-                <td>Co se dělalo</td>
 
-                <td>
-                    <input type="text" placeholder="co se dělalo" name="popis" value="{{record.popis}}">
-                </td>
             </tr>
 
             <tr>
 
-                <td>Čas strávený v minutách</td>
 
-                <td>
-                    <input type="number" placeholder="čas" name="time_spent" value="{{record.time_spent}}">
-                </td>
             </tr>
 
             <tr>
@@ -73,41 +138,18 @@
 
             <tr>
 
-                <td>Datum</td>
 
-                <td>
-                    <input type="date" placeholder="datum" name="date" value="{{record.date}}">
-                </td>
             </tr>
 
             <tr>
 
                 <td>Škála hodnocení naši práce</td>
 
-                <td>
-                    {% for i in range(5) %}
-                        <input type="radio" Name = "hodnoceni" value="{{i+1}}"
-                        {% if i+1 == record.hodnoceni %}
-                            checked
-                        {% endif %}
-                        >{{i+1}}
-                    {% endfor %}
-                </td>
+
             </tr>
 
             <tr>
-                <td> Štítky </td>
-                <td>
-                    {% for tag in tags %}
-                        <label for="{{tag.id}}" style="color: {{tag.barva}};">{{tag.name}}</label>
-                        <input type="checkbox" id="{{tag.id}}" name="{{tag.id}}"
-                        {% for cat in cats %}
-                            {% if cat.owned_id == record.id and cat.type_id == tag.id %}
-                                checked
-                            {% endif %}
-                        {% endfor %}>
-                    {% endfor %}
-                </td>
+
             </tr>
         </table>
 

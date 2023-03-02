@@ -18,13 +18,7 @@
         <b> všechna pole jsou povinná </b> 
     </h3>
     <br>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <p class="{{ category }}">{{ message }}</p>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
+
 <table>
         <tr>
         <td>
@@ -41,7 +35,7 @@
     </h3>
     <table>
         <tr>
-            <th> id </th>
+            <th> ID </th>
             <th> Jméno programátora </th>
         </tr>
             {% for usr in users %}
@@ -53,8 +47,8 @@
                     {{usr.name}}
                 </td>
                 <td>
-                    <a href="/user/delete/{{usr.id}}"> smazat</a>
-                    <a href="/user/update/{{usr.id}}"> smazat</a>
+                    <a href="/user/delete/{{usr.id}}" class="smazat confirmation">Smazat</a>
+                    <a href="/user/update/{{usr.id}}">Upravit</a>
                 </td>
             </tr>
             {% endfor %}

@@ -6,6 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{url_for('static', filename='css/styly1.css')}}" >
+    <script type="text/javascript">
+        let elems = document.getElementsByClassName('confirmation');
+        let confirmIt = function (e) {
+            if (!confirm('Are you sure?')) e.preventDefault();
+        };
+        for (let i = 0, l = elems.length; i < l; i++) {
+            elems[i].addEventListener('click', confirmIt, false);
+        }
+    </script>
     <style>
         body
         {
@@ -40,7 +49,6 @@
             list-style: none;
             background-color: {{palette.base}};
             color: {{palette.text}};
-            margin: 10px;
         }
         div 
         {
@@ -70,7 +78,8 @@
         <ul>
 
             <li>
-            <img src="{{url_for('static', filename='images/logo.png')}}" alt="logo" height="58px" style="float: right; margin-top: 5px">
+                <a href="/"><img src="{{url_for('static', filename='images/logo.png')}}" alt="logo" height="58px"
+                        style="float: right; margin-top: 5px"></a>
             </li>
             <li><a href="/" {% if active == 'home' %} style="background-color: {{palette.selected}};" {% endif %} >Domů</a></li>
 
@@ -104,8 +113,8 @@
             {% if user.name %}
                 <li><a href="#" {% if active == 'profile' %} style="background-color: {{palette.selected}};" {% endif %}>{{user.name}}</a>
                     <ul class="h">
-                        <li><a href="http://{{request.host}}:8080/profile" {% if active == 'profile' %} style="background-color: {{palette.base}};" {% endif %} > profil </a></li>
-                        <li><a href="http://{{request.host}}:8080/logout"> odhlásit se </a></li>
+                        <li><a href="/profile" {% if active == 'profile' %} style="background-color: {{palette.base}};" {% endif %} > profil </a></li>
+                        <li><a href="/logout"> odhlásit se </a></li>
                     </ul>
                 </li>
                 {% if user.auth == 1 %}
@@ -117,6 +126,13 @@
             <li> <a href="/settings/" class="set" {% if active == 'settings' %} style="background-color: {{palette.selected}};" {% endif %}><img src="{{url_for('static', filename='images/settings.png')}}" alt="logo" height="27px" style="margin-top: 5px"></a></li>
 
         </ul>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <p class="{{ category }}">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
     </header>
     {% block body %} 
 

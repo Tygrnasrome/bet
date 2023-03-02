@@ -11,13 +11,6 @@
 
 <div class="Center">
     <h1>Programátorský deník</h1>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <p class="{{ category }}">{{ message }}</p>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
     <h4>Co to je?</h4>  
     Tato aplikace je deník, ve kterém si můžete ukládat, co jste v jakém programovacím jazyce dělali <br> Tady si můžete ukládat programovací jazyky, programátory, pracuje-li Vás na projektu více, hodnotit práci, zadat čas, jak dlouho jste nad tím strávili a popisovat, co se kde dělalo.
     <h4>A jak se to používá?</h4>
