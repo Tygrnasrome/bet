@@ -154,10 +154,10 @@
                 </tr>
                 <tr>
                     <td>
-                        použít 
+                        <label for="in_use">použít</label> 
                     </td>
                     <td>
-                        <input type="checkbox" name="in_use" id="in_use" checked>
+                        <input type="checkbox" name="in_use" id="in_use" {% if user_palette.in_use == "on" %} checked {% endif %}>
                     </td>
                 </tr>
             </table>

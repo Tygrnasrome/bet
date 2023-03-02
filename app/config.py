@@ -34,6 +34,7 @@ class Palette():
     def_divone = '#555555'
     def_divtwo = '#4b4b4b'
     def_divthree = '#3b3b3b'
+    in_use = 'off'
 
 class UI():
     active = 'home'

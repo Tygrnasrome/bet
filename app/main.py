@@ -168,8 +168,14 @@ def zaznamy(serazeni):
         #programovací jazyk
         records = db.session.query(Denik).order_by(Denik.jazyk_id)
     if(serazeni == 8):
-        #programovací jazyk naopak (nemáme v provozu)
-        records = Denik.query.order_by(Denik.jazyk_id).all()
+        #programovací jazyk naopak
+        records = db.session.query(Denik).order_by(Denik.jazyk_id.desc())
+    if(serazeni == 9):
+        #jméno
+        records = db.session.query(Denik).order_by(Denik.name)
+    if(serazeni == 10):
+        #jméno naopak
+        records = db.session.query(Denik).order_by(Denik.name.desc())
 
     for r in records:
         #před porovnáváním hodnoty stringů se musí dostat do proměnných nějaká hodnota

@@ -107,8 +107,8 @@
 
     <table>
     <tr>
-        <th style="padding-right:  20px; text-align: left;">Jméno</th>
-        <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/7/">Jazyk</a></th>
+        <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/{% if serazeni == 9 %}10{% else %}9{% endif %}/">Jméno</a></th>
+        <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/{% if serazeni == 7 %}8{% else %}7{% endif %}/">Jazyk</a></th>
         <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/{% if serazeni == 3 %}4{% else %}3{% endif %}/">Čas strávený v min</a></th>
         <th style="text-align: left;">Popis</th>
         <th style="padding-right:  30px; text-align: left;"><a href="/zaznamy/{% if serazeni == 1 %}2{% else %}1{% endif %}/">Datum</a></th>
