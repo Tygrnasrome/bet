@@ -30,16 +30,18 @@
                     </select>
             </tr>
             <tr>
-            <td>
-                Programovací jazyk
-            </td>
-            <td>
-                <select name="jazyk_id" >
-                    {% for language in languages %}
-                    <option value="{{language.id}}">{{language.name}}</option>
-                    {% endfor %}
-                </select>
-            </td>
+                <td>Programovací jazyk</td>
+
+                <td>
+                    <select name="jazyk_id">
+                        {% for language in languages %}
+                        <option value="{{language.id}}"
+                                {% if language.id == record.jazyk_id %}
+                                selected
+                                {% endif %}>{{language.name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td>Čas strávený v minutách</td>
@@ -100,59 +102,6 @@
             </tr>
             {% endfor %}
         </table>
-        <table>
-            <tr>
-
-                <td>Programátor</td>
-
-                <td>
-
-                </td>
-            </tr>
-
-            <tr>
-
-
-            </tr>
-
-            <tr>
-
-
-            </tr>
-
-            <tr>
-
-                <td>Programovací jazyk</td>
-
-                <td>
-                    <select name="jazyk_id">
-                        {% for language in languages %}
-                        <option value="{{language.id}}"
-                        {% if language.id == record.jazyk_id %}
-                        selected
-                        {% endif %}>{{language.name}}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-            </tr>
-
-            <tr>
-
-
-            </tr>
-
-            <tr>
-
-                <td>Škála hodnocení naši práce</td>
-
-
-            </tr>
-
-            <tr>
-
-            </tr>
-        </table>
-
         <h3><input type="submit" value="upravit"></h3>
         <br>
 

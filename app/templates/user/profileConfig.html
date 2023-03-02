@@ -10,14 +10,6 @@
 <div>
     <h1>{{user_profile.name}}</h1>
     <h3> profil účtu </h3>
-
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <p class="{{ category }}">{{ message }}</p>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
     
     <div>
         <h1>Osobní informace</h1>

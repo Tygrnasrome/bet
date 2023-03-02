@@ -9,13 +9,6 @@
 {% block body %}
 <div class="Center">
     <h1>Zálohovat aktuální data</h1>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <p class="{{ category }}">{{ message }}</p>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
     <form action="/backup/" method="post">
     <table>
         <tr>
@@ -29,7 +22,7 @@
             </td>
         </tr>
     </table>
-    <input type="submit" value="Zazálohovat">
+    <input type="submit" value="Exportovat"/>
     </form>
     <h1> Importovat zálohu ze souboru </h1>
     <h2> Připojte soubor </h2>
@@ -46,7 +39,7 @@
         Seznam všech záloh
     </h1>
     <h2>
-        Při použití zálohy budou ztracena všechna neuložená data
+        Při importování zálohy budou ztracena všechna neuložená data
     </h2>
     <table>
         <tr>
@@ -58,9 +51,9 @@
             <td> {{backup}}</td>
             <td> {{backup_dict[backup]}}</td>
             <td>
-                <a href="/backup/download/{{backup}}"> stáhnout</a>
-                <a href="/backup/use/{{backup}}"> použít </a>
-                <a href="/backup/delete/{{backup}}" class="smazat"> smazat</a>
+                <a href="/backup/download/{{backup}}"> Stáhount </a>
+                <a href="/backup/use/{{backup}}"> Importovat </a>
+                <a href="/backup/delete/{{backup}}" class="smazat confirmation"> Smazat</a>
             </td>
         </tr>
         {% endfor %}

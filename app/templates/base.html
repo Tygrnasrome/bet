@@ -67,7 +67,10 @@
         {
             color: {{palette.header}};
         }
-
+        p.zprava{
+            font-size: 3em;
+            height: 50px;
+        }
     </style>
     {% block head %} 
 
@@ -79,7 +82,7 @@
 
             <li>
                 <a href="/"><img src="{{url_for('static', filename='images/logo.png')}}" alt="logo" height="58px"
-                        style="float: right; margin-top: 5px"></a>
+                        ></a>
             </li>
             <li><a href="/" {% if active == 'home' %} style="background-color: {{palette.selected}};" {% endif %} >Domů</a></li>
 
@@ -129,7 +132,7 @@
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {% for category, message in messages %}
-        <p class="{{ category }}">{{ message }}</p>
+        <p class="{{ category }} zprava">{{ message }}</p>
         {% endfor %}
         {% endif %}
         {% endwith %}

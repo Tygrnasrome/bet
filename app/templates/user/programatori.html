@@ -11,13 +11,6 @@
     <h1>
         <b>Seznam programátorů</b> 
     </h1>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <p class="{{ category }}">{{ message }}</p>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
     <div>
         <table>
             <tr>
@@ -58,7 +51,7 @@
                 {% endif %}
                 {% if user.auth <= 1 %}
                 <td>
-                    <a href="/user/delete/{{usr.id}}" class="smazat"> smazat</a>
+                    <a href="/user/delete/{{usr.id}}" class="smazat confirmation"> smazat</a>
                     <a href="/profile/config/{{usr.id}}"> profil</a>
                 </td>
                 {% endif %}

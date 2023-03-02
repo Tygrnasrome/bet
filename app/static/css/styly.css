@@ -65,7 +65,7 @@ ul li ul.h a
 }
 ul li a
 {
-    size: auto;
+    height: 95px;
     display: block;
     text-transform: uppercase;
     text-decoration: none;
@@ -87,7 +87,7 @@ a
 }
 .smazat
 {
-    color:#E10600;
+    color: #ff3e3e;
     text-decoration-style: dotted;
 }
 .set

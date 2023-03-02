@@ -16,13 +16,7 @@
     <h3>
         <b> všechna pole jsou povinná </b>
     </h3>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <p class="{{ category }}">{{ message }}</p>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
+
     <br>
 <table>
     <tr>
@@ -74,7 +68,7 @@
                     {{tag.popis}}
                 </td>
                 <td>
-                    <a href="/cat/delete/{{tag.id}}"> smazat</a>
+                    <a href="/cat/delete/{{tag.id}}" class="smazat confirmation"> smazat</a>
                     <a href="/cat/update/{{tag.id}}"> update</a>
 
                 </td>
