@@ -41,9 +41,9 @@
         <br>
         <h4>Hodnocení</h4>
         <label for="hodnoceni_from">od</label>
-        <input type="number" placeholder="od" id="hodnoceni_from" name="hodnoceni_from" value="{{min_hod}}" required style="width: 55px;">
+        <input type="number" placeholder="od" id="hodnoceni_from" name="hodnoceni_from" value="{{min_hod}}" max="5" min="1" required style="width: 55px;">
         <label for="hodnoceni_to">do</label>
-        <input type="number" placeholder="do" id="hodnoceni_to" name="hodnoceni_to" value="{{max_hod}}" required style="width: 55px;">
+        <input type="number" placeholder="do" id="hodnoceni_to" name="hodnoceni_to" value="{{max_hod}}" max="5" min="1" required style="width: 55px;">
         <br>
         <br>
         {% if user.auth <= 1 %}
