@@ -42,6 +42,8 @@ def setAdminAcc():
     admin_acc = User(id=0,name='admin', email='', password=generate_password_hash('1234', method='sha256'), auth=1)
     db.session.add(admin_acc)
     db.session.commit()
+    
+
 @main.route('/')
 def index():
     db.create_all()
