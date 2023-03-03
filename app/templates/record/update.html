@@ -15,7 +15,8 @@
             <TR>
                 <TD>
                     <LABEL for="name">Programátor</TD>
-                <TD><SPAN class="povinnost">*</SPAN></label></TD><TD>
+                <TD><SPAN class="povinnost">*</SPAN></label></TD>
+                <TD>
                     <SELECT name="name" id="name">
                         {% for usr in users %}
                         {% if user.auth <= 2 or usr.id == user.id %}
@@ -30,7 +31,7 @@
             </TR>
             <TR>
                 <TD>Programovací jazyk</TD>
-
+                <TD><SPAN class="povinnost">*</SPAN></label></TD>
                 <TD>
                     <SELECT name="jazyk_id">
                         {% for language in languages %}
@@ -44,7 +45,7 @@
             </TR>
             <TR>
                 <TD>Čas strávený v minutách</TD>
-
+                <TD><SPAN class="povinnost">*</SPAN></label></TD>
                 <TD>
                     <INPUT type="number" placeholder="čas" id="time_spent" name="time_spent" value="{{record.time_spent}}">
                 </TD>
@@ -52,13 +53,14 @@
 
             <TR>
                 <TD>Datum</TD>
+                <TD><SPAN class="povinnost">*</SPAN></label></TD>
                 <TD>
                     <INPUT type="date" placeholder="datum" name="date" value="{{record.date}}">
                 </TD>
             </TR>
             <TR>
                 <TD><LABEL for="popis">Popis</LABEL></TD>
-
+                <TD><SPAN class="povinnost">*</SPAN></label></TD>
                 <td>
                     <textarea rows="5" cols="12" name="popis" id="popis" value="{{record.popis}}">{{record.popis}}</textarea>
                 </td>
@@ -67,6 +69,7 @@
                 <td>
                     Škála hodnocení naši práce
                 </TD>
+                <TD><SPAN class="povinnost">*</SPAN></label></TD>
                 <TD>
                     {% for i in range(5) %}
                     <INPUT type="radio" Name = "hodnoceni" value="{{i+1}}"
@@ -79,6 +82,7 @@
             </TR>
             <TR>
                 <TD> Štítky </TD>
+                <td></td>
                 <TD>
                     {% for tag in tags %}
                     <LABEL for="{{tag.id}}" style="color: {{tag.barva}};">{{tag.name}}</LABEL>
