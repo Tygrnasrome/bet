@@ -135,11 +135,19 @@
                 {% endfor %}
                 </TD>
             
+<<<<<<< HEAD
             <TD style="text-align: center;">{{record.time_spent}}</TD>
             <TD style=" width: 200px; word-wrap: break-word; word-break: break-all;">{{record.popis}}</TD>
             <TD>{{record.date}}</TD>
             <TD style="text-align: center;">{{record.hodnoceni}}</TD>
             <TD>
+=======
+            <td style="text-align: center;">{{record.time_spent}}</td>
+            <td style=" width: 200px; word-wrap: break-word; word-break: break-all;">{{record.popis}}</td>
+            <td>{{record.date[8:] + "-" + record.date[5:7] + "-" + record.date[:4]}}</td>
+            <td style="text-align: center;">{{record.hodnoceni}}</td>
+            <td>
+>>>>>>> b7eed1be67821568b098493f06fac8a5c99bad27
                 {% for cat in cats %}
                     {% if cat.owned_id == record.id %}
                         {% for tag in tags %}

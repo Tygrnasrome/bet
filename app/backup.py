@@ -62,7 +62,7 @@ def exportCsv(name):
         # records
         out.writerow(['obj_type','id', 'name', 'jazyk_id', 'popis', 'hodnoceni', 'date', 'time_spent'])
         for record in Denik.query.order_by(Denik.id).all():
-            out.writerow(['record',record.id, record.name, record.jazyk_id, record.popis, record.hodnoceni, record.date, record.time_spent])
+            out.writerow(['record',record.id, record.name, record.jazyk_id, record.popis, record.hodnoceni, record.date[8:] + "-" + record.date[5:7] + "-" + record.date[:4], record.time_spent])
         # users
         out.writerow(['obj_type','id', 'name', 'email', 'password', 'auth', 'created_date'])
         for user in User.query.order_by(User.id).all():
@@ -101,7 +101,7 @@ def importCsv(name):
                 value_id += int(1)
             # every obj_type constructs
             if value_dict[0] == 'record':
-                db.session.add(Denik(id=value_dict[1],name=value_dict[2],jazyk_id=value_dict[3] ,popis=value_dict[4],hodnoceni=value_dict[5],date=value_dict[6], time_spent=value_dict[7]))
+                db.session.add(Denik(id=value_dict[1],name=value_dict[2],jazyk_id=value_dict[3] ,popis=value_dict[4],hodnoceni=value_dict[5],date=value_dict[6][6:] + "-" + value_dict[6][3:5] + "-" + value_dict[6][:2], time_spent=value_dict[7]))
                 db.session.commit()
             if value_dict[0] == 'user':
                 db.session.add(User(id=value_dict[1],name=value_dict[2],email=value_dict[3] ,password=value_dict[4],auth=value_dict[5],created_date=value_dict[6]))
