@@ -11,9 +11,9 @@ h1, h2, h3{
     text-align: center;
 }
 div 
-{
+{    
     background-color: #3b3b3b;
-    width: fit-content;
+    width: fit-content;    
     float: left;
     padding: 20px;
     word-break: normal;
@@ -62,10 +62,11 @@ ul li ul.h a
     text-decoration: none;
     font-size: 15px;
     text-align: left;
+    margin: 0;
 }
 ul li a
 {
-    height: 95px;
+    height: 70px;
     display: block;
     text-transform: uppercase;
     text-decoration: none;
@@ -73,7 +74,6 @@ ul li a
     text-align: center;
     padding: 15px 30px;
 }
-
 *
 {
     padding: 0;
@@ -108,8 +108,9 @@ a
 {
     background-color: white;
     color: black;
-    margin: 10px;
-    border-radius: 1px;
+    margin-block: 5px;
+    border-radius: 4px;
+    height:60px;
 }
 .povinnost{
     color: orangered;

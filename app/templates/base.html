@@ -81,8 +81,9 @@
         <ul>
 
             <li>
-                <a href="/"><img src="{{url_for('static', filename='images/logo.png')}}" alt="logo" height="58px"
-                        ></a>
+                <a href="/" style="height: fit-content;position: relative;top: -5%;margin: 0;padding-bottom: 10px;">
+                    <img src="{{url_for('static', filename='images/logo.png')}}" alt="logo" height="40px">
+                </a>
             </li>
             <li><a href="/" {% if active == 'home' %} style="background-color: {{palette.selected}};" {% endif %} >Domů</a></li>
 
