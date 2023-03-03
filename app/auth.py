@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
 from .models import User, Palettes, Denik, Jazyk
-from .config import Palette, UI, user_config_auth
+from .config import Palette, UI, user_config_auth, Filter
 from . import db
 
 auth = Blueprint('auth', __name__)
@@ -71,6 +71,7 @@ def login_post():
     flash('Uživatel přihlášen','notice')
     login_user(user, remember=remember)
     resetPalette()
+    Filter.name = current_user.id
     return redirect(url_for('auth.profile'))
 
 @auth.route('/signup/')
