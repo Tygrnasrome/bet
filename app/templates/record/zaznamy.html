@@ -85,34 +85,33 @@
     <form action="/zaznamy/reset-filter" method="get">
         <p style="text-align: center;" >    <input type="submit" value="reset filtru"> </p>
     </form>
-    <br>
-    <br>
-    <br>
-    <form action="/zaznamy/set-serazeni/" method="post">
-        <h2>Seřazení:</h2>
-        <select name="serazeni" >
-            <option value="1" {% if serazeni == 1 %} selected {% endif %}>Datum vzestupně</option>
-            <option value="2" {% if serazeni == 2 %} selected {% endif %}>Datum sestupně</option>
-            <option value="3" {% if serazeni == 3 %} selected {% endif %}>Čas sestupně</option>
-            <option value="4" {% if serazeni == 4 %} selected {% endif %}>Čas vzestupně</option>
-            <option value="5" {% if serazeni == 5 %} selected {% endif %}>Hodnocení sestupně</option>
-            <option value="6" {% if serazeni == 6 %} selected {% endif %}>Hodnocení vzestupně</option>
-            <option value="7" {% if serazeni == 7 %} selected {% endif %}>Programovací jazyk abecedně</option>
-        </select>
-        <input type="submit" value="Seřadit">
-    </form>
 </div>
 
 <div>
 
     <table>
     <tr>
-        <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/{% if serazeni == 9 %}10{% else %}9{% endif %}/">Jméno</a></th>
-        <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/{% if serazeni == 7 %}8{% else %}7{% endif %}/">Jazyk</a></th>
-        <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/{% if serazeni == 3 %}4{% else %}3{% endif %}/">Čas strávený v min</a></th>
+        <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/{% if serazeni == 9 %}10{% else %}9{% endif %}/">Jméno 
+            {% if serazeni == 9 %}<img src="{{url_for('static', filename='images/nahoru.png')}}" alt="serazeni" class="sipky">{% endif %}
+            {% if serazeni == 10 %}<img src="{{url_for('static', filename='images/dolu.png')}}" alt="logo" class="sipky">{% endif %}
+        </a></th>
+        <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/{% if serazeni == 7 %}8{% else %}7{% endif %}/">Jazyk 
+            {% if serazeni == 7 %}<img src="{{url_for('static', filename='images/nahoru.png')}}" alt="serazeni" class="sipky">{% endif %}
+            {% if serazeni == 8 %}<img src="{{url_for('static', filename='images/dolu.png')}}" alt="logo" class="sipky">{% endif %}
+        </a></th>
+        <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/{% if serazeni == 3 %}4{% else %}3{% endif %}/">Čas strávený v min
+            {% if serazeni == 4 %}<img src="{{url_for('static', filename='images/nahoru.png')}}" alt="serazeni" class="sipky">{% endif %}
+            {% if serazeni == 3 %}<img src="{{url_for('static', filename='images/dolu.png')}}" alt="logo" class="sipky">{% endif %}
+        </a></th>
         <th style="text-align: left;">Popis</th>
-        <th style="padding-right:  30px; text-align: left;"><a href="/zaznamy/{% if serazeni == 1 %}2{% else %}1{% endif %}/">Datum</a></th>
-        <th style="padding-right:  30px; text-align: left;"><a href="/zaznamy/{% if serazeni == 5 %}6{% else %}5{% endif %}/">Hodnocení</a></th>
+        <th style="padding-right:  30px; text-align: left;"><a href="/zaznamy/{% if serazeni == 1 %}2{% else %}1{% endif %}/">Datum
+            {% if serazeni == 1 %}<img src="{{url_for('static', filename='images/nahoru.png')}}" alt="serazeni" class="sipky">{% endif %}
+            {% if serazeni == 2 %}<img src="{{url_for('static', filename='images/dolu.png')}}" alt="logo" class="sipky">{% endif %}
+        </a></th>
+        <th style="padding-right:  30px; text-align: left;"><a href="/zaznamy/{% if serazeni == 5 %}6{% else %}5{% endif %}/">Hodnocení
+            {% if serazeni == 6 %}<img src="{{url_for('static', filename='images/nahoru.png')}}" alt="serazeni" class="sipky">{% endif %}
+            {% if serazeni == 5 %}<img src="{{url_for('static', filename='images/dolu.png')}}" alt="logo" class="sipky">{% endif %}
+        </a></th>
         <th style="padding-right:  30px; text-align: left;">Štítky</th>
         <th style="padding-right:  30px; text-align: left;">Možnosti</th>
     </tr>
