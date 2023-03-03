@@ -61,7 +61,7 @@
                 <td><label for="popis">Popis</label></td>
 
                 <td>
-                    <textarea rows="5" cols="12" name="popis" id="popis" value="{{record.popis}}"></textarea>
+                    <textarea rows="5" cols="12" name="popis" id="popis" value="{{record.popis}}">{{record.popis}}</textarea>
                 </td>
             </tr>
             <tr>
@@ -92,15 +92,6 @@
                     {% endfor %}
                 </td>
             </tr>
-            {% for cat in cats %}
-            <tr>
-                <td> {{cat.name}}</td>
-                <td>
-                    {% if cat.type == String(200) %}
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
         </table>
         <h3><input type="submit" value="upravit"></h3>
         <br>
