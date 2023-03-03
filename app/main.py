@@ -63,6 +63,7 @@ def index():
     try:
         if current_user.name:
             resetPalette()
+            Filter.name = current_user.id
     except:
         pass
     return render_template('index.html', user = current_user,active=UI.active,palette=Palette)
