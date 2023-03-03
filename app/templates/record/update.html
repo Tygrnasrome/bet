@@ -1,110 +1,109 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Upravit Záznam</title>
-<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+<TITLE>Upravit Záznam</TITLE>
+<LINK rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
 {% endblock %}
 
 {% block body %}
-<div class="Center">
-    <form action="/update-add/{{record.id}}" method="post">
-        <h1><b>Upravit záznam</b></h1>
+<DIV>
+    <FORM action="/update-add/{{record.id}}" method="post">
+        <H1><B>Upravit záznam</B></H1>
 
-        <br>
-        <table>
-            <tr>
-                <td>
-                    <label for="name">Programátor</label>
-                </td>
-                <td>
-                    <select name="name" id="name">
+        <BR>
+        <TABLE>
+            <TR>
+                <TD>
+                    <LABEL for="name">Programátor</TD>
+                <TD><SPAN class="povinnost">*</SPAN></label></TD><TD>
+                    <SELECT name="name" id="name">
                         {% for usr in users %}
                         {% if user.auth <= 2 or usr.id == user.id %}
-                        <option value="{{usr.id}}"
+                        <OPTION value="{{usr.id}}"
                                 {% if usr.id == record.name %}
                                 selected
                                 {% endif %}
-                        >{{usr.name}}</option>
+                        >{{usr.name}}</OPTION>
                         {% endif %}
                         {% endfor %}
-                    </select>
-            </tr>
-            <tr>
-                <td>Programovací jazyk</td>
+                    </SELECT>
+            </TR>
+            <TR>
+                <TD>Programovací jazyk</TD>
 
-                <td>
-                    <select name="jazyk_id">
+                <TD>
+                    <SELECT name="jazyk_id">
                         {% for language in languages %}
-                        <option value="{{language.id}}"
+                        <OPTION value="{{language.id}}"
                                 {% if language.id == record.jazyk_id %}
                                 selected
-                                {% endif %}>{{language.name}}</option>
+                                {% endif %}>{{language.name}}</OPTION>
                         {% endfor %}
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>Čas strávený v minutách</td>
+                    </SELECT>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Čas strávený v minutách</TD>
 
-                <td>
-                    <input type="number" placeholder="čas" id="time_spent" name="time_spent" value="{{record.time_spent}}">
-                </td>
-            </tr>
+                <TD>
+                    <INPUT type="number" placeholder="čas" id="time_spent" name="time_spent" value="{{record.time_spent}}">
+                </TD>
+            </TR>
 
-            <tr>
-                <td>Datum</td>
-                <td>
-                    <input type="date" placeholder="datum" name="date" value="{{record.date}}">
-                </td>
-            </tr>
-            <tr>
-                <td><label for="popis">Popis</label></td>
+            <TR>
+                <TD>Datum</TD>
+                <TD>
+                    <INPUT type="date" placeholder="datum" name="date" value="{{record.date}}">
+                </TD>
+            </TR>
+            <TR>
+                <TD><LABEL for="popis">Popis</LABEL></TD>
 
-                <td>
-                    <textarea rows="5" cols="12" name="popis" id="popis" value="{{record.popis}}"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td>
+                <TD>
+                    <TEXTAREA rows="5" cols="12" name="popis" id="popis" value="{{record.popis}}"></TEXTAREA>
+                </TD>
+            </TR>
+            <TR>
+                <TD>
                     Škála hodnocení naši práce
-                </td>
-                <td>
+                </TD>
+                <TD>
                     {% for i in range(5) %}
-                    <input type="radio" Name = "hodnoceni" value="{{i+1}}"
+                    <INPUT type="radio" Name = "hodnoceni" value="{{i+1}}"
                            {% if i+1 == record.hodnoceni %}
                            checked
                            {% endif %}
                     >{{i+1}}
                     {% endfor %}
-                </td>
-            </tr>
-            <tr>
-                <td> Štítky </td>
-                <td>
+                </TD>
+            </TR>
+            <TR>
+                <TD> Štítky </TD>
+                <TD>
                     {% for tag in tags %}
-                    <label for="{{tag.id}}" style="color: {{tag.barva}};">{{tag.name}}</label>
-                    <input type="checkbox" id="{{tag.id}}" name="{{tag.id}}"
+                    <LABEL for="{{tag.id}}" style="color: {{tag.barva}};">{{tag.name}}</LABEL>
+                    <INPUT type="checkbox" id="{{tag.id}}" name="{{tag.id}}"
                            {% for cat in cats %}
                            {% if cat.owned_id == record.id and cat.type_id == tag.id %}
                            checked
                            {% endif %}
                            {% endfor %}>
                     {% endfor %}
-                </td>
-            </tr>
+                </TD>
+            </TR>
             {% for cat in cats %}
-            <tr>
-                <td> {{cat.name}}</td>
-                <td>
+            <TR>
+                <TD> {{cat.name}}</TD>
+                <TD>
                     {% if cat.type == String(200) %}
                     {% endif %}
-                </td>
-            </tr>
+                </TD>
+            </TR>
             {% endfor %}
-        </table>
-        <h3><input type="submit" value="upravit"></h3>
-        <br>
+        </TABLE>
+        <H3><INPUT type="submit" value="upravit"></H3>
+        <BR>
 
-    </form>
-</div>
+    </FORM>
+</DIV>
 {% endblock %}

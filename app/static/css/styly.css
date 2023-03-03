@@ -7,8 +7,15 @@ body
     background-repeat: no-repeat;
     margin: 0;
 }
+p{
+    line-height:1.5em
+}
 h1, h2, h3{
     text-align: center;
+    padding-bottom:5px;
+}
+h4{
+    padding-bottom:5px;
 }
 div 
 {    

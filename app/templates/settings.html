@@ -1,123 +1,123 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Nastavení</title>
-<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}" >
+<TITLE>Nastavení</TITLE>
+<LINK rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}" >
 
 {% endblock %}
 
 {% block body %}
 
-<div >
-    <h1>Nastavení</h1>
+<DIV >
+    <H1>Nastavení</H1>
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages %}
-    <p class="{{ category }}">{{ message }}</p>
+    <P class="{{ category }}">{{ message }}</P>
     {% endfor %}
     {% endif %}
     {% endwith %}
-    <h2>Barvy</h2>
-    <form action="/settings/" method="post">
-        <table>
-            <tr>
-                <td>
-                    <h3>Text</h3>
-                </td>
-            </tr>
-            <tr>
-                <td>
+    <H2>Barvy</H2>
+    <FORM action="/settings/" method="post">
+        <TABLE>
+            <TR>
+                <TD>
+                    <H3>Text</H3>
+                </TD>
+            </TR>
+            <TR>
+                <TD>
                     Odstavce
-                </td>
-                <td>
-                    <input type="color" name="text" id="text" value="{{palette.text}}">
-                </td>
-            </tr>
-            <tr>
-                <td>
+                </TD>
+                <TD>
+                    <INPUT type="color" name="text" id="text" value="{{palette.text}}">
+                </TD>
+            </TR>
+            <TR>
+                <TD>
                     Nadpisy
-                </td>
-                <td>
-                    <input type="color" name="header" id="header" value="{{palette.header}}">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h3>Horní lišta</h3>
-                </td>
+                </TD>
+                <TD>
+                    <INPUT type="color" name="header" id="header" value="{{palette.header}}">
+                </TD>
+            </TR>
+            <TR>
+                <TD>
+                    <H3>Horní lišta</H3>
+                </TD>
 
-            </tr>
-            <tr>
-                <td>
+            </TR>
+            <TR>
+                <TD>
                     Základ
-                </td>
-                <td>
-                    <input type="color" name="base" id="base" value="{{palette.base}}">
-                </td>
-            </tr>
-            <tr>
-                <td>
+                </TD>
+                <TD>
+                    <INPUT type="color" name="base" id="base" value="{{palette.base}}">
+                </TD>
+            </TR>
+            <TR>
+                <TD>
                     Aktivní
-                </td>
-                <td>
-                    <input type="color" name="selected" id="selected" value="{{palette.selected}}">
-                </td>
-            </tr>
-            <tr>
-                <td>
+                </TD>
+                <TD>
+                    <INPUT type="color" name="selected" id="selected" value="{{palette.selected}}">
+                </TD>
+            </TR>
+            <TR>
+                <TD>
                     Přejetí myši
-                </td>
-                <td>
-                    <input type="color" name="hover" id="hover" value="{{palette.hover}}">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h3>Pozadí</h3>
-                </td>
-            </tr>
-            <tr>
-                <td>
+                </TD>
+                <TD>
+                    <INPUT type="color" name="hover" id="hover" value="{{palette.hover}}">
+                </TD>
+            </TR>
+            <TR>
+                <TD>
+                    <H3>Pozadí</H3>
+                </TD>
+            </TR>
+            <TR>
+                <TD>
                     Aplikace
-                </td>
-                <td>
-                    <input type="color" name="body" id="body" value="{{palette.body}}">
-                </td>
-            </tr>
-            <tr>
-                <td>
+                </TD>
+                <TD>
+                    <INPUT type="color" name="body" id="body" value="{{palette.body}}">
+                </TD>
+            </TR>
+            <TR>
+                <TD>
                     Jednoho odstavce
-                </td>
-                <td>
-                    <input type="color" name="divone" id="divone" value="{{palette.divone}}">
-                </td>
-            </tr>
-            <tr>
-                <td>
+                </TD>
+                <TD>
+                    <INPUT type="color" name="divone" id="divone" value="{{palette.divone}}">
+                </TD>
+            </TR>
+            <TR>
+                <TD>
                     Dvou odstavců
-                </td>
-                <td>
-                    <input type="color" name="divtwo" id="divtwo" value="{{palette.divtwo}}">
-                </td>
-            </tr>
-            <tr>
-                <td>
+                </TD>
+                <TD>
+                    <INPUT type="color" name="divtwo" id="divtwo" value="{{palette.divtwo}}">
+                </TD>
+            </TR>
+            <TR>
+                <TD>
                     Tří odstavců
-                </td>
-                <td>
-                    <input type="color" name="divthree" id="divthree" value="{{palette.divthree}}">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="in_use">použít</label>  
-                </td>
-                <td>
-                    <input type="checkbox" name="in_use" id="in_use"  checked>
-                </td>
-            </tr>
-        </table>
-        <input type="submit" value="Změnit Barvy" width="auto">
-    </form>
-</div>
+                </TD>
+                <TD>
+                    <INPUT type="color" name="divthree" id="divthree" value="{{palette.divthree}}">
+                </TD>
+            </TR>
+            <TR>
+                <TD>
+                    <LABEL for="in_use">použít</LABEL>  
+                </TD>
+                <TD>
+                    <INPUT type="checkbox" name="in_use" id="in_use"  checked>
+                </TD>
+            </TR>
+        </TABLE>
+        <INPUT type="submit" value="Změnit Barvy" width="auto">
+    </FORM>
+</DIV>
 {% endblock %}

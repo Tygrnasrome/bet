@@ -1,110 +1,105 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Přidat Záznam</title>
-<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+<TITLE>Přidat Záznam</TITLE>
+<LINK rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
 {% endblock %}
 
 {% block body %} 
-<form action="/add/" method="post">
-    <div class="Center">
-        <h1>
-            <b>Přidat záznam do deníku</b>
-        </h1>
-        <h3>
-            <b> Všechna pole jsou povinná </b>
-        </h3>
-
-        <br>
-        <br>
-        <table>
-            <tr>
-                <td>
-                    <label for="name">Programátor</label>
-                </td>
-                <td>
-                    <select id="name" name="name" style="width: 172px;" >
+<FORM action="/add/" method="post">
+    <DIV>
+        <H1>
+            <B>Přidat záznam do deníku</B>
+        </H1>
+        <H3>
+        <BR>
+        <TABLE>
+            <TR>
+                <TD>
+                    <LABEL for="name">Programátor</LABEL>
+                </TD><TD></TD>
+                <TD>
+                    <SELECT id="name" name="name" style="width: 172px;" >
                         {% for usr in users %}
                         {% if user.auth <= 1 or usr.id == user.id %}
-                        <option value="{{usr.id}}">{{usr.name}}</option>
+                        <OPTION value="{{usr.id}}">{{usr.name}}</OPTION>
                         {% endif %}
                         {% endfor %}
-                    </select>
-            </tr>
-            <tr>
-                <td>
-                    <label for="time">Čas strávený v minutách</label>
-                </td>
-                <td>
-                    <input type="number" id="time" placeholder="čas" name="time_spent" required>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="lang">Programovací jazyk</label>
-                </td>
-                <td>
-                    <select name="jazyk_id" id="lang">
+                    </SELECT>
+            </TR>
+            <TR>
+                <TD>
+                    <LABEL for="time">Čas strávený v minutách</TD>
+                <TD><SPAN class="povinnost">*</SPAN></label></TD>
+                <TD>
+                    <INPUT type="number" id="time" placeholder="čas" name="time_spent" required>
+                </TD>
+            </TR>
+            <TR>
+                <TD>
+                    <LABEL for="lang">Programovací jazyk</TD>
+                <TD><SPAN class="povinnost">*</SPAN></TD></LABEL>
+                <TD>
+                    <SELECT name="jazyk_id" id="lang">
                         {% for language in languages %}
-                        <option value="{{language.id}}">{{language.name}}</option>
+                        <OPTION value="{{language.id}}">{{language.name}}</OPTION>
                         {% endfor %}
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="Datum">Datum</label>
-                </td>
-                <td>
-                    <input type="date" id="Datum" placeholder="datum" name="date" required>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="popis">Popis</label>
-                </td>
-                <td>
+                    </SELECT>
+                </TD>
+            </TR>
+            <TR>
+                <TD>
+                    <LABEL for="Datum">Datum</TD>
+                <TD><SPAN class="povinnost">*</SPAN></label></TD>
+                <TD>
+                    <INPUT type="date" id="Datum" placeholder="datum" name="date" required>
+                </TD>
+            </TR>
+            <TR>
+                <TD>
+                    <LABEL for="popis">Popis</TD>
+                <TD><SPAN class="povinnost">*</SPAN></label></TD><TD>
                     <TEXTAREA rows="5" cols="12" id="popis" name="popis" required></TEXTAREA>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="rating">Škála hodnocení naši práce</label>
-                </td>
-                <td>
-                    <input type="radio" id="rating" Name = "hodnoceni" value="1" required>1
-                    <input type="radio" id="rating2" Name = "hodnoceni" value="2" required>2
-                    <input type="radio" id="rating3" Name = "hodnoceni" value="3" required>3
-                    <input type="radio" id="rating4" Name = "hodnoceni" value="4" required>4
-                    <input type="radio" id="rating5" Name = "hodnoceni" value="5" required>5
+                </TD>
+            </TR>
+            <TR>
+                <TD>
+                    <LABEL for="rating">Škála hodnocení naši práce</TD>
+                <TD><SPAN class="povinnost">*</SPAN></label></TD><TD>
+                <TD>
+                    <INPUT type="radio" id="rating" Name = "hodnoceni" value="1" required>1
+                    <INPUT type="radio" id="rating2" Name = "hodnoceni" value="2" required>2
+                    <INPUT type="radio" id="rating3" Name = "hodnoceni" value="3" required>3
+                    <INPUT type="radio" id="rating4" Name = "hodnoceni" value="4" required>4
+                    <INPUT type="radio" id="rating5" Name = "hodnoceni" value="5" required>5
 
-                </td>
-            </tr>
-            <tr>
-                <td>Štítky</td>
-                <td style=" width: 150px;">
+                </TD>
+            </TR>
+            <TR>
+                <TD>Štítky</TD><TD></TD>
+                <TD style=" width: 150px;">
                     {% for tag in tags %}
-                    <label for="{{tag.id}}" style="color: {{tag.barva}};">{{tag.name}}</label>
-                    <input type="checkbox" id="{{tag.id}}" name="{{tag.id}}">
+                    <LABEL for="{{tag.id}}" style="color: {{tag.barva}};">{{tag.name}}</LABEL>
+                    <INPUT type="checkbox" id="{{tag.id}}" name="{{tag.id}}">
                     {% endfor %}
 
-                </td>
-            </tr>
+                </TD>
+            </TR>
             {% for cat in cats %}
-            <tr>
-                <td> {{cat.name}}</td>
-                <td>
+            <TR>
+                <TD> {{cat.name}}</TD>
+                <TD>
                     {% if cat.type == String(200) %}
                     {% endif %}
-                </td>
-            </tr>
+                </TD>
+            </TR>
             {% endfor %}
-        </table>
-        <h3>
-            <input type="submit" value="přidat">
-        </h3>
-        <br>
-    </div>
-</form>
+        </TABLE>
+        <H3>
+            <INPUT type="submit" value="přidat">
+        </H3>
+        <BR>
+    </DIV>
+</FORM>
 
 {% endblock %}

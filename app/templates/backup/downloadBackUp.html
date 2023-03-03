@@ -1,47 +1,47 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Zálohy</title>
-<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}" >
+<TITLE>Zálohy</TITLE>
+<LINK rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}" >
 
 {% endblock %}
 
 {% block body %}
-<div class="Center">
-    <h1>Zálohovat aktuální data</h1>
-    <form action="/backup/" method="post">
-    <input type="submit" value="Exportovat"/>
-    </form>
-    <h1> Importovat zálohu ze souboru </h1>
-    <h2> Připojte soubor </h2>
-    <form action = "/upload/" method = "post" 
+<DIV class="Center">
+    <H1>Zálohovat aktuální data</H1>
+    <FORM action="/backup/" method="post">
+    <INPUT type="submit" value="Exportovat"/>
+    </FORM>
+    <H1> Importovat zálohu ze souboru </H1>
+    <H2> Připojte soubor </H2>
+    <FORM action = "/upload/" method = "post" 
     enctype = "multipart/form-data">
-        <input type = "file" name = "file" required/>
-        <input type="submit" value="importovat soubor">
+        <INPUT type = "file" name = "file" required/>
+        <INPUT type="submit" value="importovat soubor">
         
-    </form>   
-</div>
-<div>
-    <h1>
+    </FORM>   
+</DIV>
+<DIV>
+    <H1>
         Seznam všech záloh
-    </h1>
-    <h2>
+    </H1>
+    <H2>
         Při importování zálohy budou ztracena všechna neuložená data
-    </h2>
-    <table>
-        <tr>
-            <th> čas </th>
-        </tr>
+    </H2>
+    <TABLE>
+        <TR>
+            <TH> čas </TH>
+        </TR>
         {% for backup in backup_dict %}
-        <tr>
-            <td> {{backup}}</td>
-            <td>
-                <a href="/backup/download/{{backup}}"> Stáhnout </a>
-                <a href="/backup/use/{{backup}}"> Importovat </a>
-                <a href="/backup/delete/{{backup}}" class="smazat confirmation"> Smazat</a>
-            </td>
-        </tr>
+        <TR>
+            <TD> {{backup}}</TD>
+            <TD>
+                <A href="/backup/download/{{backup}}"> Stáhnout </A>
+                <A href="/backup/use/{{backup}}"> Importovat </A>
+                <A href="/backup/delete/{{backup}}" class="smazat confirmation"> Smazat</A>
+            </TD>
+        </TR>
         {% endfor %}
-    </table>
-</div>
+    </TABLE>
+</DIV>
 {% endblock %}

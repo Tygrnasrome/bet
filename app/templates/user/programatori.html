@@ -1,59 +1,59 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Programátoři</title>
-<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+<TITLE>Programátoři</TITLE>
+<LINK rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
 {% endblock %}
 
 {% block body %} 
-<div class="Center">
+<DIV class="Center">
 
-    <h1>
-        <b>Seznam programátorů</b> 
-    </h1>
-    <div>
-        <table>
-            <tr>
-                <th style="padding-right:  20px; word-break: normal"> Jméno </th>
-                <th style="padding-right:  20px; word-break: normal"> Pravomoc </th>
-                <th style="padding-right:  20px; word-break: normal"> Email </th>
+    <H1>
+        <B>Seznam programátorů</B> 
+    </H1>
+    <DIV>
+        <TABLE>
+            <TR>
+                <TH style="padding-right:  20px; word-break: normal"> Jméno </TH>
+                <TH style="padding-right:  20px; word-break: normal"> Pravomoc </TH>
+                <TH style="padding-right:  20px; word-break: normal"> Email </TH>
 
-            </tr>
+            </TR>
             {% for usr in users %}
-            <tr>
-                <td style="width: 125px; overflow-wrap: break-word; word-break: break-all;">
+            <TR>
+                <TD style="width: 125px; overflow-wrap: break-word; word-break: break-all;">
 
                     {{usr.name}}
-                </td>
+                </TD>
                 {% if user.auth <= 1 or user.id == usr.id %}
-                <td>
+                <TD>
                     {{usr.auth}}
-                </td>
+                </TD>
                 {% else %}
-                <td>
+                <TD>
                     -----
-                </td>
+                </TD>
                 {% endif %}
                 {% if user.auth <= 1 or user.id == usr.id %}
-                <td>
+                <TD>
                     {{usr.email}}
-                </td>
+                </TD>
                 {% else %}
-                <td>
+                <TD>
                     -----
-                </td>
+                </TD>
                 {% endif %}
                 {% if user.auth <= 1 %}
-                <td>
-                    <a href="/user/delete/{{usr.id}}" class="smazat confirmation"> smazat</a>
-                    <a href="/profile/config/{{usr.id}}"> profil</a>
-                </td>
+                <TD>
+                    <A href="/user/delete/{{usr.id}}" class="smazat confirmation"> smazat</A>
+                    <A href="/profile/config/{{usr.id}}"> profil</A>
+                </TD>
                 {% endif %}
-            </tr>
+            </TR>
             {% endfor %}
 
-        </table>
-    </div>
-</div>
+        </TABLE>
+    </DIV>
+</DIV>
 
 {% endblock %}

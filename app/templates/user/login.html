@@ -1,51 +1,43 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Přihlášení</title>
-<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+<TITLE>Přihlášení</TITLE>
+<LINK rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
 {% endblock %}
 
 {% block body %}
-<div>
-    <form action="/login" method="post">
+<DIV>
+    <FORM action="/login" method="post">
 
-         <h1>
-           <b>Přihlásit se</b>
-        </h1>
-        <h3>
-            <b> Všechna pole jsou povinná </b>
-        </h3>
-        <br>
-        <table>
-            <tr>
+         <H1>
+           <B>Přihlásit se</B>
+        </H1>
+        <BR>
+        <TABLE>
+            <TR>
                 
-                <td class="group">
-                
-                    <input type="text" id="name" name="name" required>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label>Jméno nebo E-mail</label>
-                    
-                </td>
-            </tr>
-            <tr>    
-                <td class="group">
-                    <input type="password" id="password" name="password" required>
-
-                    <label>Heslo</label>
-                </td>
-            </tr>
-            <tr>
-                <td>
-
-                    <input type="checkbox" name="remember" id="remember">
-                    <label for="remember">Pamatovat si mě</label>
-
-                    </td>
-            </tr>
-        </table>
-        <br>
-        <p style="text-align: center;"><input type="submit" value="Přihlásit se"></p>
-        <br>
-    </form>
+                <TD>
+                    <LABEL for="name">Jméno nebo E-mail</TD>
+                <TD><SPAN class="povinnost">*</SPAN></LABEL></TD><TD>
+                    <INPUT type="text" id="name" name="name" required>
+                </TD>
+            </TR>
+            <TR>    
+                <TD>
+                    <LABEL for="password">Heslo</TD>
+                <TD><SPAN class="povinnost">*</SPAN></LABEL></TD><TD>
+                    <INPUT type="password" id="password" name="password" required>
+                </TD>
+            </TR>
+            <TR>
+                <TD>
+                    <LABEL for="remember">Pamatovat si mě</LABEL>
+                    <INPUT type="checkbox" name="remember" id="remember">
+                </TD>
+            </TR>
+        </TABLE>
+        <BR>
+        <P style="text-align: center;"><INPUT type="submit" value="Přihlásit se"></P>
+        <BR>
+    </FORM>
 {% endblock %}

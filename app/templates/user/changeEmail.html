@@ -1,34 +1,34 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Změnit e-mail</title>
-<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+<TITLE>Změnit e-mail</TITLE>
+<LINK rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
 {% endblock %}
 
 {% block body %}
-<div >
-    <form action="/change/email" method="post">
+<DIV >
+    <FORM action="/change/email" method="post">
 
-        <h1>
-            <b>Změnit email</b>
-        </h1>
-        <h2>
+        <H1>
+            <B>Změnit email</B>
+        </H1>
+        <H2>
             Nechte prázdné, pokud chcete email neuvádět
-        </h2>
+        </H2>
 
-        <br>
-        <table>
-            <tr>
-                <td>
+        <BR>
+        <TABLE>
+            <TR>
+                <TD>
                     Email
-                </td>
-                <td>
-                    <input type="email" id="email" name="email" value="{{user.email}}">
-                </td>
-            </tr>
-        </table>
-        <br>
-        <p style="text-align: center;">      <input type="submit" value="změnit"> </p>
-        <br>
-    </form>
+                </TD>
+                <TD>
+                    <INPUT type="email" id="email" name="email" value="{{user.email}}">
+                </TD>
+            </TR>
+        </TABLE>
+        <BR>
+        <P style="text-align: center;">      <INPUT type="submit" value="změnit"> </P>
+        <BR>
+    </FORM>
     {% endblock %}

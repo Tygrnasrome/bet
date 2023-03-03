@@ -1,60 +1,55 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Přidat Jazyk</title>
-<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+<TITLE>Přidat Jazyk</TITLE>
+<LINK rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
 {% endblock %}
 
 {% block body %}
-<div class="Center">
-    <form action="/language/form/" method="post">
+<DIV class="Center">
+    <FORM action="/language/form/" method="post">
 
-         <h1>
-           <b>Přidat programátorský jazyk do výběru</b>
-        </h1>
-        <h3>
+         <H1>
+           <B>Přidat programátorský jazyk do výběru</B>
+        </H1>
+        
+        <BR>
+        <TABLE>
+            <TR>
+                <TD>
+                    Název jazyku</TD>
+                <TD><SPAN class="povinnost">*</SPAN></TD>
+                    <INPUT type="text" placeholder="název jazyku" id="name" name="name" required>
+                </TD>
+            </TR>
 
-            <b> všechna pole jsou povinná </b>
-
-        </h3>
-        <br>
-        <table>
-            <tr>
-                <td>
-                    Název jazyku
-                </td>
-                <td>
-                    <input type="text" placeholder="název jazyku" id="name" name="name" required>
-                </td>
-            </tr>
-
-        </table>
-        <br>
-        <p style="text-align: center;">      <input type="submit" value="přidat"> </p>
-        <br>
-    </form>
+        </TABLE>
+        <BR>
+        <P style="text-align: center;">      <INPUT type="submit" value="přidat"> </P>
+        <BR>
+    </FORM>
 
 
-    <table>
-        <tr>
-            <th style="padding-right:  20px;width: 125px; overflow-wrap: break-word; word-break: break-all;"> název jazyku </th>
+    <TABLE>
+        <TR>
+            <TH style="padding-right:  20px;width: 125px; overflow-wrap: break-word; word-break: break-all;"> název jazyku </TH>
 
-        </tr>
+        </TR>
             {% for language in languages %}
-            <tr>
-                <td>
+            <TR>
+                <TD>
                     {{language.name}}
-                </td>
-                <td>
-                    <a href="/language/delete/{{language.id}}" class="smazat confirmation"> smazat</a>
+                </TD>
+                <TD>
+                    <A href="/language/delete/{{language.id}}" class="smazat confirmation"> smazat</A>
 
-                    <a href="/language/update/{{language.id}}"> upravit</a>
+                    <A href="/language/update/{{language.id}}"> upravit</A>
 
-                </td>
-            </tr>
+                </TD>
+            </TR>
             {% endfor %}
 
-    </table>
-</div>
+    </TABLE>
+</DIV>
 
 {% endblock %}
