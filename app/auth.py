@@ -104,7 +104,7 @@ def signup_post():
         return redirect(url_for('auth.signup'))
 
     # create new user with the form data. Hash the password so plaintext version isn't saved.
-    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'), auth=2)
+    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha512'), auth=2)
 
     # add the new user to the database
     db.session.add(new_user)
@@ -172,7 +172,7 @@ def changePassword():
         if not new_password == new_password_again:
             flash('Nově zadaná hesla se neshodují','error')
             return redirect(url_for('auth.changePassword')) # neshodují se nově zadaná hesla
-        current_user.password = generate_password_hash(new_password, method='sha256') 
+        current_user.password = generate_password_hash(new_password, method='sha512') 
         db.session.commit()
         flash('Heslo bylo změněno','message')
         return redirect(url_for('auth.profile'))
@@ -199,7 +199,7 @@ def changePasswordConfig(id):
         if not new_password == new_password_again:
             flash('Nově zadaná hesla se neshodují','error')
             return redirect(url_for('auth.changePasswordConfig', id=id)) # neshodují se nově zadaná hesla 
-        user_profile.password = generate_password_hash(new_password, method='sha256') 
+        user_profile.password = generate_password_hash(new_password, method='sha512') 
         db.session.commit()
         flash('Heslo bylo změněno','message')
         return redirect(url_for('auth.profileConfig', id=id))
