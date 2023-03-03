@@ -6,8 +6,9 @@
 {% endblock %}
 
 {% block body %}    
+
 <DIV>
-    <H1>
+    <H1 style="margin-top:0px;">
       <B> Záznamy v deníku </B>
     </H1>
     <FORM action="/zaznamy/{{serazeni}}/" method="post">
@@ -76,45 +77,54 @@
             <LABEL for="{{tag.name}}" style="color: {{tag.barva}};"> {{tag.name}}</LABEL>
         {% endfor %}
 
-        <br>  
-        <br>
-       <p style="text-align: center;" ><input type="submit" value="filtrovat"> </p>
+        <BR>  
+        <BR>
+       <P style="text-align: center;" ><INPUT type="submit" value="filtrovat"> </P>
 
-    </form>
-    <br>
-    <form action="/zaznamy/reset-filter" method="get">
-        <p style="text-align: center;" >    <input type="submit" value="reset filtru"> </p>
-    </form>
-</div>
+    </FORM>
+    <BR>
+    <FORM action="/zaznamy/reset-filter" method="get">
+        <P style="text-align: center;" >    <INPUT type="submit" value="reset filtru"> </P>
+    </FORM>
+    <SCRIPT type="text/javascript">
+        let elems = document.getElementsByClassName('confirmation');
+        let confirmIt = function (e) {
+            if (!confirm('Jste si jisti, že chcete vymazat záznam?')) e.preventDefault();
+        };
+        for (let i = 0, l = elems.length; i < l; i++) {
+            elems[i].addEventListener('click', confirmIt, false);
+        }
+    </SCRIPT>
+</DIV>
 
-<div>
+<DIV>
 
-    <table>
-    <tr>
-        <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/{% if serazeni == 9 %}10{% else %}9{% endif %}/">Jméno 
-            {% if serazeni == 9 %}<img src="{{url_for('static', filename='images/nahoru.png')}}" alt="serazeni" class="sipky">{% endif %}
-            {% if serazeni == 10 %}<img src="{{url_for('static', filename='images/dolu.png')}}" alt="logo" class="sipky">{% endif %}
-        </a></th>
-        <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/{% if serazeni == 7 %}8{% else %}7{% endif %}/">Jazyk 
-            {% if serazeni == 7 %}<img src="{{url_for('static', filename='images/nahoru.png')}}" alt="serazeni" class="sipky">{% endif %}
-            {% if serazeni == 8 %}<img src="{{url_for('static', filename='images/dolu.png')}}" alt="logo" class="sipky">{% endif %}
-        </a></th>
-        <th style="padding-right:  20px; text-align: left;"><a href="/zaznamy/{% if serazeni == 3 %}4{% else %}3{% endif %}/">Čas strávený v min
-            {% if serazeni == 4 %}<img src="{{url_for('static', filename='images/nahoru.png')}}" alt="serazeni" class="sipky">{% endif %}
-            {% if serazeni == 3 %}<img src="{{url_for('static', filename='images/dolu.png')}}" alt="logo" class="sipky">{% endif %}
-        </a></th>
-        <th style="text-align: left;">Popis</th>
-        <th style="padding-right:  30px; text-align: left;"><a href="/zaznamy/{% if serazeni == 1 %}2{% else %}1{% endif %}/">Datum
-            {% if serazeni == 1 %}<img src="{{url_for('static', filename='images/nahoru.png')}}" alt="serazeni" class="sipky">{% endif %}
-            {% if serazeni == 2 %}<img src="{{url_for('static', filename='images/dolu.png')}}" alt="logo" class="sipky">{% endif %}
-        </a></th>
-        <th style="padding-right:  30px; text-align: left;"><a href="/zaznamy/{% if serazeni == 5 %}6{% else %}5{% endif %}/">Hodnocení
-            {% if serazeni == 6 %}<img src="{{url_for('static', filename='images/nahoru.png')}}" alt="serazeni" class="sipky">{% endif %}
-            {% if serazeni == 5 %}<img src="{{url_for('static', filename='images/dolu.png')}}" alt="logo" class="sipky">{% endif %}
-        </a></th>
-        <th style="padding-right:  30px; text-align: left;">Štítky</th>
-        <th style="padding-right:  30px; text-align: left;">Možnosti</th>
-    </tr>
+    <TABLE>
+    <TR>
+        <TH style="padding-right:  20px; text-align: left;"><A href="/zaznamy/{% if serazeni == 9 %}10{% else %}9{% endif %}/">Jméno 
+            {% if serazeni == 9 %}<IMG src="{{url_for('static', filename='images/nahoru.png')}}" alt="serazeni" class="sipky">{% endif %}
+            {% if serazeni == 10 %}<IMG src="{{url_for('static', filename='images/dolu.png')}}" alt="logo" class="sipky">{% endif %}
+        </A></TH>
+        <TH style="padding-right:  20px; text-align: left;"><A href="/zaznamy/{% if serazeni == 7 %}8{% else %}7{% endif %}/">Jazyk 
+            {% if serazeni == 7 %}<IMG src="{{url_for('static', filename='images/nahoru.png')}}" alt="serazeni" class="sipky">{% endif %}
+            {% if serazeni == 8 %}<IMG src="{{url_for('static', filename='images/dolu.png')}}" alt="logo" class="sipky">{% endif %}
+        </A></TH>
+        <TH style="padding-right:  20px; text-align: left;"><A href="/zaznamy/{% if serazeni == 3 %}4{% else %}3{% endif %}/">Čas strávený v min
+            {% if serazeni == 4 %}<IMG src="{{url_for('static', filename='images/nahoru.png')}}" alt="serazeni" class="sipky">{% endif %}
+            {% if serazeni == 3 %}<IMG src="{{url_for('static', filename='images/dolu.png')}}" alt="logo" class="sipky">{% endif %}
+        </A></TH>
+        <TH style="text-align: left;max-width:500px;min-width:100px;">Popis</TH>
+        <TH style="padding-right:  30px; text-align: left;"><A href="/zaznamy/{% if serazeni == 1 %}2{% else %}1{% endif %}/">Datum
+            {% if serazeni == 1 %}<IMG src="{{url_for('static', filename='images/nahoru.png')}}" alt="serazeni" class="sipky">{% endif %}
+            {% if serazeni == 2 %}<IMG src="{{url_for('static', filename='images/dolu.png')}}" alt="logo" class="sipky">{% endif %}
+        </A></TH>
+        <TH style="padding-right:  30px; text-align: left;"><A href="/zaznamy/{% if serazeni == 5 %}6{% else %}5{% endif %}/">Hodnocení
+            {% if serazeni == 6 %}<IMG src="{{url_for('static', filename='images/nahoru.png')}}" alt="serazeni" class="sipky">{% endif %}
+            {% if serazeni == 5 %}<IMG src="{{url_for('static', filename='images/dolu.png')}}" alt="logo" class="sipky">{% endif %}
+        </A></TH>
+        <TH style="padding-right:  30px; text-align: left;">Štítky</TH>
+        <TH style="padding-right:  30px; text-align: left;">Možnosti</TH>
+    </TR>
     {% for record in records %}
         {% if user.auth <= 1 or user.id == record.name %}
         <TR>
@@ -135,7 +145,7 @@
                 </TD>
             
             <TD style="text-align: center;">{{record.time_spent}}</TD>
-            <TD style=" width: 200px; word-wrap: break-word; word-break: break-all;">{{record.popis}}</TD>
+            <TD style="word-wrap: break-word; word-break: break-all;">{{record.popis}}</TD>
             <TD>{{record.date}}</TD>
             <TD style="text-align: center;">{{record.hodnoceni}}</TD>
             <TD>
@@ -160,6 +170,5 @@
     {% endfor %}
     </TABLE>
 </DIV>
-
 
 {% endblock %}

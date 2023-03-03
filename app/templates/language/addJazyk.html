@@ -53,5 +53,13 @@
 
     </TABLE>
 </DIV>
-
+<SCRIPT type="text/javascript">
+        let elems = document.getElementsByClassName('confirmation');
+        let confirmIt = function (e) {
+            if (!confirm('Jste si jisti, že chcete smazat programovací jazyk?')) e.preventDefault();
+        };
+        for (let i = 0, l = elems.length; i < l; i++) {
+            elems[i].addEventListener('click', confirmIt, false);
+        }
+    </SCRIPT>
 {% endblock %}

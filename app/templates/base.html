@@ -6,15 +6,7 @@
     <META http-equiv="X-UA-Compatible" content="IE=edge">
     <META name="viewport" content="width=device-width, initial-scale=1.0">
     <LINK rel="stylesheet" href="{{url_for('static', filename='css/styly1.css')}}" >
-    <SCRIPT type="text/javascript">
-        let elems = document.getElementsByClassName('confirmation');
-        let confirmIt = function (e) {
-            if (!confirm('Are you sure?')) e.preventDefault();
-        };
-        for (let i = 0, l = elems.length; i < l; i++) {
-            elems[i].addEventListener('click', confirmIt, false);
-        }
-    </SCRIPT>
+    
     <STYLE>
         body
         {

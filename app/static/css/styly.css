@@ -10,12 +10,16 @@ body
 p{
     line-height:1.5em
 }
+ol{
+    margin-left:15px;
+    line-height:1.25em;
+}
 h1, h2, h3{
     text-align: center;
-    padding-bottom:5px;
+    padding:5px 0px;
 }
 h4{
-    padding-bottom:5px;
+    padding:5px 0px;
 }
 div 
 {    
@@ -47,6 +51,7 @@ ul li
 {
     position: relative;
     display: inline-block;
+    height: fit-content;
 }
 ul li ul.h li
 {
