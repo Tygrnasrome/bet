@@ -59,21 +59,12 @@
             <TR>
                 <TD><LABEL for="popis">Popis</LABEL></TD>
 
-<<<<<<< HEAD
-                <TD>
-                    <TEXTAREA rows="5" cols="12" name="popis" id="popis" value="{{record.popis}}"></TEXTAREA>
-                </TD>
-            </TR>
-            <TR>
-                <TD>
-=======
                 <td>
                     <textarea rows="5" cols="12" name="popis" id="popis" value="{{record.popis}}">{{record.popis}}</textarea>
                 </td>
             </tr>
             <tr>
                 <td>
->>>>>>> b7eed1be67821568b098493f06fac8a5c99bad27
                     Škála hodnocení naši práce
                 </TD>
                 <TD>
@@ -98,28 +89,11 @@
                            {% endif %}
                            {% endfor %}>
                     {% endfor %}
-<<<<<<< HEAD
-                </TD>
-            </TR>
-            {% for cat in cats %}
-            <TR>
-                <TD> {{cat.name}}</TD>
-                <TD>
-                    {% if cat.type == String(200) %}
-                    {% endif %}
-                </TD>
-            </TR>
-            {% endfor %}
-        </TABLE>
-        <H3><INPUT type="submit" value="upravit"></H3>
-        <BR>
-=======
                 </td>
             </tr>
         </table>
         <h3><input type="submit" value="upravit"></h3>
         <br>
->>>>>>> b7eed1be67821568b098493f06fac8a5c99bad27
 
     </FORM>
 </DIV>
