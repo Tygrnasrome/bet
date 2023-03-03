@@ -42,6 +42,9 @@ def create_app():
     # blueprint for data managing parts of app
     from .data_manage import data as data_blueprint
     app.register_blueprint(data_blueprint)
+    # blueprint for backup parts of app
+    from .backup import back as backup_blueprint
+    app.register_blueprint(backup_blueprint)
     # blueprint for non-auth parts of app
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
