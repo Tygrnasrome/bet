@@ -1,51 +1,49 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Přidat Programátora</title>
-<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+<TITLE>Přidat Programátora</TITLE>
+<LINK rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
 {% endblock %}
 
 {% block body %}
-<div class="Center">
-    <form action="/user/form/" method="post">
+<DIV>
+    <FORM action="/user/form/" method="post">
 
 
-        <h1><b>Přidat programátora do výběru</b></h1>
-        <h3><b> všechna pole jsou povinná </b></h3>
+        <H1><B>Přidat programátora do výběru</B></H1>
 
-        <br>
-        <table>
-            <tr>
-                <td>
-                    Jméno programátora
-                </td>
-                <td>
-                    <input type="text" placeholder="jméno" id="name" name="name">
-                </td>
-            </tr>
-        </table>
-    <br>
-    <p style="text-align: center;"> <input type="submit" value="přidat"></p>
-    <br>
-    </form>
-    <table>
-        <tr>
-            <th style="padding-right:  20px;"> Jméno programátora </th>
+        <BR>
+        <TABLE>
+            <TR>
+                <TD>
+                    </TD>
+                <TD><SPAN class="povinnost">*</SPAN></label></TD><TD>
+                    <INPUT type="text" placeholder="jméno" id="name" name="name">
+                </TD>
+            </TR>
+        </TABLE>
+    <BR>
+    <P style="text-align: center;"> <INPUT type="submit" value="přidat"></P>
+    <BR>
+    </FORM>
+    <TABLE>
+        <TR>
+            <TH style="padding-right:  20px;"> Jméno programátora </TH>
 
-        </tr>
+        </TR>
         {% for usr in users %}
-        <tr>
-            <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">
+        <TR>
+            <TD style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">
                 {{usr.name}}
-            </td>
-            <td>
-                <a href="/user/delete/{{usr.id}}"  class="smazat confirmation"> smazat</a>
-                <a href="/user/update/{{usr.id}}"> update</a>
-            </td>
-        </tr>
+            </TD>
+            <TD>
+                <A href="/user/delete/{{usr.id}}"  class="smazat confirmation"> smazat</A>
+                <A href="/user/update/{{usr.id}}"> update</A>
+            </TD>
+        </TR>
         {% endfor %}
 
-    </table>
-</div>
+    </TABLE>
+</DIV>
 
 {% endblock %}

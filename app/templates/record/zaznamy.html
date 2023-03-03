@@ -1,79 +1,79 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Záznamy</title>
-<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}" >
+<TITLE>Záznamy</TITLE>
+<LINK rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}" >
 {% endblock %}
 
 {% block body %}    
-<div>
-    <h1>
-      <b> Záznamy v deníku </b>
-    </h1>
-    <form action="/zaznamy/{{serazeni}}/" method="post">
-        <h2>Filtry:</h2>
-        <h4>Jazyky</h4>
+<DIV>
+    <H1>
+      <B> Záznamy v deníku </B>
+    </H1>
+    <FORM action="/zaznamy/{{serazeni}}/" method="post">
+        <H2>Filtry:</H2>
+        <H4>Jazyky</H4>
         {% for language in languages %}
 
-            <label for="{{language.name}}">{{language.name}}</label>
-            <input type="checkbox" id="{{language.name}}" name="{{language.name}}"
+            <LABEL for="{{language.name}}">{{language.name}}</LABEL>
+            <INPUT type="checkbox" id="{{language.name}}" name="{{language.name}}"
             {% if filtered_languages[language.id] == "on" %}
                 checked
             {% endif %}
             >
         {% endfor %}
-        <br>
-        <br>
-        <h4>Čas strávený v minutách</h4>
-        <label for="time_from">od</label>
-        <input type="number" placeholder="od" id="time_from" name="time_from" value="{{min_time}}" required style="width: 55px;">
-        <label for="time_to">do</label>
-        <input type="number" placeholder="do" id="time_to" name="time_to" value="{{max_time}}" required style="width: 55px;">
-        <br>
-        <br>
+        <BR>
+        <BR>
+        <H4>Čas strávený v minutách</H4>
+        <LABEL for="time_from">od</LABEL>
+        <INPUT type="number" placeholder="od" id="time_from" name="time_from" value="{{min_time}}" required style="width: 55px;">
+        <LABEL for="time_to">do</LABEL>
+        <INPUT type="number" placeholder="do" id="time_to" name="time_to" value="{{max_time}}" required style="width: 55px;">
+        <BR>
+        <BR>
 
-        <h4>Datum</h4>
-        <label for="date_from">od</label>
-        <input type="date" id="date_from" name="date_from" value="{{min_date}}" required>
-        <label for="date_to">do</label>
-        <input type="date" id="date_to" name="date_to" value="{{max_date}}" required>
-        <br>
-        <br>
-        <h4>Hodnocení</h4>
-        <label for="hodnoceni_from">od</label>
-        <input type="number" placeholder="od" id="hodnoceni_from" name="hodnoceni_from" value="{{min_hod}}" max="5" min="1" required style="width: 55px;">
-        <label for="hodnoceni_to">do</label>
-        <input type="number" placeholder="do" id="hodnoceni_to" name="hodnoceni_to" value="{{max_hod}}" max="5" min="1" required style="width: 55px;">
-        <br>
-        <br>
+        <H4>Datum</H4>
+        <LABEL for="date_from">od</LABEL>
+        <INPUT type="date" id="date_from" name="date_from" value="{{min_date}}" required>
+        <LABEL for="date_to">do</LABEL>
+        <INPUT type="date" id="date_to" name="date_to" value="{{max_date}}" required>
+        <BR>
+        <BR>
+        <H4>Hodnocení</H4>
+        <LABEL for="hodnoceni_from">od</LABEL>
+        <INPUT type="number" placeholder="od" id="hodnoceni_from" name="hodnoceni_from" value="{{min_hod}}" max="5" min="1" required style="width: 55px;">
+        <LABEL for="hodnoceni_to">do</LABEL>
+        <INPUT type="number" placeholder="do" id="hodnoceni_to" name="hodnoceni_to" value="{{max_hod}}" max="5" min="1" required style="width: 55px;">
+        <BR>
+        <BR>
         {% if user.auth <= 1 %}
-       <h4>Programátor</h4>
-        <select name="name" style="width: 200px;">
+       <H4>Programátor</H4>
+        <SELECT name="name" style="width: 200px;">
 
-            <option value="-1"> všichni </option>
+            <OPTION value="-1"> všichni </OPTION>
             {% for usr in users %}
-            <option value="{{usr.id}}"
-            {% if usr.id == sel_name %} selected {% endif %}>{{usr.name}}</option>
+            <OPTION value="{{usr.id}}"
+            {% if usr.id == sel_name %} selected {% endif %}>{{usr.name}}</OPTION>
             {% endfor %}
 
-        </select>
-        <br>
-        <br>
+        </SELECT>
+        <BR>
+        <BR>
         {% endif %}
-        <h4>Štítky</h4>
-            <input type="checkbox" id="bezkatky0" name="0" 
+        <H4>Štítky</H4>
+            <INPUT type="checkbox" id="bezkatky0" name="0" 
             {% if filtered_tags[0] == "on" %}
             checked
             {% endif %}>
-            <label for="bezkatky0">  Bez kategorie</label>
+            <LABEL for="bezkatky0">  Bez kategorie</LABEL>
         {% for tag in tags %}
-            <input type="checkbox" id="{{tag.name}}" name="{{tag.name}}"
+            <INPUT type="checkbox" id="{{tag.name}}" name="{{tag.name}}"
             
             {% if filtered_tags[tag.id] == "on" %}
                 checked
             {% endif %}
             >
-            <label for="{{tag.name}}" style="color: {{tag.barva}};"> {{tag.name}}</label>
+            <LABEL for="{{tag.name}}" style="color: {{tag.barva}};"> {{tag.name}}</LABEL>
         {% endfor %}
 
         <br>  
@@ -117,49 +117,49 @@
     </tr>
     {% for record in records %}
         {% if user.auth <= 1 or user.id == record.name %}
-        <tr>
-            <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">{% for usr in users %}
+        <TR>
+            <TD style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">{% for usr in users %}
 
                 {% if usr.id == record.name %}
                     {{usr.name}}
                 {% endif %}
-            {% endfor %}</td>
+            {% endfor %}</TD>
 
-            <td style=" text-align: center;">
+            <TD style=" text-align: center;">
 
                 {% for language in languages %}
                     {% if language.id == record.jazyk_id %}
                         {{language.name}}
                     {% endif %}
                 {% endfor %}
-                </td>
+                </TD>
             
-            <td style="text-align: center;">{{record.time_spent}}</td>
-            <td style=" width: 200px; word-wrap: break-word; word-break: break-all;">{{record.popis}}</td>
-            <td>{{record.date[8:] + "-" + record.date[5:7] + "-" + record.date[:4]}}</td>
-            <td style="text-align: center;">{{record.hodnoceni}}</td>
-            <td>
+            <TD style="text-align: center;">{{record.time_spent}}</TD>
+            <TD style=" width: 200px; word-wrap: break-word; word-break: break-all;">{{record.popis}}</TD>
+            <TD>{{record.date}}</TD>
+            <TD style="text-align: center;">{{record.hodnoceni}}</TD>
+            <TD>
                 {% for cat in cats %}
                     {% if cat.owned_id == record.id %}
                         {% for tag in tags %}
                             {% if cat.type_id == tag.id %}
-                            <p style="color: {{tag.barva}};">{{tag.name}}</p>
-                                <br>
+                            <P style="color: {{tag.barva}};">{{tag.name}}</P>
+                                <BR>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
                 {% endfor %}
-            </td>
+            </TD>
             {% if user.auth <= 1 or user.id == record.name %}
-            <td> <a href="/update-form/{{record.id}}">Upravit</a>  <br>
-                <a href="/delete/{{record.id}}" class="smazat confirmation">Smazat</a>  </td>
+            <TD> <A href="/update-form/{{record.id}}">Upravit</A>  <BR>
+                <A href="/delete/{{record.id}}" class="smazat confirmation">Smazat</A>  </TD>
             {% endif %}
-        </tr>
+        </TR>
 
         {% endif %}
     {% endfor %}
-    </table>
-</div>
+    </TABLE>
+</DIV>
 
 
 {% endblock %}

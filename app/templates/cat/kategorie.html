@@ -1,40 +1,40 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Kategorie</title>
-<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+<TITLE>Kategorie</TITLE>
+<LINK rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
 {% endblock %}
 
 {% block body %} 
 
-<div class="Center">
-        <h1>Seznam Štítků</h1>
-        <table>
-            <tr>
-                <th style="padding-right:  20px;"> Název štítku </th>
-                <th style="padding-right:  20px;"> Barva štítku</th>
-                <th style="padding-right:  20px;"> Popis štítku</th>
-            </tr>
+<DIV class="Center">
+        <H1>Seznam Štítků</H1>
+        <TABLE>
+            <TR>
+                <TH style="padding-right:  20px;"> Název štítku </TH>
+                <TH style="padding-right:  20px;"> Barva štítku</TH>
+                <TH style="padding-right:  20px;"> Popis štítku</TH>
+            </TR>
                 {% for tag in tags %}
-                <tr>
-                    <td style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">
+                <TR>
+                    <TD style=" width: 125px; overflow-wrap: break-word; word-break: break-all;">
                         {{tag.name}}
-                    </td>
-                    <td style="color: {{tag.barva}};">
+                    </TD>
+                    <TD style="color: {{tag.barva}};">
                         {{tag.barva}}
-                    </td>
-                    <td>
+                    </TD>
+                    <TD>
                         {{tag.popis}}
-                    </td>
-                    <td>
-                        <a href="/cat/delete/{{tag.id}}" class="smazat confirmation"> smazat</a>
-                        <a href="/cat/update/{{tag.id}}"> update</a>
-                    </td>
-                </tr>
+                    </TD>
+                    <TD>
+                        <A href="/cat/delete/{{tag.id}}" class="smazat confirmation"> smazat</A>
+                        <A href="/cat/update/{{tag.id}}"> update</A>
+                    </TD>
+                </TR>
                 {% endfor %}
     
-        </table>
-    </div>
+        </TABLE>
+    </DIV>
 
 
 {% endblock %}

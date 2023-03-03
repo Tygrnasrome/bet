@@ -1,56 +1,53 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Vytvořit účet</title>
-<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+<TITLE>Vytvořit účet</TITLE>
+<LINK rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
 {% endblock %}
 
 {% block body %}
-<div >
-    <form action="/signup" method="post">
+<DIV >
+    <FORM action="/signup" method="post">
 
-         <h1>
-           <b>Vytvořit účet</b>
-        </h1>
-
-        <h3>
-            <b> všechna pole jsou povinná </b>
-        </h3>        
-        <br>
-        <table>
-            <tr>
-                
-                <td class="group">
-                
-                    
-                    <input type="name" placeholder="Mirek Dušín" id="name" name="name" required/>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label>Jméno</label>
-                </td>
-            </tr>
-            <tr>
-                
-                <td class="group">
-                    <input type="email" id="email" name="email"/>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label>E-mail (nepovinné)</label>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="password" id="password" name="password" required>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label>Jméno</label>
-                </td>
-            </tr>
+         <H1>
+           <B>Vytvořit účet</B>
+        </H1>
+        <TABLE>
+            <TR>
+                <TD>
+                    <LABEL for="name">Jméno 
+                </TD>
+                <TD>
+                    <SPAN class="povinnost">*</SPAN></LABEL>
+                </TD>
+                <TD>
+                    <INPUT type="name" placeholder="Mirek Dušín" id="name" name="name" required/>
+                </TD>
+            </TR>
+            <TR>
+                <TD>
+                    <LABEL for="email">E-mail</LABEL>
+                </TD><TD></TD>
+                <TD>
+                    <INPUT type="email" id="email" name="email"/>
+                </TD>
+            </TR>
+            <TR>
+                <TD>
+                    <LABEL for="password">Heslo
+                    </TD>
+                <TD>
+                    <SPAN class="povinnost">*</SPAN></LABEL>
+                </TD>
+                <TD>    
+                    <INPUT type="password" id="password" name="password" required>
+                </TD>
+            </TR>
             
-        </table>
-        <br>
-        <p style="text-align: center;">      <input type="submit" value="vytvořit"> </p>
-        <br>
-    </form>
+        </TABLE>
+        <BR>
+        <P style="text-align: center;"><INPUT type="submit" value="vytvořit"> </P>
+        <BR>
+    </FORM>
 
 {% endblock %}

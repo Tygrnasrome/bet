@@ -1,73 +1,70 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Upravit Kategorii</title>
-<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+<TITLE>Upravit Kategorii</TITLE>
+<LINK rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
 {% endblock %}
 
 {% block body %}
-<div class="Center">
-    <form action="/cat/update/{{tag_to_update.id}}" method="post">
+<DIV>
+    <FORM action="/cat/update/{{tag_to_update.id}}" method="post">
 
-     <h1>
-       <b>Upravit štítek ve výběru</b> 
-    </h1>
-    <h3>
-        <b> všechna pole jsou povinná </b> 
-    </h3>
-    <br>
+     <H1>
+       <B>Upravit štítek ve výběru</B> 
+    </H1>
+    <BR>
 
-<table>
-    <tr>
-        <td>Název štítku</td>
-        <td>
-            <input type="text" placeholder="název štítku" id="name" name="name" required value="{{tag_to_update.name}}">
-        </td>
-    </tr>
-    <tr>
-        <td>Barva štítku</td>
-        <td>
-            <input type="color" id="barva" Name = "barva" value="{{tag_to_update.barva}}" required>          
-        </td>
-    </tr>
-    <tr>
-        <td>Popis štítku</td>
-        <td>
-            <input type="text" placeholder="popis štítku" id="popis" name="popis" value="{{tag_to_update.popis}}" required>
-        </td>
-    </tr>
-</table>
-    <h3>   
-        <br>
-        <input type="submit" value="upravit">
+<TABLE>
+    <TR>
+        <TD>Název štítku</TD>
+                <TD><SPAN class="povinnost">*</SPAN></LABEL></TD><TD>
+            <INPUT type="text" placeholder="název štítku" id="name" name="name" required value="{{tag_to_update.name}}">
+        </TD>
+    </TR>
+    <TR>
+        <TD>Barva štítku</TD>
+                <TD><SPAN class="povinnost">*</SPAN></LABEL></TD><TD>
+            <INPUT type="color" id="barva" Name = "barva" value="{{tag_to_update.barva}}" required>          
+        </TD>
+    </TR>
+    <TR>
+        <TD>Popis štítku</TD>
+                <TD><SPAN class="povinnost">*</SPAN></LABEL></TD><TD>
+            <INPUT type="text" placeholder="popis štítku" id="popis" name="popis" value="{{tag_to_update.popis}}" required>
+        </TD>
+    </TR>
+</TABLE>
+    <H3>   
+        <BR>
+        <INPUT type="submit" value="upravit">
     
-    </h3>
-</form>
-    <table>
-        <tr>
-            <th> Název štítku </th>
-            <th> Barva štítku</th>
-            <th> Popis štítku</th>
-        </tr>
+    </H3>
+</FORM>
+    <TABLE>
+        <TR>
+            <TH> Název štítku </TH>
+            <TH> Barva štítku</TH>
+            <TH> Popis štítku</TH>
+        </TR>
             {% for tag in tags %}
-            <tr>
-                <td>
+            <TR>
+                <TD>
                     {{tag.name}}
-                </td>
-                <td>
+                </TD>
+                <TD>
                     {{tag.barva}}
-                </td>
-                <td>
+                </TD>
+                <TD>
                     {{tag.popis}}
-                </td>
-                <td>
-                    <a href="/cat/delete/{{tag.id}}" class="smazat confirmation"> smazat</a>
-                    <a href="/cat/update/{{tag.id}}"> update</a>
-                </td>
-            </tr>
+                </TD>
+                <TD>
+                    <A href="/cat/delete/{{tag.id}}" class="smazat confirmation"> smazat</A>
+                    <A href="/cat/update/{{tag.id}}"> update</A>
+                </TD>
+            </TR>
             {% endfor %}
 
-    </table>
-</div>
+    </TABLE>
+</DIV>
 
 {% endblock %}

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    <link rel="icon" href="{{url_for('static', filename='images/favicon.ico')}}" type="image/x-icon">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/styly1.css')}}" >
-    <script type="text/javascript">
+<HTML lang="en" xmlns="http://www.w3.org/1999/html">
+<HEAD>
+    <LINK rel="icon" href="{{url_for('static', filename='images/favicon.ico')}}" type="image/x-icon">
+    <META charset="UTF-8">
+    <META http-equiv="X-UA-Compatible" content="IE=edge">
+    <META name="viewport" content="width=device-width, initial-scale=1.0">
+    <LINK rel="stylesheet" href="{{url_for('static', filename='css/styly1.css')}}" >
+    <SCRIPT type="text/javascript">
         let elems = document.getElementsByClassName('confirmation');
         let confirmIt = function (e) {
             if (!confirm('Are you sure?')) e.preventDefault();
@@ -14,8 +14,8 @@
         for (let i = 0, l = elems.length; i < l; i++) {
             elems[i].addEventListener('click', confirmIt, false);
         }
-    </script>
-    <style>
+    </SCRIPT>
+    <STYLE>
         body
         {
             background: {{palette.body}};
@@ -68,78 +68,78 @@
             color: {{palette.header}};
         }
         p.zprava{
-            font-size: 3em;
+            font-size: 2em;
             height: 50px;
         }
-    </style>
+    </STYLE>
     {% block head %} 
 
     {% endblock %}
-</head>
-<body>
-    <header>
-        <ul>
+</HEAD>
+<BODY>
+    <HEADER>
+        <UL>
 
-            <li>
-                <a href="/" style="height: fit-content;position: relative;top: -5%;margin: 0;padding-bottom: 10px;">
-                    <img src="{{url_for('static', filename='images/logo.png')}}" alt="logo" height="40px">
-                </a>
-            </li>
-            <li><a href="/" {% if active == 'home' %} style="background-color: {{palette.selected}};" {% endif %} >Domů</a></li>
+            <LI>
+                <A href="/" style="height: fit-content;position: relative;top: -5%;margin: 0;padding-bottom: 10px;">
+                    <IMG src="{{url_for('static', filename='images/logo.png')}}" alt="logo" height="40px">
+                </A>
+            </LI>
+            <LI><A href="/" {% if active == 'home' %} style="background-color: {{palette.selected}};" {% endif %} >Domů</A></LI>
 
-            <li><a href="#" {% if active == 'cat' or active == 'records' or active == 'user' or active == 'language' %} style="background-color: {{palette.selected}};" {% endif %}>Přehled</a>
-                <ul class="h">
-                    <li><a href="/zaznamy/1/" {% if active == 'records' %} style="background-color: {{palette.base}};" {% endif %}>Záznamy</a></li>
-                    <li><a href="/cat/" {% if active == 'cat' %} style="background-color: {{palette.base}};" {% endif %}>Štítky</a></li>
+            <LI><A href="#" {% if active == 'cat' or active == 'records' or active == 'user' or active == 'language' %} style="background-color: {{palette.selected}};" {% endif %}>Přehled</A>
+                <UL class="h">
+                    <LI><A href="/zaznamy/1/" {% if active == 'records' %} style="background-color: {{palette.base}};" {% endif %}>Záznamy</A></LI>
+                    <LI><A href="/cat/" {% if active == 'cat' %} style="background-color: {{palette.base}};" {% endif %}>Štítky</A></LI>
                     {% if user.name %}
                         {% if user.auth <= 1 %}
-                            <li><a href="/user/" {% if active == 'user' %} style="background-color: {{palette.base}};" {% endif %}>Programátoři</a></li>
+                            <LI><A href="/user/" {% if active == 'user' %} style="background-color: {{palette.base}};" {% endif %}>Programátoři</A></LI>
                         {% endif %}
                     {% endif %}
-                    <li><a href="/language/" {% if active == 'language' %} style="background-color: {{palette.base}};" {% endif %}>Programovací jazyky</a></li>
-                </ul>
-            </li>
+                    <LI><A href="/language/" {% if active == 'language' %} style="background-color: {{palette.base}};" {% endif %}>Programovací jazyky</A></LI>
+                </UL>
+            </LI>
 
-            <li><a href="#" {% if active == 'addCat' or active == 'addRecord' or active == 'signup' or active == 'addLanguage' %} style="background-color: {{palette.selected}};" {% endif %}>Přidat</a>
-              <ul class="h">
-                <li><a href="/form/" {% if active == 'addRecord' %} style="background-color: {{palette.base}};" {% endif %}><b>Záznam</b></a></li>
-                <li><a href="/cat/form/" {% if active == 'addCat' %} style="background-color: {{palette.base}};" {% endif %}><b>Štítek</b></a></li>
+            <LI><A href="#" {% if active == 'addCat' or active == 'addRecord' or active == 'signup' or active == 'addLanguage' %} style="background-color: {{palette.selected}};" {% endif %}>Přidat</A>
+              <UL class="h">
+                <LI><A href="/form/" {% if active == 'addRecord' %} style="background-color: {{palette.base}};" {% endif %}><B>Záznam</B></A></LI>
+                <LI><A href="/cat/form/" {% if active == 'addCat' %} style="background-color: {{palette.base}};" {% endif %}><B>Štítek</B></A></LI>
                 {% if user.name %}
                     {% if user.auth <= 1 %}
-                        <li><a href="/language/form" {% if active == 'addLanguage' %} style="background-color: {{palette.base}};" {% endif %}><b>Programovací jazyk</b></a></li>
-                        <li><a href="/signup/" {% if active == 'signup' %} style="background-color: {{palette.base}};" {% endif %}><b>Účet</b></a></li>
+                        <LI><A href="/language/form" {% if active == 'addLanguage' %} style="background-color: {{palette.base}};" {% endif %}><B>Programovací jazyk</B></A></LI>
+                        <LI><A href="/signup/" {% if active == 'signup' %} style="background-color: {{palette.base}};" {% endif %}><B>Účet</B></A></LI>
                     {% endif %}
                 {% endif %}
 
-              </ul>
-            </li>
+              </UL>
+            </LI>
 
             {% if user.name %}
-                <li><a href="#" {% if active == 'profile' %} style="background-color: {{palette.selected}};" {% endif %}>{{user.name}}</a>
-                    <ul class="h">
-                        <li><a href="/profile" {% if active == 'profile' %} style="background-color: {{palette.base}};" {% endif %} > profil </a></li>
-                        <li><a href="/logout"> odhlásit se </a></li>
-                    </ul>
-                </li>
+                <LI><A href="#" {% if active == 'profile' %} style="background-color: {{palette.selected}};" {% endif %}>{{user.name}}</A>
+                    <UL class="h">
+                        <LI><A href="/profile" {% if active == 'profile' %} style="background-color: {{palette.base}};" {% endif %} > profil </A></LI>
+                        <LI><A href="/logout"> odhlásit se </A></LI>
+                    </UL>
+                </LI>
                 {% if user.auth == 1 %}
-                    <li><a href="/backup/" {% if active == 'backup' %} style="background-color: {{palette.selected}};" {% endif %}> zálohy </a></li>
+                    <LI><A href="/backup/" {% if active == 'backup' %} style="background-color: {{palette.selected}};" {% endif %}> zálohy </A></LI>
                 {% endif %}
             {% else %}
-                <li><a class="login" href="/login/" {% if active == 'login' %} {% endif %} > přihlášení </a></li>
+                <LI><A class="login" href="/login/" {% if active == 'login' %} {% endif %} > přihlášení </A></LI>
             {% endif %}
-            <li> <a href="/settings/" class="set" {% if active == 'settings' %} style="background-color: {{palette.selected}};" {% endif %}><img src="{{url_for('static', filename='images/settings.png')}}" alt="logo" height="27px" style="margin-top: 5px"></a></li>
+            <LI> <A href="/settings/" class="set" {% if active == 'settings' %} style="background-color: {{palette.selected}};" {% endif %}><IMG src="{{url_for('static', filename='images/settings.png')}}" alt="logo" height="27px" style="margin-top: 5px"></A></LI>
 
-        </ul>
+        </UL>
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {% for category, message in messages %}
-        <p class="{{ category }} zprava">{{ message }}</p>
+        <P class="{{ category }} zprava">{{ message }}</P>
         {% endfor %}
         {% endif %}
         {% endwith %}
-    </header>
+    </HEADER>
     {% block body %} 
 
     {% endblock %}
-</body>
-</html>
+</BODY>
+</HTML>

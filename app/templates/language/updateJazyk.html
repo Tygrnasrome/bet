@@ -1,53 +1,54 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Upravit Jazyk</title>
-<link rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
+<TITLE>Upravit Jazyk</TITLE>
+<LINK rel="stylesheet" href="{{url_for('static', filename='css/styly.css')}}">
 {% endblock %}
 
 {% block body %}
-<div class="Center">
-    <form action="/language/update/{{language_to_update.id}}" method="post">
+<DIV class="Center">
+    <FORM action="/language/update/{{language_to_update.id}}" method="post">
 
-        <h1><b>Upravit programátorský jazyk ve výběru</b></h1>
+        <H1><B>Upravit programátorský jazyk ve výběru</B></H1>
 
-        <br>
+        <BR>
 
-        <table>
-            <tr>
+        <TABLE>
+            <TR>
 
-                <td>Název jazyku <span class="povinnost">*</span></td>
+                <TD>Název jazyku </TD>
+                <TD><SPAN class="povinnost">*</SPAN></label></TD>
 
-                <td>
-                    <input type="text" placeholder="název jazyku" id="name" name="name" required value="{{language_to_update.name}}">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="submit" value="upravit">
-                </td>
-            </tr>
-        </table>
-    </form>
+                <TD>
+                    <INPUT type="text" placeholder="název jazyku" id="name" name="name" required value="{{language_to_update.name}}">
+                </TD>
+            </TR>
+            <TR>
+                <TD>
+                    <INPUT type="submit" value="upravit">
+                </TD>
+            </TR>
+        </TABLE>
+    </FORM>
 
 
-    <table>
-        <tr>
-            <th> název jazyku </th>
-        </tr>
+    <TABLE>
+        <TR>
+            <TH> název jazyku </TH>
+        </TR>
         {% for language in languages %}
-        <tr>
-            <td>
+        <TR>
+            <TD>
                 {{language.name}}
-            </td>
-            <td>
-            <a href="/language/delete/{{language.id}}" class="smazat confirmation"> smazat</a>
-            <a href="/language/update/{{language.id}}"> upravit</a>
-            </td>
-        </tr>
+            </TD>
+            <TD>
+            <A href="/language/delete/{{language.id}}" class="smazat confirmation"> smazat</A>
+            <A href="/language/update/{{language.id}}"> upravit</A>
+            </TD>
+        </TR>
     {% endfor %}
 
-    </table>
-</div>
+    </TABLE>
+</DIV>
 
 {% endblock %}
