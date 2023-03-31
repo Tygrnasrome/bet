@@ -11,6 +11,8 @@
  html {
     line-height: 1.15; /* 1 */
     -webkit-text-size-adjust: 100%; /* 2 */
+    font-family: sans-serif;
+    user-select: none;
   }
   
   /* Sections
@@ -22,6 +24,8 @@
   
   body {
     margin: 0;
+    background-color: black;
+    color: white;
   }
   
   /**
@@ -40,7 +44,7 @@
   h1 {
     font-size: 2em;
     margin: 0.67em 0;
-    float: center;
+    text-align: center;
   }
   
   /* Grouping content

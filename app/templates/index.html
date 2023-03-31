@@ -4,11 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
     <title>Document</title>
 </head>
 <body>
-    <div class-"menu ">
-
+    <div class="menu">
+        <div id="myModal" class="modal">
+            <button id="myBtn">Open Modal</button>
+            <div class="modal-content">
+                <div class="M-Header red"></div>
+                <span class="close">&times;</span>
+                <p>Ahoj, světe!</p>
+            </div>
+          
+          </div>
     </div>
+    <script src="{{url_for('static', filename='scripts/dragDrop.js')}}"></script>
+    <script src="{{url_for('static', filename='scripts/menu.js')}}"></script>
 </body>
 </html>
