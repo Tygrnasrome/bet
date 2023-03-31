@@ -28,3 +28,11 @@ def postUpdate(id):
         note.color =  request.form['color']
         db.session.commit()
     return redirect('/')
+
+@data.route('/delete/<int:id>', methods=['GET'])
+def delete(id):
+    note = Note.query.filter_by(id=id).first()
+    if note:
+        db.session.delete(note)
+        db.session.commit()
+    return redirect('/')
