@@ -18,3 +18,13 @@ def post():
     db.session.add(new_note)
     db.session.commit()
     return redirect('/')
+
+@data.route('/update/<int:id>', methods=['POST'])
+def post(id):
+    note = Note.query.filter_by(id=id).first()
+    if not note:
+        note.content = request.form['content']
+        note.podpis = request.form['podpis']
+        note.color =  request.form['color']
+        db.session.commit()
+    return redirect('/')
