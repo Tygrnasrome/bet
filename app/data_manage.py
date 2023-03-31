@@ -20,7 +20,7 @@ def post():
     return redirect('/')
 
 @data.route('/update/<int:id>', methods=['POST'])
-def post(id):
+def postUpdate(id):
     note = Note.query.filter_by(id=id).first()
     if not note:
         note.content = request.form['content']
