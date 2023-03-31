@@ -5,7 +5,10 @@ tr{
     text-align:center;
 }
 
-
+.menu{
+    width: 100%;
+    height: 100%;
+}
 .M-Header{
     background-color: red !important;
     font-weight: bold;
