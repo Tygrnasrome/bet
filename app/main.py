@@ -5,8 +5,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Blueprint
 from . import db, api_commits, api_users, api_sys
 from .models import User, Commit
+from .config import Data
 
 main = Blueprint('main', __name__)
+
+
 
 def saveApi():
     for user in api_users:
@@ -21,6 +24,7 @@ def saveApi():
             db.session.add(new_user)
             db.session.commit()
     for commit in api_commits:
+        Data.commit_num += 1
         data_dict = {}
         i = 0
         for data in commit:
@@ -36,6 +40,7 @@ def saveApi():
         if author:
             author.lines_added += db_commit.lines_added
             author.lines_removed += db_commit.lines_removed
+            author.changes += db_commit.lines_added + db_commit.lines_removed
             db.session.commit()
         else:
             return data_dict[0]
@@ -54,11 +59,15 @@ def stats():
     saveApi()
     labels = []
     data = []
-    for user in User.query.order_by(User.name).all():
-        fullname = "{name} {surname}"
-        fullname.format(name= user.name, surname=user.surname)
-        labels.append(fullname)
-        data.append(user.lines_added)
-        data.append(user.lines_removed)
-    
-    return render_template('stat.html',labels = labels, data = data)
+    i=0
+    for user in User.query.order_by(User.changes).all():
+        if i<5:
+            fullname = "{name} {surname}"
+            fullname.format(name= user.name, surname=user.surname)
+            labels.append(fullname)
+            labels.append(fullname)
+            data.append(user.lines_added)
+            data.append(user.lines_removed)
+            i+=1
+    bestProgrammer = User.query.order_by(User.changes).first()
+    return render_template('stat.html',labels = labels, data = data, bestProgrammer=bestProgrammer, commit_num=Data.commit_num, api_users=api_users, users=User.query.order_by(User.changes).all())
