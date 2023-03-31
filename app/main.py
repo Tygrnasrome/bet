@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, redirect, jsonify, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask import Blueprint
 from . import db, api_commits, api_users, api_sys
-from .models import User, Commit
+from .models import User, Commit, Note
 from .config import Data
 
 main = Blueprint('main', __name__)
@@ -46,7 +46,8 @@ def saveApi():
 @main.route('/')
 def index():
     db.create_all()
-    return render_template('index.html')
+    notes = Note.query.order_by(Note.changes.desc()).all()
+    return render_template('index.html', notes = notes)
 
 @main.route('/stats/')
 def stats():
