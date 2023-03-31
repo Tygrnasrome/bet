@@ -12,6 +12,8 @@ class User(db.Model):
     name = db.Column(db.String(50), nullable=False)
     surname = db.Column(db.String(50), nullable=False)
     nick = db.Column(db.String(30), nullable=False)
+    lines_added = db.Column(db.Integer, default=0)
+    lines_removed = db.Column(db.Integer, default=0)
 
 class Commit(db.Model):
     commit_id = db.Column(db.String(40), primary_key=True)

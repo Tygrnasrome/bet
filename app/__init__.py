@@ -6,8 +6,9 @@ import requests
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 #connection to api
-response_API = requests.get('https://tda.knapa.cz/swagger.json')
-
+api_commits = requests.get('https://tda.knapa.cz/commit/', headers={'x-access-token': 'cc21ac07629d323bd2c85570379cf05c','accept': 'application/json'})
+api_users = requests.get('https://tda.knapa.cz/user/', headers={'x-access-token': 'cc21ac07629d323bd2c85570379cf05c','accept': 'application/json'})
+api_sys = requests.get('https://tda.knapa.cz/sysinfo/', headers={'x-access-token': 'cc21ac07629d323bd2c85570379cf05c','accept': 'application/json'})
 def create_app():
 
 
