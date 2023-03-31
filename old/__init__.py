@@ -1,7 +1,7 @@
 import os
 from flask import Flask, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-import requests
+
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 
@@ -21,8 +21,7 @@ def create_app():
     app.config['UPLOAD_FOLDER'] = os.path.abspath("app/static/backups/") #useless command (no impact on code)
     db.init_app(app)
     
-    #connection to api
-    response_API = requests.get('https://tda.knapa.cz/swagger.json')
+
     
     # blueprint for api parts of app
     from .api import api as api_blueprint

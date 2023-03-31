@@ -10,6 +10,6 @@ main = Blueprint('main', __name__)
 def index():
     return render_template('index.html')
 
-@main.route('/stats')
-def index():
+@main.route('/stats/')
+def stats():
     return render_template('stat.html')
