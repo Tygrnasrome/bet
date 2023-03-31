@@ -10,17 +10,21 @@
 </head>
 <body>
     <div class="menu">
+        <button id="myBtn">Open Modal</button>
+
         <div id="myModal" class="modal">
-            <button id="myBtn">Open Modal</button>
-            <div class="modal-content">
-                <div class="M-Header red"></div>
+            <header class="M-Header modal-content">
+                Přidat
                 <span class="close">&times;</span>
-                <p>Ahoj, světe!</p>
+            </header>
+            <div class="modal-content">
+                <p class="modalP">Ahoj, světe!</p>
             </div>
           
           </div>
     </div>
     <script src="{{url_for('static', filename='scripts/dragDrop.js')}}"></script>
     <script src="{{url_for('static', filename='scripts/menu.js')}}"></script>
+    <script src="{{url_for('static', filename='scripts/modal.js')}}"></script>
 </body>
 </html>
