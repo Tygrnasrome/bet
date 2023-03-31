@@ -36,8 +36,82 @@
         <tr><td>InitialCommit</td><td>Programátor 01</td></tr>
     </table>
     
-    <!-- <div style="height: 50vh; width: 50%;">
+    <div style="height: 50vh; width: 50%;">
         <canvas id="myChart"></canvas>
-    </div> -->
+    </div>
+    <div style="height: 50vh; width: 50%;">
+        <canvas id="myChart2"></canvas>
+    </div>
+    <script>
+        const labels = {{ labels | tojson}};
+ 
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Přidané',
+                backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                borderColor: 'rgb(0, 255, 0)',
+                data: {{ data | tojson}},
+            }]
+        };
+ 
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Přidané'
+                    },
+                    legend: {
+                        position: left,
+                    } 
+        }
+    }
+        };
+ 
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+ 
+    </script>
+    <!--POD tímto je graf pro odebrané-->
+    <script>
+        const labels = {{ labels | tojson}};
+ 
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Odebrané',
+                backgroundColor: 'rgba(255, 0, 0, 0.2)',
+                borderColor: 'rgb(255, 0, 0)',
+                data: {{ data | tojson}},
+            }]
+        };
+ 
+        const config = {
+            type: 'bar',
+            data: data,
+            options: { maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Odebrané'
+                    },
+                    legend: {
+                        position: left,
+                    } 
+                }
+        };
+ 
+        const myChart = new Chart(
+            document.getElementById('myChart2'),
+            config
+        );
+ 
+    </script>
 </body>
 </html>

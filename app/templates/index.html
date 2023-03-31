@@ -9,21 +9,25 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="menu">
+    <div class="menu-open">
         <button id="myBtn">Open Modal</button>
 
         <div id="myModal" class="modal">
+            <form  method="post">
             <header class="M-Header modal-content">
                 Přidat
                 <span class="close">&times;</span>
             </header>
             <div class="modal-content">
-                
+                <p class="modalP">Description (max. 120 characters):</p>
+                <textarea maxlength="120"></textarea>
+                <p class="modalP">Signature (max. 30 characters):</p>
+                <input type="text" id="podpis" name="podpis" maxlength="30">
             </div>
             <footer class="M-footer modal-content">
-                <button ></button>
+                <input type="submit" value="Submit">
             </footer>
-          
+          </form>
           </div>
     </div>
     <script src="{{url_for('static', filename='scripts/dragDrop.js')}}"></script>
