@@ -58,7 +58,18 @@
         const config = {
             type: 'bar',
             data: data,
-            options: { maintainAspectRatio: false }
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Přidané'
+                    },
+                    legend: {
+                        position: left,
+                    } 
+        }
+    }
         };
  
         const myChart = new Chart(
@@ -84,7 +95,16 @@
         const config = {
             type: 'bar',
             data: data,
-            options: { maintainAspectRatio: false }
+            options: { maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Odebrané'
+                    },
+                    legend: {
+                        position: left,
+                    } 
+                }
         };
  
         const myChart = new Chart(
