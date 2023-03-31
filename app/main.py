@@ -42,20 +42,16 @@ def saveApi():
             author.changes += commit['lines_added'] + commit['lines_removed']
             db.session.commit()
     data = api_sys.text
-    sys_json = json.loads(data)
-    for sys in sys_json:
-        Data.cpu_load = sys['cpu_load']
-        Data.ram_usage = sys['ram_usage']
-        Data.disk_usage = sys['disk_usage']
-        Data.boot_time = sys['boot_time']
-        Data.platform = sys['platform']
 
+    Data.latest_commit = Commit.query.order_by(Commit.date).first()
 
 @main.route('/')
 def index():
     db.create_all()
+    data = api_sys.text   
+    commits_json = json.loads(data)
     notes = Note.query.order_by(Note.id).all()
-    return render_template('index.html', notes = notes)
+    return render_template('index.html', notes = notes, api_sys=commits_json)
 
 @main.route('/stats/')
 def stats():
@@ -63,17 +59,26 @@ def stats():
     data = api_users.text
     parse_json = json.loads(data)
     saveApi()
-    labels = []
-    data = []
+    labelsAdded = []
+    dataAdded = []
     i=0
-    for user in User.query.order_by(User.changes.desc()).all():
+    for user in User.query.order_by(User.lines_added.desc()).all():
         if i<5:
             fullname = "{name} {surname}"
             fullname.format(name= user.name, surname=user.surname)
-            labels.append(fullname)
-            labels.append(fullname)
-            data.append(user.lines_added)
-            data.append(user.lines_removed)
+            labelsAdded.append(fullname)
+            dataAdded.append(user.lines_added)
+
+            i+=1
+    labelsRemoved = []
+    dataRemoved = []
+    i=0
+    for user in User.query.order_by(User.lines_removed.desc()).all():
+        if i<5:
+            fullname = "{name} {surname}"
+            fullname.format(name= user.name, surname=user.surname)
+            labelsRemoved.append(fullname)
+            dataRemoved.append(user.lines_removed)
             i+=1
     bestProgrammer = User.query.order_by(User.changes.desc()).first()
-    return render_template('stat.html',labels = labels, data = data, bestProgrammer=bestProgrammer, commit_num=Data.commit_num, api_users=parse_json, users=User.query.order_by(User.changes).all())
+    return render_template('stat.html',latest_commit=Data.latest_commit,labelsRemoved = labelsRemoved, dataAdded = dataAdded,labelsAdded=labelsAdded,dataRemoved=dataRemoved, bestProgrammer=bestProgrammer, commit_num=Data.commit_num, api_users=parse_json, users=User.query.order_by(User.changes).all())
