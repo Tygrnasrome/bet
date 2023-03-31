@@ -41,12 +41,20 @@ def saveApi():
             author.lines_removed += commit['lines_removed']
             author.changes += commit['lines_added'] + commit['lines_removed']
             db.session.commit()
+    data = api_sys.text
+    sys_json = json.loads(data)
+    for sys in sys_json:
+        Data.cpu_load = sys['cpu_load']
+        Data.ram_usage = sys['ram_usage']
+        Data.disk_usage = sys['disk_usage']
+        Data.boot_time = sys['boot_time']
+        Data.platform = sys['platform']
 
 
 @main.route('/')
 def index():
     db.create_all()
-    notes = Note.query.order_by(Note.changes.desc()).all()
+    notes = Note.query.order_by(Note.id).all()
     return render_template('index.html', notes = notes)
 
 @main.route('/stats/')

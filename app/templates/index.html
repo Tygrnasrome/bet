@@ -34,8 +34,18 @@
             </footer>
           </form>
           </div>
-          <div id="myModal" class="modal">
-            <form action="/update/" method="post">
+          
+    </div>
+    {% for note in notes %}
+    <div style="background-color: {{note.color}};" class="draggable">
+        {{note.content}}
+        <p>{{note.name}}</p>
+        <p>
+            <button id="MyUpdate">update</button> 
+            <form action="/delete/{{note.id}}"> <input type="submit" value="delete" class="delete"></form>
+        </p>
+        <div id="myModalU" class="modal">
+            <form action="/update/{{note.id}}" method="post">
             <header class="M-Header modal-content">
                 Přidat
                 <span class="close">&times;</span>
@@ -53,6 +63,7 @@
           </form>
           </div>
     </div>
+    {% endfor %}
     <script src="{{url_for('static', filename='scripts/dragDrop.js')}}"></script>
     <script src="{{url_for('static', filename='scripts/menu.js')}}"></script>
     <script src="{{url_for('static', filename='scripts/modal.js')}}"></script>
