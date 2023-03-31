@@ -46,7 +46,7 @@ def saveApi():
 @main.route('/')
 def index():
     db.create_all()
-    notes = Note.query.order_by(Note.changes.desc()).all()
+    notes = Note.query.order_by(Note.id.desc()).all()
     return render_template('index.html', notes = notes)
 
 @main.route('/stats/')
