@@ -7,3 +7,4 @@ import os
 from datetime import datetime
 
 data = Blueprint('data', __name__)
+
