@@ -57,7 +57,7 @@ def stats():
     labels = []
     data = []
     i=0
-    for user in User.query.order_by(User.changes).all():
+    for user in User.query.order_by(User.changes.desc()).all():
         if i<5:
             fullname = "{name} {surname}"
             fullname.format(name= user.name, surname=user.surname)
@@ -66,5 +66,5 @@ def stats():
             data.append(user.lines_added)
             data.append(user.lines_removed)
             i+=1
-    bestProgrammer = User.query.order_by(User.changes).first()
+    bestProgrammer = User.query.order_by(User.changes.desc()).first()
     return render_template('stat.html',labels = labels, data = data, bestProgrammer=bestProgrammer, commit_num=Data.commit_num, api_users=parse_json, users=User.query.order_by(User.changes).all())
