@@ -10,8 +10,11 @@ tr{
     background-color: red !important;
     font-weight: bold;
     font-size: 2em;
-    margin-top: 15%;
-    margin-bottom: 0%;
+    margin-top: 5%;
+}
+.M-Footer{
+    background-color: red !important;
+    margin-top: 0% !important;
 }
 p.modalP{
     color:#888 !important;
@@ -34,7 +37,7 @@ p.modalP{
   /* Modal Content/Box */
   .modal-content {
     background-color: #fefefe;
-    margin: 0% auto auto auto; /* 15% from the top and centered */
+    margin: 0% auto auto auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
