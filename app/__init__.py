@@ -12,7 +12,7 @@ def create_app():
         os.makedirs(app.instance_path)
     except OSError:
         pass
-    app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
+    app.config['SECRET_KEY'] = 'cc21ac07629d323bd2c85570379cf05c'
     app.config.from_mapping(
         DATABASE=os.path.join(app.instance_path, 'tourdeflask.sqlite'),
     )
