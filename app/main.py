@@ -5,3 +5,11 @@ from flask import Blueprint
 from . import db
 
 main = Blueprint('main', __name__)
+
+@main.route('/')
+def index():
+    return render_template('index.html')
+
+@main.route('/stats')
+def index():
+    return render_template('stat.html')
