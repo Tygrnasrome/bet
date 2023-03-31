@@ -46,7 +46,7 @@
         {{note.content}}
         <p>{{note.name}}</p>
         <p>
-            <button id="Update{{note.id}}" class="MyUpdate" onclick = 'ModalUpdateShow(this.id)'>update</button> 
+            <button id="{{note.id}}" class="MyUpdate" onclick = 'ModalUpdateShow(this.id)'>update</button> 
             <form action="/delete/{{note.id}}"> <input type="submit" value="delete" class="delete"></form>
         </p>
         <div id="myModalU" class="modalU">
