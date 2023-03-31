@@ -6,6 +6,7 @@ class Note(db.Model):
     content = db.Column(db.String(120), nullable=False)
     name = db.Column(db.String(30), nullable=False)
     created_date = db.Column(db.String(30), default=datetime.utcnow().strftime("%m-%d-%Y"))
+    color = db.Column(db.String(30), nullable=False)
 
 class User(db.Model):
     userID = db.Column(db.String(40), primary_key=True)

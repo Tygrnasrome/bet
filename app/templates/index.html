@@ -20,9 +20,28 @@
             </header>
             <div class="modal-content">
                 <p class="modalP">Description (max. 120 characters):</p>
-                <textarea maxlength="120"></textarea>
+                <textarea maxlength="120" id="content" name="content" required></textarea>
                 <p class="modalP">Signature (max. 30 characters):</p>
-                <input type="text" id="podpis" name="podpis" maxlength="30">
+                <input type="text" id="podpis" name="podpis" maxlength="30" minlength="3" required>
+                <input type="color" name="color" id="color" required>
+            </div>
+            <footer class="M-footer modal-content">
+                <input type="submit" value="Submit">
+            </footer>
+          </form>
+          </div>
+          <div id="myModal" class="modal">
+            <form action="/update/" method="post">
+            <header class="M-Header modal-content">
+                Přidat
+                <span class="close">&times;</span>
+            </header>
+            <div class="modal-content">
+                <p class="modalP">Description (max. 120 characters):</p>
+                <textarea maxlength="120" id="content" name="content" required></textarea>
+                <p class="modalP">Signature (max. 30 characters):</p>
+                <input type="text" id="podpis" name="podpis" maxlength="30" minlength="3" required>
+                <input type="color" name="color" id="color" required>
             </div>
             <footer class="M-footer modal-content">
                 <input type="submit" value="Submit">
