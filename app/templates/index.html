@@ -14,7 +14,7 @@
         <div id="myModal" class="modal">
             <form  method="post">
             <header class="M-Header modal-content">
-                Přidat
+                Add
                 <span class="close">&times;</span>
             </header>
             <div class="modal-content">
@@ -32,7 +32,7 @@
           
     </div>
     {% for note in notes %}
-    <div style="background-color: {{note.color}};" class="draggable">
+    <div style="background-color: {{note.color}};" class="draggable notes">
         {{note.content}}
         <p>{{note.name}}</p>
         <p>
@@ -42,7 +42,7 @@
         <div id="myModalU" class="modal">
             <form action="/update/{{note.id}}" method="post">
             <header class="M-Header modal-content">
-                Přidat
+                Update
                 <span class="close">&times;</span>
             </header>
             <div class="modal-content">
