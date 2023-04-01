@@ -65,7 +65,7 @@ def stats():
     for user in User.query.order_by(User.lines_added.desc()).all():
         if i<5:
             fullname = "{name} {surname}"
-            fullname.format(name= user.name, surname=user.surname)
+            fullname = fullname.format(name= user.name, surname=user.surname)
             labelsAdded.append(fullname)
             dataAdded.append(user.lines_added)
 
