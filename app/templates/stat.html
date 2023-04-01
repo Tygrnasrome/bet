@@ -53,11 +53,14 @@
         </tr>
     </table>
     
-    <div style="height: 50vh; width: 50%;">
+    <div style="height: 25vh; width: 100%;">
         <canvas id="myChart"></canvas>
     </div>
+    <div style="height: 25vh; width: 100%;">
+        <canvas id="myChart1"></canvas>
+    </div>
     <script>
-        const label = {{ labels | tojson}};
+        const label = {{ labelsAdded | tojson}};
  
         const data = {
             labels: label,
@@ -65,7 +68,7 @@
                 label: 'Přidané',
                 backgroundColor: 'rgba(0, 255, 0, 0.2)',
                 borderColor: 'rgb(0, 255, 0)',
-                data: {{ data | tojson}},
+                data: {{ dataAdded | tojson}},
             }]
         };
  
@@ -81,6 +84,35 @@
  
         const myChart = new Chart(
             document.getElementById('myChart'),
+            config
+        );
+ 
+    </script>
+    <script>
+        const label1 = {{ labelsRemoved | tojson}};
+ 
+        const data1 = {
+            labels: label1,
+            datasets: [{
+                label: 'Přidané',
+                backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                borderColor: 'rgb(0, 255, 0)',
+                data: {{ dataRemoved | tojson}},
+            }]
+        };
+ 
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                maintainAspectRatio: false,
+                
+        
+    }
+        };
+ 
+        const myChart = new Chart(
+            document.getElementById('myChart1'),
             config
         );
  
