@@ -15,7 +15,7 @@
             var btn1 = document.getElementsByClassName("MyUpdate")[id1];
             var span = document.getElementsByClassName("close1")[0];
             btn1.onclick = function () {
-                modal1.style.display = "block";
+                modal1.style.display = "flex";
             }
             span.onclick = function() {
                 modal1.style.display = "none";
@@ -37,7 +37,7 @@
         onclick="modal.style.display = 'block' ">Add</button>
 
     <div id="Modal" class="modal">
-        <form method="post">
+        <form method="post" style="width: 50%; height: fit-content;">
             <header class="M-Header modal-content">
                 Add
                 <span class="close">&times;</span>
@@ -68,7 +68,7 @@
             <form action="/delete/{{note.id}}"> <input type="submit" value="delete" class="delete"></form>
         </p>
         <div id="myModalU" class="modalU">
-            <form action="/update/{{note.id}}" method="post">
+            <form action="/update/{{note.id}}" method="post" style="width: 50%; height: fit-content;">
                 <header class="M-Header modalU-content">
                     Update
                     <span class="close1">&times;</span>
@@ -87,7 +87,7 @@
         </div>
     </div>
     {% endfor %}
-    <script src="{{url_for('static', filename='scripts/dragDrop.js')}}"></script>
+    <!-- <script src="{{url_for('static', filename='scripts/dragDrop.js')}}"></script> -->
     <script src="{{url_for('static', filename='scripts/menu.js')}}"></script>
     <script src="{{url_for('static', filename='scripts/modal.js')}}"></script>
     
