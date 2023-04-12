@@ -81,4 +81,4 @@ def stats():
             dataRemoved.append(user.lines_removed)
             i+=1
     bestProgrammer = User.query.order_by(User.changes.desc()).first()
-    return render_template('stat.html',latest_commit=Data.latest_commit,labelsRemoved = labelsRemoved, dataAdded = dataAdded,labelsAdded=labelsAdded,dataRemoved=dataRemoved, bestProgrammer=bestProgrammer, commit_num=Data.commit_num, api_users=parse_json, users=User.query.order_by(User.changes).all())
+    return render_template('stat.html',latest_commit=Data.latest_commit,labelsRemoved = labelsRemoved, dataAdded = dataAdded, labelsAdded=labelsAdded, dataRemoved=dataRemoved, bestProgrammer=bestProgrammer, commit_num=Data.commit_num, api_users=parse_json, users=User.query.order_by(User.changes).all())

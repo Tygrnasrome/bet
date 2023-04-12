@@ -22,6 +22,11 @@ tr{
 p.modalP{
     color:#888 !important;
 }
+a.menu{
+    font-size: 2em;
+    width: 50%;
+    float: left;
+}
 
 /* Modal */
 .modal {
