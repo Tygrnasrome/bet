@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, redirect, flash, url_for, send_file
 from flask_sqlalchemy import SQLAlchemy
-from .models import Denik,Tags,User,Kategorie,Jazyk, Palettes
+from .models import User, Palettes
 from flask import Blueprint
 from flask_login import login_required, current_user
-from .config import UI,Palette, user_config_auth, backup_config_auth, obj_config_auth, Filter, cat_config_auth, backup_dict
+from .config import UI,Palette, user_config_auth, backup_config_auth, obj_config_auth, cat_config_auth, backup_dict
 from . import db
 import csv
 import os
@@ -15,8 +15,6 @@ data = Blueprint('data', __name__)
 @data.route('/add/', methods=['POST', 'GET'])
 @login_required
 def addZaznam():
-    tags = Tags.query.order_by(Tags.id).all()
-
     #pokud nekdo prida neco do databaze, tak se spusti tato cast, a pak se přeseměruje na view /zaznamy/
     record_name = str(request.form['name'])
     record_time = int(request.form['time_spent'])

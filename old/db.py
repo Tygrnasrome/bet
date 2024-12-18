@@ -7,11 +7,6 @@ import sqlite3
 con = sqlite3.connect("db.db")
 
 cur = con.cursor()
-people = [
-     "'Fairy', 'Tooth', '2022-10-08 09:15:10', 1",
-     "'Ruprecht', 'Knecht', '2022-10-08 09:15:13', 1",
-     "'Bunny', 'Easter', '2022-10-08 09:15:27', 1",
-]
 
 def init_db():
     """

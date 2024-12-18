@@ -1,7 +1,3 @@
-# Tour de App - řešení týmu GYMVODáři
-
-Autory jsou: Robert Ernest, Pavel Škop a Ondřej Nepevný 
-
 Šablona pro vývoj aplikace pro Tour de App společně s vytvořením a nahráním výstupu
 
 ## Lokální spuštění
