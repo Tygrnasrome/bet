@@ -2,7 +2,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import os
 from urllib.parse import unquote
 
-hostName = "0.0.0.0"
+hostName = "localhost"
 serverPort = 8080
 base_directory = "templates"
 static_directory = "static"
@@ -37,6 +37,7 @@ class MyServer(BaseHTTPRequestHandler):
         except Exception as e:
             self.send_response(500)
             self.send_header("Content-type", "text/html")
+            self.wfile.write(e) 
             self.end_headers()
             self.wfile.write(b"<html><body><h1>500 Internal Server Error</h1></body></html>")
 
