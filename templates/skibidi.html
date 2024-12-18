@@ -4,167 +4,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/styles.css">
-    <title>betjo</title>
+    <title>Betjo - Update Scores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        .table th {
+            background-color: #003e6b;
+            /* Blue header color */
+            color: white;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+            /* Light gray background for even rows */
+        }
+
+        .table tbody tr:hover {
+            background-color: #d1ecf1;
+            /* Light blue hover effect */
+        }
+    </style>
 </head>
 
-<body>
-    <div class="container">
-        <div class="left-column">
-            <p>Zápasy</p>
-            <table class="left-table">
+<body class="bg-light">
+    <div class="container my-4">
+        <h3>Upravit výsledky zápasu</h3>
+        <table class="table table-bordered">
+            <thead>
                 <tr>
-                    <th>Time</th>
-                    <th>Match</th>
-                    <th>Score</th>
+                    <th>Čas</th>
+                    <th>Zápas</th>
+                    <th>Skóre</th>
+                    <th>Kurz</th>
                 </tr>
+            </thead>
+            <tbody>
                 <tr>
                     <td>8:10 - 8:16</td>
                     <td>PA x DB</td>
-                    <td><input type="text" id="score1" onchange="updateScore('PA_DB', this.value)"></td>
+                    <td><input type="text" id="PA_DB" class="form-control" onchange="updateScore('PA_DB', this.value)">
+                    </td>
+                    <td><input type="text" id="course1" class="form-control"
+                            onchange="updateCourse('course1', this.value)">
+                    </td>
                 </tr>
                 <tr>
                     <td>8:18 - 8:24</td>
                     <td>PB x DA</td>
-                    <td><input type="text" id="score2" onchange="updateScore('PB_DA', this.value)"></td>
+                    <td><input type="text" id="PB_DA" class="form-control" onchange="updateScore('PB_DA', this.value)">
+                    </td>
+                    <td><input type="text" id="course2" class="form-control"
+                            onchange="updateCourse('course2', this.value)">
+                    </td>
                 </tr>
                 <tr>
                     <td>8:26 - 8:32</td>
                     <td>TA x KB</td>
-                    <td><input type="text" id="score3" onchange="updateScore('TA_KB', this.value)"></td>
+                    <td><input type="text" id="TA_KB" class="form-control" onchange="updateScore('TA_KB', this.value)">
+                    </td>
+                    <td><input type="text" id="course3" class="form-control"
+                            onchange="updateCourse('course3', this.value)">
+                    </td>
                 </tr>
                 <tr>
                     <td>8:34 - 8:40</td>
                     <td>TB x KA</td>
-                    <td><input type="text" id="score4" onchange="updateScore('TB_KA', this.value)"></td>
+                    <td><input type="text" id="TB_KA" class="form-control" onchange="updateScore('TB_KA', this.value)">
+                    </td>
+                    <td><input type="text" id="course4" class="form-control"
+                            onchange="updateCourse('course4', this.value)">
+                    </td>
                 </tr>
                 <tr>
                     <td>8:42 - 8:48</td>
                     <td>PA x TA</td>
-                    <td><input type="text" id="score5" onchange="updateScore('PA_TA', this.value)"></td>
+                    <td><input type="text" id="PA_TA" class="form-control" onchange="updateScore('PA_TA', this.value)">
+                    </td>
+                    <td><input type="text" id="course5" class="form-control"
+                            onchange="updateCourse('course5', this.value)">
+                    </td>
                 </tr>
                 <tr>
                     <td>8:50 - 8:56</td>
                     <td>PB x TB</td>
-                    <td><input type="text" id="score6" onchange="updateScore('PB_TB', this.value)"></td>
+                    <td><input type="text" id="PB_TB" class="form-control" onchange="updateScore('PB_TB', this.value)">
+                    </td>
+                    <td><input type="text" id="course6" class="form-control"
+                            onchange="updateCourse('course6', this.value)">
+                    </td>
                 </tr>
                 <tr>
                     <td>8:58 - 9:04</td>
                     <td>DB x KB</td>
-                    <td><input type="text" id="score7" onchange="updateScore('DB_KB', this.value)"></td>
+                    <td><input type="text" id="DB_KB" class="form-control" onchange="updateScore('DB_KB', this.value)">
+                    </td>
+                    <td><input type="text" id="course7" class="form-control"
+                            onchange="updateCourse('course7', this.value)">
+                    </td>
                 </tr>
                 <tr>
                     <td>9:06 - 9:12</td>
                     <td>DA x KA</td>
-                    <td><input type="text" id="score8" onchange="updateScore('DA_KA', this.value)"></td>
+                    <td><input type="text" id="DA_KA" class="form-control" onchange="updateScore('DA_KA', this.value)">
+                    </td>
+                    <td><input type="text" id="course8" class="form-control"
+                            onchange="updateCourse('course8', this.value)">
+                    </td>
                 </tr>
                 <tr>
                     <td>9:14 - 9:20</td>
                     <td>PA x KB</td>
-                    <td><input type="text" id="score9" onchange="updateScore('PA_KB', this.value)"></td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="center-column">
-            <table class="schedule">
-                <tr>
-                    <th></th>
-                    <th>PA</th>
-                    <th>DB</th>
-                    <th>TA</th>
-                    <th>KB</th>
+                    <td><input type="text" id="PA_KB" class="form-control" onchange="updateScore('PA_KB', this.value)">
+                    </td>
+                    <td><input type="text" id="course9" class="form-control"
+                            onchange="updateCourse('course9', this.value)">
+                    </td>
                 </tr>
                 <tr>
-                    <th>PA</th>
-                    <td class="diagonal"></td>
-                    <td id="PA_DB"></td>
-                    <td id="PA_TA"></td>
-                    <td id="PA_KB"></td>
+                    <td>9:22 - 9:28</td>
+                    <td>PB x KA</td>
+                    <td><input type="text" id="PB_KA" class="form-control" onchange="updateScore('PB_KA', this.value)">
+                    </td>
+                    <td><input type="text" id="course10" class="form-control"
+                            onchange="updateCourse('course10', this.value)">
+                    </td>
                 </tr>
                 <tr>
-                    <th>DB</th>
-                    <td id="PA_DB"></td>
-                    <td class="diagonal"></td>
-                    <td></td>
-                    <td id="DB_KB"></td>
+                    <td>9:30 - 9:36</td>
+                    <td>DB x TA</td>
+                    <td><input type="text" id="DB_TA" class="form-control" onchange="updateScore('DB_TA', this.value)">
+                    </td>
+                    <td><input type="text" id="course11" class="form-control"
+                            onchange="updateCourse(this.id, this.value)">
+                    </td>
                 </tr>
                 <tr>
-                    <th>TA</th>
-                    <td id="PA_TA"></td>
-                    <td></td>
-                    <td class="diagonal"></td>
-                    <td id="TA_KB"></td>
+                    <td>9:38 - 9:44</td>
+                    <td>DA x TB</td>
+                    <td><input type="text" id="DA_TB" class="form-control" onchange="updateScore('DA_TB', this.value)">
+                    </td>
+                    <td><input type="text" id="course12" class="form-control"
+                            onchange="updateCourse('course12', this.value)">
+                    </td>
                 </tr>
-                <tr>
-                    <th>KB</th>
-                    <td id="PA_KB"></td>
-                    <td id="DB_KB"></td>
-                    <td id="TA_KB"></td>
-                    <td class="diagonal"></td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <th></th>
-                    <th>PB</th>
-                    <th>DA</th>
-                    <th>TB</th>
-                    <th>KA</th>
-                </tr>
-                <tr>
-                    <th>PB</th>
-                    <td class="diagonal"></td>
-                    <td id="PB_DA"></td>
-                    <td id="PB_TB"></td>
-                    <td id="PB_KA"></td>
-                </tr>
-                <tr>
-                    <th>DA</th>
-                    <td></td>
-                    <td class="diagonal"></td>
-                    <td id="DA_TB"></td>
-                    <td id="DA_KA"></td>
-                </tr>
-                <tr>
-                    <th>TB</th>
-                    <td></td>
-                    <td></td>
-                    <td class="diagonal"></td>
-                    <td id="TB_KA"></td>
-                </tr>
-                <tr>
-                    <th>KA</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="diagonal"></td>
-                </tr>
-            </table>
-
-        </div>
-
-        <div class="right-column">
-        </div>
+            </tbody>
+        </table>
     </div>
+
     <script>
         function updateScore(id, value) {
-            const cell = document.getElementById(id);
-            if (cell) {
-                cell.innerText = value;
+            // Store the updated score in localStorage
+            localStorage.setItem(id, value);
+        }
+        function updateCourse(id, value) {
+            // Store the updated score in localStorage
+            localStorage.setItem(id, value);
+        }
+
+        // Optionally, preload scores if they already exist in localStorage
+        window.onload = function () {
+            const scores = ["PA_DB", "PB_DA", "TA_KB", "TB_KA", "PA_TA", "PB_TB", "DB_KB", "DA_KA", "PA_KB", "DA_TB", "DB_TA", "PB_KA",
+                "course1", "course2", "course3", "course4", "course4", "course5", "course6", "course7", "course8", "course9", "course10", "course11", "course12"];
+            scores.forEach(id => {
+                const value = localStorage.getItem(id);
+                if (value) {
+                    document.getElementById(id).value = value;
+                }
+            });
+        }
+        document.addEventListener("keydown", (event) => {
+            if (event.key == "S") {
+                window.location.href = "index.html";  // Redirect to skibidi.html
             }
-        }
-
-        async function handleKeyPress(event) {
-            // Simulate an async operation (e.g., waiting for a response)
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate a delay
-        }
-
-        document.addEventListener("keydown", async (event) => {
-            if (event.key == "S")
-                window.location.href = "index.html";  // Redirect to desired URL
         });
+
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
