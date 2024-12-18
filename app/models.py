@@ -32,4 +32,5 @@ class Match(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     team_one_id = db.Column(db.Integer, db.ForeignKey(Team.id))
     team_two_id = db.Column(db.Integer, db.ForeignKey(Team.id))
-
+    course_one = db.Column(db.Integer, nullable=False)
+    course_two = db.Column(db.Integer, nullable=False)

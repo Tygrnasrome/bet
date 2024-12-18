@@ -2,7 +2,7 @@ import sqlite3
 import json
 from flask import Flask, render_template, request, redirect, jsonify, flash
 from flask_sqlalchemy import SQLAlchemy
-from .models import User, Palettes
+from .models import User, Palettes, Match
 from flask import Blueprint
 from flask_login import login_required, current_user
 from .config import UI,Palette, obj_config_auth
@@ -41,12 +41,16 @@ def resetPalette():
 def setAdminAcc():
     admin_acc = User(id=0,name='admin', email='', password=generate_password_hash('1234', method='pbkdf2:sha256'), auth=1)
     db.session.add(admin_acc)
+    match = Match(id=0, )
+    db.session.add(admin_acc)
+
     db.session.commit()
 
 
 @main.route('/')
 def index():
     global admin_acc
+    matches = Match.query.order_by(Match.id).all()
     db.create_all()
     try:
         admin_acc = User.query.get_or_404(0)
@@ -58,7 +62,7 @@ def index():
             resetPalette()
     except:
         pass
-    return render_template('index.html', user = current_user,active=UI.active,palette=Palette)
+    return render_template('index.html', user = current_user,active=UI.active,palette=Palette, matches=matches)
 
 @main.route('/settings/', methods=['POST', 'GET'])
 @login_required

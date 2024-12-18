@@ -17,81 +17,79 @@
             btn1.onclick = function () {
                 modal1.style.display = "flex";
             }
-            span.onclick = function() {
+            span.onclick = function () {
                 modal1.style.display = "none";
             }
 
             // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
+            window.onclick = function (event) {
                 if (event.target == modal1) {
                     modal1.style.display = "none";
                 }
-            } 
+            }
         }
     </script>
 </head>
 
 <body>
 
-    <button id="Btn" style="height: 40px; width: 50%; float: left;"
-        onclick="modal.style.display = 'block' ">Add</button>
-    <a href="stats" class="menu">STATISTICS</a>
-
-    <div id="Modal" class="modal">
-        <form method="post" style="width: 50%; height: fit-content;">
-            <header class="M-Header modal-content">
-                Add
-                <span class="close">&times;</span>
-            </header>
-            <div class="modal-content">
-                <p class="modalP">Description (max. 120 characters):</p>
-                <textarea maxlength="120" id="content" name="content" required></textarea>
-                <p class="modalP">Signature (max. 30 characters):</p>
-                <input type="text" id="podpis" name="podpis" maxlength="30" minlength="3" required>
-                <input type="color" name="color" id="color" required>
-            </div>
-            <footer class="M-footer modal-content">
-                <input type="submit" value="Submit">
-            </footer>
-        </form>
-    </div>
+    <a id="Btn" style="height: 40px; width: 50%; float: left;" onclick="modal.style.display = 'block' ">Add</button>
 
 
-
-
-
-    {% for note in notes %}
-    <div style="background-color: {{note.color}};" class="draggable notes">
-        {{note.content}}
-        <p>{{note.name}}</p>
-        <p>
-            <button id="{{note.id}}" class="MyUpdate" onclick='ModalUpdateShow(this.id)'>update</button>
-            <form action="/delete/{{note.id}}"> <input type="submit" value="delete" class="delete"></form>
-        </p>
-        <div id="myModalU" class="modalU">
-            <form action="/update/{{note.id}}" method="post" style="width: 50%; height: fit-content;">
-                <header class="M-Header modalU-content">
-                    Update
-                    <span class="close1">&times;</span>
+        <div id="Modal" class="modal">
+            <form method="post" style="width: 50%; height: fit-content;">
+                <header class="M-Header modal-content">
+                    Nova sazka
+                    <span class="close">&times;</span>
                 </header>
                 <div class="modal-content">
-                    <p class="modalP">Description (max. 120 characters):</p>
-                    <textarea maxlength="120" id="content" name="content" required></textarea>
-                    <p class="modalP">Signature (max. 30 characters):</p>
-                    <input type="text" id="podpis" name="podpis" maxlength="30" minlength="3" required>
-                    <input type="color" name="color" id="color" required>
+                    <p class="modalP">Jmeno (toho kdo ti dal prachy)</p>
+                    <input type="text" id="name" name="name" maxlength="30" minlength="3" required>
+                    <p class="modalP">Hotovost</p>
+                    <input type="number" id="cash" name="cash" required>
                 </div>
                 <footer class="M-footer modal-content">
                     <input type="submit" value="Submit">
                 </footer>
             </form>
         </div>
-    </div>
-    {% endfor %}
-    <!-- <script src="{{url_for('static', filename='scripts/dragDrop.js')}}"></script> -->
-    <script src="{{url_for('static', filename='scripts/menu.js')}}"></script>
-    <script src="{{url_for('static', filename='scripts/modal.js')}}"></script>
-    
+
+
+
+
+
+        {% for match in matches %}
+        <div style="background-color: {{note.color}};" class="draggable notes">
+            {{note.content}}
+            <p>{{note.name}}</p>
+            <p>
+                <button id="{{note.id}}" class="MyUpdate" onclick='ModalUpdateShow(this.id)'>update</button>
+            <form action="/delete/{{note.id}}"> <input type="submit" value="delete" class="delete"></form>
+            </p>
+            <div id="myModalU" class="modalU">
+                <form action="/update/{{note.id}}" method="post" style="width: 50%; height: fit-content;">
+                    <header class="M-Header modalU-content">
+                        Update
+                        <span class="close1">&times;</span>
+                    </header>
+                    <div class="modal-content">
+                        <p class="modalP">Description (max. 120 characters):</p>
+                        <textarea maxlength="120" id="content" name="content" required></textarea>
+                        <p class="modalP">Signature (max. 30 characters):</p>
+                        <input type="text" id="podpis" name="podpis" maxlength="30" minlength="3" required>
+                        <input type="color" name="color" id="color" required>
+                    </div>
+                    <footer class="M-footer modal-content">
+                        <input type="submit" value="Submit">
+                    </footer>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        <!-- <script src="{{url_for('static', filename='scripts/dragDrop.js')}}"></script> -->
+        <script src="{{url_for('static', filename='scripts/menu.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/modal.js')}}"></script>
+
 
 
 
