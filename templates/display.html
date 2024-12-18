@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Display</title>
+    <style>
+        /* Same styles as in setup.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .left-column {
+            width: 20%;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .center-column {
+            width: 60%;
+            padding: 20px;
+            background-color: #e0e0e0;
+        }
+
+        .schedule {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .schedule th,
+        .schedule td {
+            border: 1px solid #333;
+            padding: 10px;
+            font-size: 1.1em;
+        }
+
+        .schedule th {
+            background-color: #444;
+            color: #fff;
+        }
+
+        .schedule .blue {
+            background-color: #87CEFA;
+            font-weight: bold;
+        }
+
+        .schedule .green {
+            background-color: #90EE90;
+            font-weight: bold;
+        }
+
+        .left-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .left-table th,
+        .left-table td {
+            border: 1px solid #333;
+            padding: 8px;
+        }
+
+        .left-table th {
+            background-color: #666;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Left Column with All Possible Matches -->
+        <div class="left-column">
+            <p><strong>All Possible Matches</strong></p>
+            <table class="left-table">
+                <tr>
+                    <th>Time</th>
+                    <th>Match</th>
+                    <th>Score</th>
+                </tr>
+                <tr>
+                    <td>8:10 - 8:16</td>
+                    <td>PA x DB</td>
+                    <td id="PA_DB"></td>
+                </tr>
+                <tr>
+                    <td>8:18 - 8:24</td>
+                    <td>PB x DA</td>
+                    <td id="PB_DA"></td>
+                </tr>
+                <tr>
+                    <td>8:26 - 8:32</td>
+                    <td>TA x KB</td>
+                    <td id="TA_KB"></td>
+                </tr>
+                <tr>
+                    <td>8:34 - 8:40</td>
+                    <td>TB x KA</td>
+                    <td id="TB_KA"></td>
+                </tr>
+                <tr>
+                    <td>8:42 - 8:48</td>
+                    <td>PA x TA</td>
+                    <td id="PA_TA"></td>
+                </tr>
+                <tr>
+                    <td>8:50 - 8:56</td>
+                    <td>PB x TB</td>
+                    <td id="PB_TB"></td>
+                </tr>
+                <tr>
+                    <td>8:58 - 9:04</td>
+                    <td>DB x KB</td>
+                    <td id="DB_KB"></td>
+                </tr>
+                <tr>
+                    <td>9:06 - 9:12</td>
+                    <td>DA x KA</td>
+                    <td id="DA_KA"></td>
+                </tr>
+                <tr>
+                    <td>9:14 - 9:20</td>
+                    <td>PA x KB</td>
+                    <td id="PA_KB"></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Center Column with Diagonal Table -->
+        <div class="center-column">
+            <p><strong>Diagonal Match Table</strong></p>
+            <table class="schedule">
+                <tr>
+                    <th></th>
+                    <th>PA</th>
+                    <th>DB</th>
+                    <th>TA</th>
+                    <th>KB</th>
+                </tr>
+                <tr>
+                    <th>PA</th>
+                    <td class="blue"></td>
+                    <td id="PA_DB"></td>
+                    <td id="PA_TA"></td>
+                    <td id="PA_KB"></td>
+                </tr>
+                <tr>
+                    <th>DB</th>
+                    <td id="PA_DB"></td>
+                    <td class="blue"></td>
+                    <td></td>
+                    <td id="DB_KB"></td>
+                </tr>
+                <tr>
+                    <th>TA</th>
+                    <td id="PA_TA"></td>
+                    <td></td>
+                    <td class="blue"></td>
+                    <td id="TA_KB"></td>
+                </tr>
+                <tr>
+                    <th>KB</th>
+                    <td id="PA_KB"></td>
+                    <td id="DB_KB"></td>
+                    <td id="TA_KB"></td>
+                    <td class="blue"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            // Retrieve and display stored scores
+            const scores = ["PA_DB", "PB_DA", "TA_KB", "TB_KA", "PA_TA", "PB_TB", "DB_KB", "DA_KA", "PA_KB"];
+            scores.forEach(id => {
+                const value = localStorage.getItem(id);
+                if (value) {
+                    document.getElementById(id).innerText = value;
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

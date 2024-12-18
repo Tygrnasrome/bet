@@ -1,0 +1,62 @@
+body {
+    margin: 0%;
+}
+
+.container {
+    display: flex;
+}
+
+.left-column {
+    width: 35%;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+.right-column {
+    width: 5%;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+.center-column {
+    width: 60%;
+    background-color: #e0e0e0;
+    padding: 20px;
+}
+
+.center-column {
+    width: 60%;
+    background-color: #e0e0e0;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #555;
+    color: #fff;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+td.diagonal {
+    background-color: black;
+}
+
+input[type="text"] {
+    width: 40px;
+    text-align: center;
+}
