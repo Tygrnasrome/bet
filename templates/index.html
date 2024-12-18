@@ -2,259 +2,259 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Betjo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Custom styles */
-        .table tr th,
-        .table th {
-            background-color: #003e6b;
-            /* Blue header color */
-            color: white;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Betjo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Custom styles */
+    .table tr th,
+    .table th {
+      background-color: #003e6b;
+      /* Blue header color */
+      color: white;
+    }
 
-        .table tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
-            /* Light gray background for even rows */
-        }
+    .table tbody tr:nth-child(even) {
+      background-color: #f2f2f2;
+      /* Light gray background for even rows */
+    }
 
-        .table tbody tr:hover {
-            background-color: #d1ecf1;
-            /* Light blue hover effect */
-        }
+    .table tbody tr:hover {
+      background-color: #d1ecf1;
+      /* Light blue hover effect */
+    }
 
-        .diagonal {
-            background-color: #6c1219b6;
-            /* Diagonal cells with light red background */
-        }
+    .diagonal {
+      background-color: #6c1219b6;
+      /* Diagonal cells with light red background */
+    }
 
-        /* Fix for table header color in even rows of second and third table */
-        .table tbody tr:nth-child(even) th {
-            color: white;
-            /* Reset the font color of header cells in even rows to white */
-        }
-    </style>
+    /* Fix for table header color in even rows of second and third table */
+    .table tbody tr:nth-child(odd) th {
+      color: white;
+      /* Reset the font color of header cells in even rows to white */
+    }
+  </style>
 </head>
 
 <body class="bg-light">
-    <div class="container my-4">
+  <div class="container my-4">
+    <div class="row">
+      <!-- Left Column -->
+      <div class="col-md-4">
+        <h3>Zápasy</h3>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Čas</th>
+              <th>Zápas</th>
+              <th>Skóre</th>
+              <th>Kurz</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>8:10 - 8:16</td>
+              <td>PA x DB</td>
+              <td id="PA_DB"></td>
+              <td id="course1"></td>
+            </tr>
+            <tr>
+              <td>8:18 - 8:24</td>
+              <td>PB x DA</td>
+              <td id="PB_DA"></td>
+              <td id="course2"></td>
+            </tr>
+            <tr>
+              <td>8:26 - 8:32</td>
+              <td>TA x KB</td>
+              <td id="TA_KB"></td>
+              <td id="course3"></td>
+            </tr>
+            <tr>
+              <td>8:34 - 8:40</td>
+              <td>TB x KA</td>
+              <td id="TB_KA"></td>
+              <td id="course4"></td>
+            </tr>
+            <tr>
+              <td>8:42 - 8:48</td>
+              <td>PA x TA</td>
+              <td id="PA_TA"></td>
+              <td id="course5"></td>
+            </tr>
+            <tr>
+              <td>8:50 - 8:56</td>
+              <td>PB x TB</td>
+              <td id="PB_TB"></td>
+              <td id="course6"></td>
+            </tr>
+            <tr>
+              <td>8:58 - 9:04</td>
+              <td>DB x KB</td>
+              <td id="DB_KB"></td>
+              <td id="course7"></td>
+            </tr>
+            <tr>
+              <td>9:06 - 9:12</td>
+              <td>DA x KA</td>
+              <td id="DA_KA"></td>
+              <td id="course8"></td>
+            </tr>
+            <tr>
+              <td>9:14 - 9:20</td>
+              <td>PA x KB</td>
+              <td id="PA_KB"></td>
+              <td id="course9"></td>
+            </tr>
+            <tr>
+              <td>9:22 - 9:28</td>
+              <td>PB x KA</td>
+              <td id="PB_KA"></td>
+              <td id="course10"></td>
+            </tr>
+            <tr>
+              <td>9:30 - 9:36</td>
+              <td>DB x TA</td>
+              <td id="DB_TA"></td>
+              <td id="course11"></td>
+            </tr>
+            <tr>
+              <td>9:38 - 9:44</td>
+              <td>DA x TB</td>
+              <td id="DA_TB"> </td>
+              <td id="course12"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Center Column -->
+      <div class="col-md-8">
+        <h3>Výsledková tabulka</h3>
         <div class="row">
-            <!-- Left Column -->
-            <div class="col-md-4">
-                <h3>Zápasy</h3>
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Čas</th>
-                            <th>Zápas</th>
-                            <th>Skóre</th>
-                            <th>Kurz</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>8:10 - 8:16</td>
-                            <td>PA x DB</td>
-                            <td id="PA_DB"></td>
-                            <td id="course1"></td>
-                        </tr>
-                        <tr>
-                            <td>8:18 - 8:24</td>
-                            <td>PB x DA</td>
-                            <td id="PB_DA"></td>
-                            <td id="course2"></td>
-                        </tr>
-                        <tr>
-                            <td>8:26 - 8:32</td>
-                            <td>TA x KB</td>
-                            <td id="TA_KB"></td>
-                            <td id="course3"></td>
-                        </tr>
-                        <tr>
-                            <td>8:34 - 8:40</td>
-                            <td>TB x KA</td>
-                            <td id="TB_KA"></td>
-                            <td id="course4"></td>
-                        </tr>
-                        <tr>
-                            <td>8:42 - 8:48</td>
-                            <td>PA x TA</td>
-                            <td id="PA_TA"></td>
-                            <td id="course5"></td>
-                        </tr>
-                        <tr>
-                            <td>8:50 - 8:56</td>
-                            <td>PB x TB</td>
-                            <td id="PB_TB"></td>
-                            <td id="course6"></td>
-                        </tr>
-                        <tr>
-                            <td>8:58 - 9:04</td>
-                            <td>DB x KB</td>
-                            <td id="DB_KB"></td>
-                            <td id="course7"></td>
-                        </tr>
-                        <tr>
-                            <td>9:06 - 9:12</td>
-                            <td>DA x KA</td>
-                            <td id="DA_KA"></td>
-                            <td id="course8"></td>
-                        </tr>
-                        <tr>
-                            <td>9:14 - 9:20</td>
-                            <td>PA x KB</td>
-                            <td id="PA_KB"></td>
-                            <td id="course9"></td>
-                        </tr>
-                        <tr>
-                            <td>9:22 - 9:28</td>
-                            <td>PB x KA</td>
-                            <td id="PB_KA"></td>
-                            <td id="course10"></td>
-                        </tr>
-                        <tr>
-                            <td>9:30 - 9:36</td>
-                            <td>DB x TA</td>
-                            <td id="DB_TA"></td>
-                            <td id="course11"></td>
-                        </tr>
-                        <tr>
-                            <td>9:38 - 9:44</td>
-                            <td>DA x TB</td>
-                            <td id="DA_TB"> </td>
-                            <td id="course12"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+          <div class="col-6">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>1</th>
+                  <th>PA</th>
+                  <th>DB</th>
+                  <th>TA</th>
+                  <th>KB</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>PA</th>
+                  <td class="diagonal"></td>
+                  <td id="PA_DB"></td>
+                  <td id="PA_TA"></td>
+                  <td id="PA_KB"></td>
+                </tr>
+                <tr>
+                  <th>DB</th>
+                  <td></td>
+                  <td class="diagonal"></td>
+                  <td id="DB_TA"></td>
+                  <td id="DB_KB"></td>
+                </tr>
+                <tr>
+                  <th>TA</th>
+                  <td></td>
+                  <td></td>
+                  <td class="diagonal"></td>
+                  <td id="TA_KB"></td>
+                </tr>
+                <tr>
+                  <th>KB</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="diagonal"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-            <!-- Center Column -->
-            <div class="col-md-8">
-                <h3>Výsledková tabulka</h3>
-                <div class="row">
-                    <div class="col-6">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>1</th>
-                                    <th>PA</th>
-                                    <th>DB</th>
-                                    <th>TA</th>
-                                    <th>KB</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>PA</th>
-                                    <td class="diagonal"></td>
-                                    <td id="PA_DB"></td>
-                                    <td id="PA_TA"></td>
-                                    <td id="PA_KB"></td>
-                                </tr>
-                                <tr>
-                                    <th>DB</th>
-                                    <td></td>
-                                    <td class="diagonal"></td>
-                                    <td id="DB_TA"></td>
-                                    <td id="DB_KB"></td>
-                                </tr>
-                                <tr>
-                                    <th>TA</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="diagonal"></td>
-                                    <td id="TA_KB"></td>
-                                </tr>
-                                <tr>
-                                    <th>KB</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="diagonal"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="col-6">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>2</th>
-                                    <th>PB</th>
-                                    <th>DA</th>
-                                    <th>TB</th>
-                                    <th>KA</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>PB</th>
-                                    <td class="diagonal"></td>
-                                    <td id="PB_DA"></td>
-                                    <td id="PB_TB"></td>
-                                    <td id="PB_KA"></td>
-                                </tr>
-                                <tr>
-                                    <th>DA</th>
-                                    <td></td>
-                                    <td class="diagonal"></td>
-                                    <td id="DA_TB"></td>
-                                    <td id="DA_KA"></td>
-                                </tr>
-                                <tr>
-                                    <th>TB</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="diagonal"></td>
-                                    <td id="TB_KA"></td>
-                                </tr>
-                                <tr>
-                                    <th>KA</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="diagonal"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+          <div class="col-6">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>2</th>
+                  <th>PB</th>
+                  <th>DA</th>
+                  <th>TB</th>
+                  <th>KA</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>PB</th>
+                  <td class="diagonal"></td>
+                  <td id="PB_DA"></td>
+                  <td id="PB_TB"></td>
+                  <td id="PB_KA"></td>
+                </tr>
+                <tr>
+                  <th>DA</th>
+                  <td></td>
+                  <td class="diagonal"></td>
+                  <td id="DA_TB"></td>
+                  <td id="DA_KA"></td>
+                </tr>
+                <tr>
+                  <th>TB</th>
+                  <td></td>
+                  <td></td>
+                  <td class="diagonal"></td>
+                  <td id="TB_KA"></td>
+                </tr>
+                <tr>
+                  <th>KA</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="diagonal"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        // Fetch and display stored scores from localStorage
-        window.onload = function () {
-            const scores = ["PA_DB", "PB_DA", "TA_KB", "TB_KA", "PA_TA", "PB_TB", "DB_KB", "DA_KA", "PA_KB", "DA_TB", "DB_TA", "PB_KA",
-                "course1", "course2", "course3", "course4", "course4", "course5", "course6", "course7", "course8", "course9", "course10", "course11", "course12"];
+  <script>
+    // Fetch and display stored scores from localStorage
+    window.onload = function () {
+      const scores = ["PA_DB", "PB_DA", "TA_KB", "TB_KA", "PA_TA", "PB_TB", "DB_KB", "DA_KA", "PA_KB", "DA_TB", "DB_TA", "PB_KA",
+        "course1", "course2", "course3", "course4", "course4", "course5", "course6", "course7", "course8", "course9", "course10", "course11", "course12"];
 
-            scores.forEach(id => {
-                const value = localStorage.getItem(id);
-                if (value) {
-                    // Find all elements by ID or class and update their innerText or value
-                    const elements = document.querySelectorAll(`#${id}`);
-                    elements.forEach(element => {
-                        if (element.tagName === "INPUT") {
-                            element.value = value;  // For inputs, update the value
-                        } else {
-                            element.innerText = value;  // For other elements, update innerText
-                        }
-                    });
-                }
-            });
-        }
-
-        document.addEventListener("keydown", (event) => {
-            if (event.key == "S") {
-                window.location.href = "skibidi.html";  // Redirect to skibidi.html
+      scores.forEach(id => {
+        const value = localStorage.getItem(id);
+        if (value) {
+          // Find all elements by ID or class and update their innerText or value
+          const elements = document.querySelectorAll(`#${id}`);
+          elements.forEach(element => {
+            if (element.tagName === "INPUT") {
+              element.value = value;  // For inputs, update the value
+            } else {
+              element.innerText = value;  // For other elements, update innerText
             }
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+          });
+        }
+      });
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key == "S") {
+        window.location.href = "skibidi.html";  // Redirect to skibidi.html
+      }
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
