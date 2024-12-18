@@ -1,6 +1,0 @@
-flask
-flask_login
-psycopg2
-flask_sqlalchemy
-falcon
-requests
